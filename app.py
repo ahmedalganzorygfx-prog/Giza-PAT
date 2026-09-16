@@ -6,6 +6,7 @@ from io import BytesIO
 from PIL import Image
 import os
 import urllib.request
+import base64
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
@@ -14,7 +15,7 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 
 # ---------------------------------------------------------
-# 1. تهيئة واختيارات إعدادات الصفحة والتنسيقات (Dark Mode RTL)
+# 1. تهيئة وإعدادات الصفحة والتنسيقات (Dark Mode RTL)
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="الأكاديمية المهنية للمعلمين - فرع الجيزة",
@@ -22,7 +23,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# دعم التوافق التلقائي مع الوضع الداكن والفاتح ومحاذاة العناوين
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -33,7 +33,7 @@ st.markdown("""
         text-align: right;
     }
     
-    /* صندوق الترويسة متكيف تلقائياً مع خلفية النظام */
+    /* صندوق الترويسة الرئيسي */
     .header-box {
         background-color: var(--background-secondary-color, rgba(128, 128, 128, 0.12));
         padding: 25px;
@@ -70,19 +70,57 @@ st.markdown("""
         text-align: right;
     }
 
-    /* تحسين ظهور اللوجو والتباين على الوضع الداكن */
-    .dark-mode-logo img {
-        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.7));
-        border-radius: 8px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+    /* حاوية خلفية بيضاء دائرية للوجو */
+    .logo-container {
+        background-color: #FFFFFF !important;
+        padding: 12px;
+        border-radius: 50%;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+        display: inline-block;
+        margin-bottom: 10px;
+        width: 140px;
+        height: 140px;
+        border: 2px solid #1E3A8A;
+    }
+
+    .logo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# 2. إدارة قاعدة البيانات (SQLite)
+# 2. قائمة الإدارات التعليمية كاملة
+# ---------------------------------------------------------
+GIZA_ADMINISTRATIONS = [
+    "أبو النمرس",
+    "أطفيح",
+    "أكتوبر",
+    "أوسيم",
+    "البدرشين",
+    "الحوامدية",
+    "الدقى",
+    "الديوان العام",
+    "الشيخ زايد",
+    "الصف",
+    "العجوزة",
+    "العمرانية",
+    "الهرم",
+    "الواحات البحرية",
+    "الوراق",
+    "بولاق الدكرور",
+    "جنوب الجيزة",
+    "حدائق أكتوبر",
+    "ديوان المديرية",
+    "شمال الجيزة",
+    "كرداسة",
+    "منشأة القناطر"
+]
+
+# ---------------------------------------------------------
+# 3. إدارة قاعدة البيانات (SQLite)
 # ---------------------------------------------------------
 DB_NAME = "giza_academy_v3.db"
 
@@ -142,11 +180,10 @@ def get_attachments(req_id):
     return attachments
 
 # ---------------------------------------------------------
-# 3. معالج إعداد الـ PDF والـ QR Code
+# 4. معالج إعداد الـ PDF والـ QR Code
 # ---------------------------------------------------------
 FONT_PATH = "Cairo-Regular.ttf"
 
-# تنزيل الخط العربي افتراضياً في حالة عدم وجوده
 if not os.path.exists(FONT_PATH):
     try:
         font_url = "https://github.com/google/fonts/raw/main/ofl/cairo/Cairo-Regular.ttf"
@@ -207,24 +244,27 @@ def generate_pdf(request_data):
     return buf.getvalue()
 
 # ---------------------------------------------------------
-# 4. ترويسة الصفحة واللوجو المتوافق مع الوضع الداكن
+# 5. ترويسة الصفحة واللوجو بالخلفية المخصصة
 # ---------------------------------------------------------
 st.markdown('<div class="header-box">', unsafe_allow_html=True)
 
-col_l, col_logo, col_r = st.columns([2, 1, 2])
-with col_logo:
-    logo_filename = None
-    for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
-        if os.path.exists(fname):
-            logo_filename = fname
-            break
-            
-    if logo_filename:
-        st.markdown('<div class="dark-mode-logo">', unsafe_allow_html=True)
-        st.image(logo_filename, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-    else:
-        st.markdown("<h1 style='text-align: center; margin: 0;'>🎓</h1>", unsafe_allow_html=True)
+logo_filename = None
+for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
+    if os.path.exists(fname):
+        logo_filename = fname
+        break
+
+if logo_filename:
+    with open(logo_filename, "rb") as f:
+        encoded_logo = base64.b64encode(f.read()).decode()
+    
+    st.markdown(f'''
+        <div class="logo-container">
+            <img src="data:image/png;base64,{encoded_logo}" alt="لوجو الفرع">
+        </div>
+    ''', unsafe_allow_html=True)
+else:
+    st.markdown("<h1 style='text-align: center; margin: 0;'>🎓</h1>", unsafe_allow_html=True)
 
 st.markdown('''
     <h1 class="main-header">الأكاديمية المهنية للمعلمين - فرع الجيزة</h1>
@@ -233,7 +273,7 @@ st.markdown('''
 ''', unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# 5. القائمة الرئيسية والتنقل
+# 6. القائمة الرئيسية والتنقل
 # ---------------------------------------------------------
 menu = ["الرئيسية والخدمات", "تقديم طلب شهادة صلاحية", "متابعة حالة الطلب", "لوحة تحكم الفرع (الأدمن)"]
 choice = st.sidebar.radio("القائمة الرئيسية", menu)
@@ -259,14 +299,10 @@ elif choice == "تقديم طلب شهادة صلاحية":
         with col1:
             name = st.text_input("الاسم الرباعي")
             code = st.text_input("كود المعلم")
-            school = st.text_input("المدرسة")
+            school = st.text_input("المدرسة / جهة العمل")
         with col2:
             nat_id = st.text_input("الرقم القومي (14 رقم)")
-            admin_name = st.selectbox("الإدارة التعليمية", [
-                "إدارة جنوب الجيزة", "إدارة شمال الجيزة", "إدارة الدقي", "إدارة العجوزة", 
-                "إدارة العمرانية", "إدارة الهرم", "إدارة 6 أكتوبر", "إدارة الشيخ زايد", 
-                "إدارة كرداسة", "إدارة أوسيم", "إدارة البدرشين", "إدارة العياط", "إدارات أخرى"
-            ])
+            admin_name = st.selectbox("الإدارة التعليمية", GIZA_ADMINISTRATIONS)
             cert_type = st.selectbox("نوع شهادة الصلاحية المطلوبة", [
                 "معلم مساعد (التثبيت)", "التسكين على الكادر", "الترقي للدرجة الأعلى",
                 "تغيير المسمى الوظيفي", "إعادة تعيين (قرار 160 لسنة 2024)",
@@ -329,7 +365,6 @@ elif choice == "لوحة تحكم الفرع (الأدمن)":
                 with st.expander(f"طلب #{row['id']} - {row['teacher_name']} ({row['cert_type']})"):
                     st.write(f"**كود المعلم:** {row['teacher_code']} | **الرقم القومي:** {row['national_id']} | **الإدارة:** {row['administration']}")
                     
-                    # عرض صور المرفقات إن وجدت
                     attachments = get_attachments(row['id'])
                     if attachments:
                         c_img1, c_img2, c_img3 = st.columns(3)
