@@ -15,7 +15,7 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 
 # ---------------------------------------------------------
-# 1. تهيئة وإعدادات الصفحة والتنسيقات (Dark Mode RTL)
+# 1. تهيئة وإعدادات الصفحة والتنسيقات (Dark Mode RTL - بدون خلفية بيضاء)
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="الأكاديمية المهنية للمعلمين - فرع الجيزة",
@@ -70,23 +70,20 @@ st.markdown("""
         text-align: right;
     }
 
-    /* حاوية دائرية في منتصف الترويسة بضبط دقيق */
-    .logo-container {
-        background-color: #FFFFFF !important;
-        padding: 10px;
-        border-radius: 50%;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    /* حاوية شفافية اللوجو بدون خلفيات أو إطارات */
+    .transparent-logo-container {
         display: inline-block;
         margin: 0 auto 10px auto;
-        width: 140px;
-        height: 140px;
-        border: 2px solid #1E3A8A;
+        max-width: 150px;
+        max-height: 150px;
     }
 
-    .logo-container img {
+    .transparent-logo-container img {
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: contain;
+        /* ظل خفيف ناصع يضمن ظهور اللوجو المفرغ على الوضع الداكن والفاتح */
+        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.65));
     }
     </style>
 """, unsafe_allow_html=True)
@@ -247,11 +244,10 @@ def generate_pdf(request_data):
     return buf.getvalue()
 
 # ---------------------------------------------------------
-# 5. الترويسة وقراءة اللوجو من مجلد المشروع وتوسيعه في المنتصف
+# 5. الترويسة واللوجو المفرغ بالكامل (بدون خلفية)
 # ---------------------------------------------------------
 st.markdown('<div class="header-box">', unsafe_allow_html=True)
 
-# فحص ملف الصورة المباشر من مجلد المشروع أولاً
 logo_bytes = None
 for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png', 'Logo.PNG', 'LOGO.PNG']:
     if os.path.exists(fname):
@@ -259,7 +255,6 @@ for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png', 'Logo.PNG', 'LOGO
             logo_bytes = f.read()
         break
 
-# إذا لم يوجد ملف صورة بالمجلد يتم الفحص بقاعدة البيانات
 if not logo_bytes:
     logo_bytes = get_logo_from_db()
 
@@ -267,7 +262,7 @@ if logo_bytes:
     encoded_logo = base64.b64encode(logo_bytes).decode()
     st.markdown(f'''
         <div style="text-align: center;">
-            <div class="logo-container">
+            <div class="transparent-logo-container">
                 <img src="data:image/png;base64,{encoded_logo}" alt="لوجو الفرع">
             </div>
         </div>
@@ -370,7 +365,7 @@ elif choice == "لوحة تحكم الفرع (الأدمن)":
         st.success("تم الوصول بصلاحيات الإدارة.")
         
         with st.expander("🖼️ تغيير لوجو الفرع"):
-            new_logo = st.file_uploader("قم برفع اللوجو الجديد (PNG أو JPG)", type=["png", "jpg", "jpeg"])
+            new_logo = st.file_uploader("قم برفع اللوجو الجديد (PNG مفرغ)", type=["png", "jpg", "jpeg"])
             if st.button("حفظ اللوجو الجديد"):
                 if new_logo:
                     save_logo_to_db(new_logo.read())
