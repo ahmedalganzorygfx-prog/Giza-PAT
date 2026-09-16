@@ -22,7 +22,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# دعم التوافق التلقائي وتخصيص حاوية خلفية اللوجو
+# دعم التوافق التلقائي مع الوضع الداكن والفاتح ومحاذاة العناوين
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -33,7 +33,7 @@ st.markdown("""
         text-align: right;
     }
     
-    /* صندوق الترويسة الرئيسي */
+    /* صندوق الترويسة متكيف تلقائياً مع خلفية النظام */
     .header-box {
         background-color: var(--background-secondary-color, rgba(128, 128, 128, 0.12));
         padding: 25px;
@@ -70,23 +70,13 @@ st.markdown("""
         text-align: right;
     }
 
-    /* حاوية مخصصة بخلفية بيضاء دائمة للوجو لضمان بروزه */
-    .logo-container {
-        background-color: #FFFFFF !important;
-        padding: 12px;
-        border-radius: 50%; /* شكل دائري أنيق */
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25); /* ظل لإبراز اللوجو */
-        display: inline-block;
-        margin-bottom: 10px;
-        width: 140px;
-        height: 140px;
-        border: 2px solid #1E3A8A;
-    }
-
-    .logo-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+    /* تحسين ظهور اللوجو والتباين على الوضع الداكن */
+    .dark-mode-logo img {
+        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.7));
+        border-radius: 8px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -156,6 +146,7 @@ def get_attachments(req_id):
 # ---------------------------------------------------------
 FONT_PATH = "Cairo-Regular.ttf"
 
+# تنزيل الخط العربي افتراضياً في حالة عدم وجوده
 if not os.path.exists(FONT_PATH):
     try:
         font_url = "https://github.com/google/fonts/raw/main/ofl/cairo/Cairo-Regular.ttf"
@@ -216,29 +207,24 @@ def generate_pdf(request_data):
     return buf.getvalue()
 
 # ---------------------------------------------------------
-# 4. ترويسة الصفحة واللوجو بالخلفية المخصصة
+# 4. ترويسة الصفحة واللوجو المتوافق مع الوضع الداكن
 # ---------------------------------------------------------
 st.markdown('<div class="header-box">', unsafe_allow_html=True)
 
-logo_filename = None
-for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
-    if os.path.exists(fname):
-        logo_filename = fname
-        break
-
-if logo_filename:
-    # عرض اللوجو داخل الحاوية المخصصة بظروف العرض المباشر
-    import base64
-    with open(logo_filename, "rb") as f:
-        encoded_logo = base64.b64encode(f.read()).decode()
-    
-    st.markdown(f'''
-        <div class="logo-container">
-            <img src="data:image/png;base64,{encoded_logo}" alt="لوجو الفرع">
-        </div>
-    ''', unsafe_allow_html=True)
-else:
-    st.markdown("<h1 style='text-align: center; margin: 0;'>🎓</h1>", unsafe_allow_html=True)
+col_l, col_logo, col_r = st.columns([2, 1, 2])
+with col_logo:
+    logo_filename = None
+    for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
+        if os.path.exists(fname):
+            logo_filename = fname
+            break
+            
+    if logo_filename:
+        st.markdown('<div class="dark-mode-logo">', unsafe_allow_html=True)
+        st.image(logo_filename, use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    else:
+        st.markdown("<h1 style='text-align: center; margin: 0;'>🎓</h1>", unsafe_allow_html=True)
 
 st.markdown('''
     <h1 class="main-header">الأكاديمية المهنية للمعلمين - فرع الجيزة</h1>
@@ -343,6 +329,7 @@ elif choice == "لوحة تحكم الفرع (الأدمن)":
                 with st.expander(f"طلب #{row['id']} - {row['teacher_name']} ({row['cert_type']})"):
                     st.write(f"**كود المعلم:** {row['teacher_code']} | **الرقم القومي:** {row['national_id']} | **الإدارة:** {row['administration']}")
                     
+                    # عرض صور المرفقات إن وجدت
                     attachments = get_attachments(row['id'])
                     if attachments:
                         c_img1, c_img2, c_img3 = st.columns(3)
