@@ -8,7 +8,23 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. التنسيق والظهور (CSS)
+# 2. رابط Google Sheets الخاص بك (رابط التصدير المباشر CSV)
+SHEET_CERTS_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=0"
+
+@st.cache_data(ttl=60)
+def load_live_data(url):
+    try:
+        return pd.read_csv(url)
+    except Exception:
+        # بيانات افتراضية في حال التعثر
+        return pd.DataFrame({
+            "كود المعلم": ["123456", "654321"],
+            "الاسم": ["أحمد محمود", "سارة إبراهيم"],
+            "البرنامج": ["تطبيقات الذكاء الاصطناعي", "اختبارات الوظائف الإشرافية"],
+            "حالة الشهادة": ["معتمدة وجاهزة", "قيد المراجعة"]
+        })
+
+# 3. تنسيق الواجهة (CSS)
 st.markdown("""
     <style>
     html, body, [class*="css"] {
@@ -45,31 +61,33 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. الهيدر العلوي
+# 4. الترويسة الهيدر
 st.markdown("""
     <div class="top-bar">
         <div>
             <a href="#" class="btn-teacher">منصة المعلم</a>
             <span style="margin-right: 20px; font-weight: 500;">الأكاديمية المهنية للمعلمين</span>
         </div>
-        <div style="font-size: 1.2rem; font-weight: bold;">
-            فرع الجيزة
-        </div>
+        <div style="font-size: 1.2rem; font-weight: bold;">فرع الجيزة</div>
     </div>
 """, unsafe_allow_html=True)
 
-# 4. التحكم بالصلاحيات عبر القائمة الجانبية
+# 5. إدارة الصلاحيات في القائمة الجانبية
 st.sidebar.header("🔐 دخول إدارة الفرع")
 role = st.sidebar.radio("نوع المستخدم:", ["معلم / مستخدم عادي", "مدير النظام (Admin)"])
 is_admin = (role == "مدير النظام (Admin)")
 
-if is_admin:
-    st.sidebar.success("تم تفعيل صلاحيات الأدمن (التنزيل والتحميل متاح)")
-else:
-    st.sidebar.info("صلاحيات التنزيل واستخراج الملفات مخصصة للأدمن فقط")
+if st.sidebar.button("🔄 تحديث البيانات الآن"):
+    st.cache_data.clear()
+    st.sidebar.success("تم إعادة تنشيط البيانات المباشرة!")
 
-# 5. التبويبات الرئيسية استناداً إلى البرامج والمجلدات
-tab_home, tab_certs, tab_exam_app, tab_stats, tab_jobs, tab_assistant, tab_attendance = st.tabs([
+if is_admin:
+    st.sidebar.success("صلاحيات الأدمن مفعلة (التحميل متاح)")
+else:
+    st.sidebar.info("صلاحيات التنزيل مخصصة للمدير فقط")
+
+# 6. التبويبات الرئيسية لبرامج الفرع
+tab_home, tab_certs, tab_exam, tab_stats, tab_jobs, tab_assistant, tab_attendance = st.tabs([
     "🏠 الرئيسية",
     "📜 Academy Certificates",
     "💻 ExamApp",
@@ -79,7 +97,9 @@ tab_home, tab_certs, tab_exam_app, tab_stats, tab_jobs, tab_assistant, tab_atten
     "⏱️ نظام الحضور"
 ])
 
-# --- التبويب الأول: الرئيسية ---
+df_certs = load_live_data(SHEET_CERTS_URL)
+
+# --- الرئيسية ---
 with tab_home:
     st.markdown("""
         <div class="instruction-card">
@@ -91,77 +111,50 @@ with tab_home:
             </ul>
         </div>
     """, unsafe_allow_html=True)
-    st.info("قم باختيار البرنامج المطلوب من التبويبات أعلاه لبدء استخدام المنصة.")
 
-# --- 1. برنامج Academy Certificates ---
+# --- 1. Academy Certificates ---
 with tab_certs:
-    st.subheader("📜 برنامج الشهادات (Academy Certificates)")
-    search_code = st.text_input("بحث برقم القومي / كود المعلم:", key="cert_search")
-    
-    if st.button("استعلام عن الشهادة"):
-        st.success("تم العثور على الشهادة المطلوبة.")
-        st.write("بيانات الشهادة: **معتمدة من فرع الجيزة**")
+    st.subheader("📜 الاستعلام المباشر عن الشهادات")
+    code = st.text_input("أدخل كود المعلم أو الرقم القومي:")
+    if st.button("استعلام"):
+        if code:
+            df_certs['كود المعلم'] = df_certs['كود المعلم'].astype(str)
+            match = df_certs[df_certs['كود المعلم'] == code.strip()]
+            if not match.empty:
+                row = match.iloc[0]
+                st.success(f"الاسم: **{row.get('الاسم', '')}**")
+                st.write(f"البرنامج: **{row.get('البرنامج', '')}**")
+                st.write(f"حالة الشهادة: **{row.get('حالة الشهادة', '')}**")
+                if is_admin:
+                    st.download_button("📥 تنزيل النتيجة (Excel)", data=match.to_csv(index=False).encode('utf-8-sig'), file_name="cert.csv")
+            else:
+                st.error("لم يتم العثور على بيانات المتقدم.")
 
-    if is_admin:
-        st.download_button(
-            label="📥 تنزيل الشهادة (PDF)",
-            data="محتوى الشهادة",
-            file_name="certificate.pdf",
-            mime="application/pdf"
-        )
-
-# --- 2. برنامج ExamApp ---
-with tab_exam_app:
+# --- 2. ExamApp ---
+with tab_exam:
     st.subheader("💻 تطبيق الاختبارات الرقمية (ExamApp)")
-    st.write("بوابة إجراء الاختبارات وتوثيق النتائج لمرشحي الفرع.")
-    if st.button("تشغيل جلسة الاختبار"):
-        st.info("جاري إعداد بيئة الاختبار الرقمي...")
+    st.info("منصة متابعة جلسات الاختبارات الخاصة بالفرع.")
 
-# --- 3. برنامج إحصائيات مسمي وظيفي 2026 ---
+# --- 3. إحصائيات 2026 ---
 with tab_stats:
     st.subheader("📊 إحصائيات مسمي وظيفي 2026")
-    df_stats = pd.DataFrame({
-        "المسمى الوظيفي": ["معلم", "معلم أول", "معلم أول أ", "معلم خبير", "معلم كبير"],
-        "عدد المستهدفين بالفرع": [1200, 850, 640, 410, 190],
-        "نسبة الإنجاز": ["95%", "90%", "88%", "92%", "98%"]
-    })
-    st.dataframe(df_stats, width="stretch", hide_index=True)
-    
+    st.dataframe(df_certs, width="stretch", hide_index=True)
     if is_admin:
-        st.download_button(
-            label="📥 تصدير تقرير الإحصائيات (Excel)",
-            data=df_stats.to_csv(index=False).encode('utf-8-sig'),
-            file_name="job_title_stats_2026.csv",
-            mime="text/csv"
-        )
+        st.download_button("📥 تنزيل الكشف الكامل", data=df_certs.to_csv(index=False).encode('utf-8-sig'), file_name="stats_2026.csv")
 
-# --- 4. برنامج استكمال اختبارات الوظائف الاشرافية والمعلم المساعد ---
+# --- 4. الوظائف الإشرافية ---
 with tab_jobs:
-    st.subheader("📝 استكمال اختبارات الوظائف الإشرافية والمعلم المساعد")
-    st.text_input("رقم الملف / كود المتقدم:", key="jobs_search")
-    st.selectbox("نوع الوظيفة المتقدم لها:", ["مدير مدرية / إدارة", "وكيل مدرية / إدارة", "موجه فني", "معلم مساعد"])
-    st.button("تسجيل استكمال البيانات")
+    st.subheader("📝 استكمال اختبارات الوظائف الإشرافية")
+    st.text_input("رقم الملف / الكود:")
+    st.button("حفظ واستكمال")
 
-# --- 5. برنامج ملفات المعلم المساعد ---
+# --- 5. المعلم المساعد ---
 with tab_assistant:
     st.subheader("📂 ملفات المعلم المساعد")
-    st.write("نظام فحص وتدقيق صحة المستندات الخاصة بالمعلمين المساعدين.")
-    
-    uploaded_file = st.file_uploader("رفع مسح ضوئي لملف المتقدم (PDF):", type=["pdf", "png", "jpg"])
-    if uploaded_file and is_admin:
-        st.success(f"تم رفع الملف: {uploaded_file.name} بنجاح.")
+    st.file_uploader("رفع مستندات المعلم المساعد (PDF):", type=["pdf"])
 
-# --- 6. برنامج نظام الحضور ---
+# --- 6. نظام الحضور ---
 with tab_attendance:
-    st.subheader("⏱️ نظام الحضور والانصراف التدريبي")
+    st.subheader("⏱️ نظام الحضور والانصراف")
     st.date_input("تاريخ اليوم التدريبي:")
-    st.time_input("ساعة تسجيل الحضور:")
-    st.button("تأكيد تسجيل الحضور")
-    
-    if is_admin:
-        st.download_button(
-            label="📥 تنزيل كشف الحضور اليومي (Excel)",
-            data="كشف الحضور والغياب",
-            file_name="attendance_report.csv",
-            mime="text/csv"
-        )
+    st.button("تسجيل الحضور")
