@@ -33,6 +33,7 @@ st.markdown("""
         text-align: right;
     }
     
+    /* صندوق الترويسة الرئيسي */
     .header-box {
         background-color: var(--background-secondary-color, rgba(128, 128, 128, 0.12));
         padding: 25px;
@@ -69,13 +70,14 @@ st.markdown("""
         text-align: right;
     }
 
+    /* حاوية دائرية في منتصف الترويسة بضبط دقيق */
     .logo-container {
         background-color: #FFFFFF !important;
-        padding: 12px;
+        padding: 10px;
         border-radius: 50%;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
         display: inline-block;
-        margin-bottom: 10px;
+        margin: 0 auto 10px auto;
         width: 140px;
         height: 140px;
         border: 2px solid #1E3A8A;
@@ -245,23 +247,29 @@ def generate_pdf(request_data):
     return buf.getvalue()
 
 # ---------------------------------------------------------
-# 5. ترويسة الصفحة واللوجو المتكيف
+# 5. الترويسة وقراءة اللوجو من مجلد المشروع وتوسيعه في المنتصف
 # ---------------------------------------------------------
 st.markdown('<div class="header-box">', unsafe_allow_html=True)
 
-logo_bytes = get_logo_from_db()
+# فحص ملف الصورة المباشر من مجلد المشروع أولاً
+logo_bytes = None
+for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png', 'Logo.PNG', 'LOGO.PNG']:
+    if os.path.exists(fname):
+        with open(fname, "rb") as f:
+            logo_bytes = f.read()
+        break
+
+# إذا لم يوجد ملف صورة بالمجلد يتم الفحص بقاعدة البيانات
 if not logo_bytes:
-    for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
-        if os.path.exists(fname):
-            with open(fname, "rb") as f:
-                logo_bytes = f.read()
-            break
+    logo_bytes = get_logo_from_db()
 
 if logo_bytes:
     encoded_logo = base64.b64encode(logo_bytes).decode()
     st.markdown(f'''
-        <div class="logo-container">
-            <img src="data:image/png;base64,{encoded_logo}" alt="لوجو الفرع">
+        <div style="text-align: center;">
+            <div class="logo-container">
+                <img src="data:image/png;base64,{encoded_logo}" alt="لوجو الفرع">
+            </div>
         </div>
     ''', unsafe_allow_html=True)
 else:
@@ -361,7 +369,6 @@ elif choice == "لوحة تحكم الفرع (الأدمن)":
     if pwd == "admin123":
         st.success("تم الوصول بصلاحيات الإدارة.")
         
-        # قسم تغيير اللوجو الجديد
         with st.expander("🖼️ تغيير لوجو الفرع"):
             new_logo = st.file_uploader("قم برفع اللوجو الجديد (PNG أو JPG)", type=["png", "jpg", "jpeg"])
             if st.button("حفظ اللوجو الجديد"):
