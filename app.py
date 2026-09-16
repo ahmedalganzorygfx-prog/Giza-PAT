@@ -3,12 +3,12 @@ import sqlite3
 import pandas as pd
 import qrcode
 from io import BytesIO
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 import os
 import urllib.request
 
 # ---------------------------------------------------------
-# 1. تهيئة وإعدادات الصفحة
+# 1. تهيئة وإعدادات الصفحة والتنسيقات (CSS)
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="الأكاديمية المهنية للمعلمين - فرع الجيزة",
@@ -16,32 +16,51 @@ st.set_page_config(
     layout="wide"
 )
 
+# تعديل التنسيق لتمركز العناوين وإتاحة المحاذاة الصحيحة (RTL)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+    
     html, body, [class*="css"] {
         font-family: 'Cairo', sans-serif;
         direction: rtl;
         text-align: right;
     }
+    
+    /* تنسيق صندوق الترويسة والعناوين */
     .header-box {
         background-color: #f0f2f6;
-        padding: 20px;
+        padding: 25px;
         border-radius: 12px;
         margin-bottom: 25px;
-        box-shadow: 0px 4px 6px rgba(0,0,0,0.08);
-        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+        text-align: center; /* وضع محتويات الترويسة في المنتصف */
     }
+    
     .main-header {
         color: #1E3A8A;
-        margin-top: 10px;
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center; /* العنوان الرئيسي في المنتصف */
+        margin-top: 15px;
         margin-bottom: 5px;
     }
-    .sub-header {
+    
+    .main-subheading {
         color: #1E3A8A;
-        border-bottom: 2px solid #1E3A8A;
-        padding-bottom: 5px;
-        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center; /* العنوان الفرعي في المنتصف */
+        margin-bottom: 0px;
+    }
+
+    .section-title {
+        color: #1E3A8A;
+        border-bottom: 3px solid #1E3A8A;
+        padding-bottom: 8px;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        text-align: right; /* محاذاة عناوين الأقسام من اليمين لليار */
     }
     </style>
 """, unsafe_allow_html=True)
@@ -96,16 +115,8 @@ def update_status(req_id, new_status):
     conn.commit()
     conn.close()
 
-def get_attachments(req_id):
-    conn = sqlite3.connect("giza_academy_v3.db")
-    c = conn.cursor()
-    c.execute("SELECT attachment_poa, attachment_qual, attachment_rep FROM requests WHERE id = ?", (req_id,))
-    attachments = c.fetchone()
-    conn.close()
-    return attachments
-
 # ---------------------------------------------------------
-# 3. معالج إعداد الـ PDF والـ QR (تنزيل الخط تلقائياً)
+# 3. معالجة الـ PDF والـ QR Code
 # ---------------------------------------------------------
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -115,7 +126,6 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 
 FONT_PATH = "Cairo-Regular.ttf"
-# تنزيل الخط تلقائياً إذا لم يكن موجوداً
 if not os.path.exists(FONT_PATH):
     try:
         font_url = "https://github.com/google/fonts/raw/main/ofl/cairo/Cairo-Regular.ttf"
@@ -176,32 +186,40 @@ def generate_pdf(request_data):
     return buf.getvalue()
 
 # ---------------------------------------------------------
-# 4. الترويسة الشاملة للوجو والعنوان (بدون أخطاء)
+# 4. الترويسة الرئيسية واللوجو (مُعدلة لإظهار اللوجو والتوسيط)
 # ---------------------------------------------------------
 st.markdown('<div class="header-box">', unsafe_allow_html=True)
 
-col_logo_l, col_logo_c, col_logo_r = st.columns([2, 1, 2])
-with col_logo_c:
-    if os.path.exists('logo.png'):
-        st.image('logo.png', width=130)
+# معالجة عرض اللوجو في منتصف الصفحة
+col_l, col_logo, col_r = st.columns([2, 1, 2])
+with col_logo:
+    logo_filename = None
+    # البحث عن ملف اللوجو بصيغ مختلفة في المجلد
+    for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
+        if os.path.exists(fname):
+            logo_filename = fname
+            break
+            
+    if logo_filename:
+        st.image(logo_filename, use_container_width=True)
     else:
-        # عرض أيقونة بديلة أنيقة في حال عدم وجود ملف الشعار
         st.markdown("<h1 style='text-align: center; margin: 0;'>🎓</h1>", unsafe_allow_html=True)
 
+# العناوين في المنتصف
 st.markdown('''
     <h1 class="main-header">الأكاديمية المهنية للمعلمين - فرع الجيزة</h1>
-    <p style="color: #1E3A8A; font-weight: bold; margin-bottom: 0;">المنصة الرقمية الموحدة لإصدار وتدقيق شهادات الصلاحية</p>
+    <p class="main-subheading">المنصة الرقمية الموحدة لإصدار وتدقيق شهادات الصلاحية</p>
 </div>
 ''', unsafe_allow_html=True)
 
+# ---------------------------------------------------------
+# 5. شريط التنقل والصفحات
+# ---------------------------------------------------------
 menu = ["الرئيسية والخدمات", "تقديم طلب شهادة صلاحية", "متابعة حالة الطلب", "لوحة تحكم الفرع (الأدمن)"]
 choice = st.sidebar.radio("القائمة الرئيسية", menu)
 
-# ---------------------------------------------------------
-# 5. صفحات النظام
-# ---------------------------------------------------------
 if choice == "الرئيسية والخدمات":
-    st.markdown("<h2 class='sub-header'>مسارات شهادات الصلاحية المتاحة بالفرع</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='section-title'>مسارات شهادات الصلاحية المتاحة بالفرع</h2>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
         st.info("### 1. معلم مساعد\nإصدار شهادات الصلاحية للتعين والتثبيت على وظيفة معلم.")
@@ -214,8 +232,7 @@ if choice == "الرئيسية والخدمات":
         st.warning("### 6. القيادات الإشرافية\nصلاحية ممارسة مهام الإدارة والتوجيه الفني.")
 
 elif choice == "تقديم طلب شهادة صلاحية":
-    st.markdown("<h2 class='sub-header'>تقديم طلب إصدار شهادة صلاحية جديد</h2>", unsafe_allow_html=True)
-
+    st.markdown("<h2 class='section-title'>تقديم طلب إصدار شهادة صلاحية جديد</h2>", unsafe_allow_html=True)
     with st.form("request_form"):
         col1, col2 = st.columns(2)
         with col1:
@@ -252,10 +269,10 @@ elif choice == "تقديم طلب شهادة صلاحية":
                 add_request(name, nat_id, code, admin_name, school, cert_type, poa_bytes, qual_bytes, rep_bytes)
                 st.success(f"تم تسجيل طلبك بنجاح للأستاذ/ة {name}! يمكنك متابعة الطلب باستخدام الرقم القومي.")
             else:
-                st.error("يرجى التأكد من كتابة الاسم ورقم كود المعلم والرقم القومي الصحيح (14 رقم).")
+                st.error("يرجى التأكد من كتابة البيانات الأساسية وصحة الرقم القومي (14 رقم).")
 
 elif choice == "متابعة حالة الطلب":
-    st.markdown("<h2 class='sub-header'>الاستعلام عن طلب شهادة الصلاحية</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='section-title'>الاستعلام عن طلب شهادة الصلاحية</h2>", unsafe_allow_html=True)
     search_nat_id = st.text_input("أدخل الرقم القومي للاستعلام")
     if st.button("بحث"):
         if search_nat_id:
@@ -281,7 +298,7 @@ elif choice == "متابعة حالة الطلب":
                 st.info("لم يتم العثور على طلبات مسجلة بهذا الرقم القومي.")
 
 elif choice == "لوحة تحكم الفرع (الأدمن)":
-    st.markdown("<h2 class='sub-header'>إدارة ومراجعة الطلبات - فرع الجيزة</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='section-title'>إدارة ومراجعة الطلبات - فرع الجيزة</h2>", unsafe_allow_html=True)
     pwd = st.text_input("كلمة مرور أدمن الفرع", type="password")
     if pwd == "admin123":
         st.success("تم الوصول بصلاحيات الإدارة.")
