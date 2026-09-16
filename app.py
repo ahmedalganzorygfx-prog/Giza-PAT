@@ -33,7 +33,6 @@ st.markdown("""
         text-align: right;
     }
     
-    /* صندوق الترويسة الرئيسي */
     .header-box {
         background-color: var(--background-secondary-color, rgba(128, 128, 128, 0.12));
         padding: 25px;
@@ -70,7 +69,6 @@ st.markdown("""
         text-align: right;
     }
 
-    /* حاوية خلفية بيضاء دائرية للوجو */
     .logo-container {
         background-color: #FFFFFF !important;
         padding: 12px;
@@ -95,28 +93,10 @@ st.markdown("""
 # 2. قائمة الإدارات التعليمية كاملة
 # ---------------------------------------------------------
 GIZA_ADMINISTRATIONS = [
-    "أبو النمرس",
-    "أطفيح",
-    "أكتوبر",
-    "أوسيم",
-    "البدرشين",
-    "الحوامدية",
-    "الدقى",
-    "الديوان العام",
-    "الشيخ زايد",
-    "الصف",
-    "العجوزة",
-    "العمرانية",
-    "الهرم",
-    "الواحات البحرية",
-    "الوراق",
-    "بولاق الدكرور",
-    "جنوب الجيزة",
-    "حدائق أكتوبر",
-    "ديوان المديرية",
-    "شمال الجيزة",
-    "كرداسة",
-    "منشأة القناطر"
+    "أبو النمرس", "أطفيح", "أكتوبر", "أوسيم", "البدرشين", "الحوامدية", 
+    "الدقى", "الديوان العام", "الشيخ زايد", "الصف", "العجوزة", "العمرانية", 
+    "الهرم", "الواحات البحرية", "الوراق", "بولاق الدكرور", "جنوب الجيزة", 
+    "حدائق أكتوبر", "ديوان المديرية", "شمال الجيزة", "كرداسة", "منشأة القناطر"
 ]
 
 # ---------------------------------------------------------
@@ -143,10 +123,31 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value BLOB
+        )
+    ''')
     conn.commit()
     conn.close()
 
 init_db()
+
+def save_logo_to_db(logo_bytes):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('logo', ?)", (logo_bytes,))
+    conn.commit()
+    conn.close()
+
+def get_logo_from_db():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("SELECT value FROM settings WHERE key = 'logo'")
+    row = c.fetchone()
+    conn.close()
+    return row[0] if row else None
 
 def add_request(name, nat_id, code, admin_name, school_name, cert_type, att_poa, att_qual, att_rep):
     conn = sqlite3.connect(DB_NAME)
@@ -244,20 +245,20 @@ def generate_pdf(request_data):
     return buf.getvalue()
 
 # ---------------------------------------------------------
-# 5. ترويسة الصفحة واللوجو بالخلفية المخصصة
+# 5. ترويسة الصفحة واللوجو المتكيف
 # ---------------------------------------------------------
 st.markdown('<div class="header-box">', unsafe_allow_html=True)
 
-logo_filename = None
-for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
-    if os.path.exists(fname):
-        logo_filename = fname
-        break
+logo_bytes = get_logo_from_db()
+if not logo_bytes:
+    for fname in ['logo.png', 'logo.jpg', 'logo.jpeg', 'Logo.png']:
+        if os.path.exists(fname):
+            with open(fname, "rb") as f:
+                logo_bytes = f.read()
+            break
 
-if logo_filename:
-    with open(logo_filename, "rb") as f:
-        encoded_logo = base64.b64encode(f.read()).decode()
-    
+if logo_bytes:
+    encoded_logo = base64.b64encode(logo_bytes).decode()
     st.markdown(f'''
         <div class="logo-container">
             <img src="data:image/png;base64,{encoded_logo}" alt="لوجو الفرع">
@@ -359,6 +360,17 @@ elif choice == "لوحة تحكم الفرع (الأدمن)":
     pwd = st.text_input("كلمة مرور أدمن الفرع", type="password")
     if pwd == "admin123":
         st.success("تم الوصول بصلاحيات الإدارة.")
+        
+        # قسم تغيير اللوجو الجديد
+        with st.expander("🖼️ تغيير لوجو الفرع"):
+            new_logo = st.file_uploader("قم برفع اللوجو الجديد (PNG أو JPG)", type=["png", "jpg", "jpeg"])
+            if st.button("حفظ اللوجو الجديد"):
+                if new_logo:
+                    save_logo_to_db(new_logo.read())
+                    st.success("تم تحديث اللوجو بنجاح!")
+                    st.rerun()
+
+        st.markdown("---")
         df = get_requests()
         if not df.empty:
             for idx, row in df.iterrows():
