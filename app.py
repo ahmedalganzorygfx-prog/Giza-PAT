@@ -12,6 +12,22 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# دالة مساعدة لتحويل الصورة المحلية إلى base64 لضمان عرضها بداخل HTML
+def load_local_image_base64(image_name):
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    img_path = os.path.join(script_dir, image_name)
+    
+    if os.path.exists(img_path):
+        with open(img_path, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("utf-8")
+            # تحديد امتداد الملف
+            ext = image_name.split('.')[-1].lower()
+            mime_type = "image/png" if ext == "png" else "image/jpeg"
+            return f"data:{mime_type};base64,{encoded}"
+    else:
+        # صورة افتراضية في حالة عدم وجود الملف محلياً
+        return "https://via.placeholder.com/1200x500?text=Image+Not+Found"
+
 # قائمة الإدارات التعليمية لمحافظة الجيزة
 EDARAT_LIST = [
     "أبو النمرس", "أطفيح", "أكتوبر", "أوسيم", "البدرشين", "الحوامدية", 
@@ -30,17 +46,13 @@ JOBS_LIST = [
     "كبير معلمين"
 ]
 
-# تحديد مسار وقراءة صورة اللوجو وتشفيرها لعرضها بداخل HTML
-script_dir = os.path.dirname(os.path.realpath(__file__))
-logo_path = os.path.join(script_dir, "Logo.png")
-
+# تحضير اللوجو
 logo_html_tag = ""
-if os.path.exists(logo_path):
-    with open(logo_path, "rb") as f:
-        encoded_logo = base64.b64encode(f.read()).decode("utf-8")
-        logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
+logo_src = load_local_image_base64("Logo.png")
+if "data:image" in logo_src:
+    logo_html_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS) والتخلص من الخلفية البيضاء
+# تطبيق التنسيقات (CSS)
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -53,7 +65,6 @@ st.markdown("""
         display: none;
     }
 
-    /* شريط التنقل العلوي الهيدر */
     .top-navbar {
         background-color: #0b1a3e !important;
         padding: 10px 30px;
@@ -105,7 +116,7 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض السلايدر بدون خلفية بيضاء وبعرض كامل المساحة 🎨 */
+    /* 🎨 تصميم العرض السلايدر المتكيف مع الصور المحلية 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -120,7 +131,7 @@ st.markdown("""
     .simple-slider-img {
         width: 100%;
         height: 440px;
-        object-fit: cover !important; /* ملء المساحة المخصصة بالكامل */
+        object-fit: cover !important;
         display: block;
     }
 
@@ -134,7 +145,6 @@ st.markdown("""
         border-top: 2px solid #937B2B;
     }
 
-    /* العناوين العامة */
     .centered-header {
         text-align: center !important;
         margin: 20px 0 30px 0;
@@ -158,7 +168,6 @@ st.markdown("""
         text-align: center !important;
     }
 
-    /* بطاقات الإدارات التعليمية */
     .edara-card {
         background-color: var(--secondary-background-color);
         border: 1px solid rgba(147, 123, 43, 0.3);
@@ -173,13 +182,6 @@ st.markdown("""
         transition: all 0.3s ease;
     }
 
-    .edara-card:hover {
-        border-right-color: #937B2B;
-        transform: translateY(-3px);
-        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-    }
-
-    /* بطاقات البرامج التدريبية */
     .program-card {
         background-color: #1b2631 !important;
         border: 2px solid #937B2B;
@@ -219,7 +221,6 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /* تصميم نموذج التواصل مع الدعم */
     .support-form-container {
         background-color: var(--secondary-background-color);
         padding: 35px;
@@ -251,12 +252,6 @@ st.markdown("""
         border: 1px solid #937B2B !important;
         padding: 10px 20px !important;
         transition: all 0.3s ease !important;
-        box-shadow: 0 4px 10px rgba(11, 26, 62, 0.2) !important;
-    }
-
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #937B2B 0%, #0b1a3e 100%) !important;
-        transform: translateY(-2px);
     }
 
     .whatsapp-card {
@@ -268,18 +263,9 @@ st.markdown("""
         padding: 15px 10px;
         border-radius: 12px;
         text-decoration: none;
-        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-        transition: all 0.3s ease;
         border: 1px solid #ffffff;
     }
 
-    .whatsapp-card:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45);
-        color: #ffffff !important;
-    }
-
-    /* 🌟 تصميم الختام (Footer) 🌟 */
     .app-footer {
         margin-top: 50px;
         padding: 20px 0;
@@ -356,7 +342,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (صور عربية عالية الجودة للبرامج فقط دون إضافة اللوجو داخل السلايدر)
+# 1️⃣ الصفحة الرئيسية (استخدام أسماء الصور المحلية)
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -366,23 +352,23 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة برامج السلايدر بدون اللوجو
+    # قائمة البرامج مع وضع اسم الملف المحلي مباشرة
     slides = [
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
-            "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
+            "file_name": "leaders.jpg"
         },
         {
             "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
-            "image": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1600&auto=format&fit=crop"
+            "file_name": "teachers.jpg"
         },
         {
             "title": "🔄 برنامج تغيير المسمى الوظيفي وتأهيل الكوادر التعليمية",
-            "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
+            "file_name": "job_change.jpg"
         },
         {
             "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين المحترفين (TOT)",
-            "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1600&auto=format&fit=crop"
+            "file_name": "tot.jpg"
         }
     ]
 
@@ -390,11 +376,14 @@ if current_tab == "الرئيسية":
         st.session_state['slide_index'] = 0
 
     current = slides[st.session_state['slide_index']]
+    
+    # تحميل الصورة المحلية المحددة كـ base64
+    img_src = load_local_image_base64(current['file_name'])
 
     # عرض المعرض التلقائي المخصص
     st.markdown(f"""
         <div class="simple-slider-container">
-            <img src="{current['image']}" class="simple-slider-img" alt="صورة البرنامج">
+            <img src="{img_src}" class="simple-slider-img" alt="صورة البرنامج">
             <div class="simple-slider-caption">{current['title']}</div>
         </div>
     """, unsafe_allow_html=True)
