@@ -3,13 +3,13 @@ import os
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
-    page_title="الأكاديمية المهنية للمعلمين - منصة الفرع",
+    page_title="الأكاديمية المهنية للمعلمين - فرع الجيزة",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# قائمة الإدارات التعليمية لمحافظة الجيزة
+# قائمة الإدارات التعليمية التابعة لفرع الجيزة
 EDARAT_LIST = [
     "أبو النمرس", "أطفيح", "أكتوبر", "أوسيم", "البدرشين", "الحوامدية", 
     "الدقى", "الديوان العام", "الشيخ زايد", "الصف", "العجوزة", "العمرانية", 
@@ -17,11 +17,11 @@ EDARAT_LIST = [
     "حدائق أكتوبر", "ديوان المديرية", "شمال الجيزة", "كرداسة", "منشأة القناطر"
 ]
 
-# تحديد المسار الديناميكي لملف اللوجو المرفوع (Logo.png)
+# تحديد مسار اللوجو المرفوع (Logo.png)
 script_dir = os.path.dirname(os.path.realpath(__file__))
 logo_path = os.path.join(script_dir, "Logo.png")
 
-# تطبيق CSS متقدم للتصميم
+# تطبيق التنسيقات (CSS)
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -35,7 +35,7 @@ st.markdown("""
         display: none;
     }
 
-    /* شريط التنقل العلوي */
+    /* شريط التنقل العلوي الهيدر */
     .top-navbar {
         background-color: #0b1a3e;
         padding: 12px 30px;
@@ -50,15 +50,13 @@ st.markdown("""
     .nav-right-container {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
     }
 
     .nav-logo-text {
         color: white;
         font-weight: bold;
-        font-size: 1.1rem;
-        border-left: 1px solid rgba(255,255,255,0.2);
-        padding-left: 15px;
+        font-size: 1.15rem;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -74,16 +72,11 @@ st.markdown("""
         text-decoration: none;
         box-shadow: 0 3px 8px rgba(178, 31, 31, 0.4);
         border: 1px solid #ffd700;
-        transition: transform 0.2s ease;
-    }
-
-    .teacher-platform-btn:hover {
-        transform: scale(1.03);
     }
 
     .centered-header {
         text-align: center;
-        margin: 25px 0 35px 0;
+        margin: 20px 0 30px 0;
     }
 
     .main-header-title {
@@ -96,12 +89,12 @@ st.markdown("""
     }
 
     .sub-header-title {
-        color: #666666;
+        color: #555555;
         font-size: 1.1rem;
         margin-top: 8px;
     }
 
-    /* شبكة عرض الإدارات التعليمية */
+    /* بطاقات الإدارات التعليمية */
     .edara-card {
         background-color: #ffffff;
         border: 1px solid #e2e8f0;
@@ -112,17 +105,17 @@ st.markdown("""
         font-weight: bold;
         color: #1a202c;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
         margin-bottom: 15px;
+        transition: all 0.3s ease;
     }
 
     .edara-card:hover {
         border-right-color: #937B2B;
         transform: translateY(-3px);
         box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-        background-color: #fdfdfd;
     }
 
+    /* بطاقات البرامج التدريبية */
     .program-card {
         background-color: #1b2631;
         border: 2px solid #937B2B;
@@ -170,16 +163,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ---------------- التحكم بالتبويبات عبر session_state ----------------
+# إدارة حالة التبويبات الحالية
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# إنشاء شريط التنقل العلوي HTML
+# الشريط العلوي للهيدر
 st.markdown("""
     <div class="top-navbar">
         <div class="nav-right-container">
             <div class="nav-logo-text">
-                🏛️ الأكاديمية المهنية للمعلمين
+                🏛️ الأكاديمية المهنية للمعلمين - فرع الجيزة
             </div>
         </div>
         <div class="teacher-platform-btn">
@@ -188,7 +181,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# أزرار اختيار التبويبات بالهيدر العلوي
+# أزرار التبويبات الرئيسية
 cols = st.columns([1, 1.2, 1.3, 1.3, 1.2, 1.2, 1.5])
 
 with cols[0]:
@@ -196,8 +189,8 @@ with cols[0]:
         st.session_state['current_tab'] = 'الرئيسية'
 
 with cols[1]:
-    if st.button("عن الأكاديمية", use_container_width=True):
-        st.session_state['current_tab'] = 'عن الأكاديمية'
+    if st.button("عن الفرع", use_container_width=True):
+        st.session_state['current_tab'] = 'عن الفرع'
 
 with cols[2]:
     if st.button("ادارات الافراد", use_container_width=True):
@@ -227,31 +220,31 @@ current_tab = st.session_state['current_tab']
 if current_tab == "الرئيسية":
     st.markdown("""
         <div class="centered-header">
-            <div class="main-header-title">أهلاً بكم في البوابة الرقمية للفرع</div>
-            <div class="sub-header-title">الأكاديمية المهنية للمعلمين - منصة التنمية المهنية والاعتماد الرقمي</div>
+            <div class="main-header-title">الأكاديمية المهنية للمعلمين - فرع الجيزة</div>
+            <div class="sub-header-title">البوابة الرقمية للخدمات والتدريبات والاعتماد المهني للمعلمين</div>
         </div>
     """, unsafe_allow_html=True)
 
-    # عرض اللوجو بأبعاد متناسقة في منتصف الصفحة
-    col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
+    # عرض اللوجو الخاص بالمشروع Logo.png
+    col_img1, col_img2, col_img3 = st.columns([1, 1.5, 1])
     with col_img2:
         if os.path.exists(logo_path):
             st.image(logo_path, use_container_width=True)
         elif os.path.exists("Logo.png"):
             st.image("Logo.png", use_container_width=True)
         else:
-            st.warning("🎓 لم يتم العثور على ملف Logo.png")
+            st.warning("🎓 الأكاديمية المهنية للمعلمين - فرع الجيزة")
 
-# 2️⃣ عن الأكاديمية
-elif current_tab == "عن الأكاديمية":
+# 2️⃣ عن الفرع
+elif current_tab == "عن الفرع":
     st.markdown("""
         <div class="centered-header">
-            <div class="main-header-title">عن الأكاديمية والفرع</div>
+            <div class="main-header-title">عن فرع الجيزة</div>
         </div>
     """, unsafe_allow_html=True)
     st.markdown("""
         <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; font-size: 1.1rem;">
-            تسعى الأكاديمية المهنية للمعلمين بفرعها المعتمد إلى الارتقاء بمستوى المعلمين والقيادات التربوية، وتقديم أفضل البرامج التأهيلية للترقي والتسكين والتوجيه الفني وفق أحدث المعايير الرقمية.
+            يقدم فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة البرامج التدريبية المعتمدة لترقي وتسكين أعضاء هيئة التعليم، وإعداد القيادات التربوية وتغيير المسمى الوظيفي بجميع الإدارات التعليمية التابعة للمحافظة.
         </div>
     """, unsafe_allow_html=True)
 
@@ -259,8 +252,8 @@ elif current_tab == "عن الأكاديمية":
 elif current_tab == "الادارات التعليمية":
     st.markdown("""
         <div class="centered-header">
-            <div class="main-header-title">الإدارات التعليمية التابعة للفرع</div>
-            <div class="sub-header-title">دليل الإدارات والديوان بمحافظة الجيزة</div>
+            <div class="main-header-title">الإدارات التعليمية - محافظة الجيزة</div>
+            <div class="sub-header-title">دليل الإدارات التعليمية والديوان التابعة لفرع الجيزة</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -270,11 +263,11 @@ elif current_tab == "الادارات التعليمية":
         with col_target:
             st.markdown(f'<div class="edara-card">📍 إدارة {edara}</div>', unsafe_allow_html=True)
 
-# 4️⃣ منصة الفرع والبرامج التدريبية
+# 4️⃣ منصة الفرع والبرامج
 elif current_tab == "منصة الفرع":
     st.markdown("""
         <div class="centered-header">
-            <div class="main-header-title">منصة الفرع - البرامج الرقمية المعتمدة</div>
+            <div class="main-header-title">منصة فرع الجيزة - البرامج الرقمية</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -328,7 +321,7 @@ elif current_tab == "منصة الفرع":
             st.markdown("""
                 <div class="program-card">
                     <div class="program-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
-                    <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر.</div>
+                    <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
                 </div>
             """, unsafe_allow_html=True)
             st.button("التسجيل بالبرنامج", key="b4", use_container_width=True)
@@ -366,11 +359,11 @@ elif current_tab == "منصة الفرع":
         st.button("التسجيل بالبرنامج", key="b7", use_container_width=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
-# التبويبات المتبقية
+# باقي التبويبات
 else:
     st.markdown(f"""
         <div class="centered-header">
             <div class="main-header-title">{current_tab}</div>
         </div>
     """, unsafe_allow_html=True)
-    st.info(f"محتوى قسم {current_tab} متاح وجاهز للتخصيص.")
+    st.info(f"قسم {current_tab} متاح وجاهز للإضافة والتخصيص.")
