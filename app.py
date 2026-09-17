@@ -3,6 +3,7 @@ import os
 import urllib.parse
 import base64
 import time
+import random
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
@@ -12,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة مساعدة لتحميل الصورة سواء كانت محلية أو رابطاً معالجة الأخطاء
+# دالة مساعدة لتحميل الصورة سواء كانت محلية أو رابطاً مع معالجة الأخطاء
 def get_image_url_or_base64(file_name, fallback_url):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     img_path = os.path.join(script_dir, file_name)
@@ -109,7 +110,7 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض السلايدر المتكيف مع الشاشة بالكامل 🎨 */
+    /* 🎨 تصميم السلايدر لعرض الصور فقط دون أي نصوص أو أسماء 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -123,19 +124,9 @@ st.markdown("""
 
     .simple-slider-img {
         width: 100%;
-        height: 440px;
+        height: 460px;
         object-fit: cover !important;
         display: block;
-    }
-
-    .simple-slider-caption {
-        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%);
-        color: #FFD700 !important;
-        font-size: 1.25rem;
-        font-weight: bold;
-        padding: 16px;
-        text-align: center !important;
-        border-top: 2px solid #937B2B;
     }
 
     .centered-header {
@@ -335,7 +326,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية
+# 1️⃣ الصفحة الرئيسية (البداية باللوجو، ثم عرض عشوائي للصور بدون أسماء)
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -345,49 +336,54 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة البرامج مع وضع اسم الملف المحلي والبديل الاحتياطي عالية الجودة من الإنترنت
-    slides = [
+    # قائمة الصور (بداية باللوجو)
+    logo_slide = {
+        "file_name": "Logo.png",
+        "fallback": "https://via.placeholder.com/1200x500?text=PAT+Giza+Branch"
+    }
+
+    program_slides = [
         {
-            "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
             "file_name": "leaders.jpg",
             "fallback": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
         },
         {
-            "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
             "file_name": "teachers.jpg",
             "fallback": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1600&auto=format&fit=crop"
         },
         {
-            "title": "🔄 برنامج تغيير المسمى الوظيفي وتأهيل الكوادر التعليمية",
             "file_name": "job_change.jpg",
             "fallback": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
         },
         {
-            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين المحترفين (TOT)",
             "file_name": "tot.jpg",
             "fallback": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1600&auto=format&fit=crop"
         }
     ]
 
-    if 'slide_index' not in st.session_state:
-        st.session_state['slide_index'] = 0
+    # تهيئة أول عرض
+    if 'has_started' not in st.session_state:
+        st.session_state['has_started'] = False
+        st.session_state['current_slide'] = logo_slide
+    else:
+        # اختيار صورة عشوائية من صور البرامج
+        st.session_state['current_slide'] = random.choice(program_slides)
 
-    current = slides[st.session_state['slide_index']]
+    current = st.session_state['current_slide']
     
     # جلب رابط أو كود base64 للصورة
     img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض المعرض المخصص
+    # عرض السلايدر (صورة فقط وبدون أي عنوان أو اسم أسفلها)
     st.markdown(f"""
         <div class="simple-slider-container">
-            <img src="{img_src}" class="simple-slider-img" alt="صورة البرنامج">
-            <div class="simple-slider-caption">{current['title']}</div>
+            <img src="{img_src}" class="simple-slider-img" alt="عرض">
         </div>
     """, unsafe_allow_html=True)
 
-    # الانتقال التلقائي كل 4 ثوانٍ
+    # التتابع والتأخير الزمني (4 ثوانٍ) ثم الانتقال العشوائي التالي
     time.sleep(4)
-    st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
+    st.session_state['has_started'] = True
     st.rerun()
 
 # 2️⃣ عن الفرع
