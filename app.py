@@ -17,10 +17,13 @@ EDARAT_LIST = [
     "حدائق أكتوبر", "ديوان المديرية", "شمال الجيزة", "كرداسة", "منشأة القناطر"
 ]
 
-# تطبيق CSS متقدم لتصمييم شريط الهيدر المماثل للصورة المرفقة
+# تحديد المسار الديناميكي لملف اللوجو المرفوع (Logo.png)
+script_dir = os.path.dirname(os.path.realpath(__file__))
+logo_path = os.path.join(script_dir, "Logo.png")
+
+# تطبيق CSS متقدم للتصميم
 st.markdown("""
     <style>
-    /* الإعدادات العامة لاتجاه الصفحة RTL */
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         direction: rtl;
         text-align: right;
@@ -28,14 +31,13 @@ st.markdown("""
         background-color: #f8f9fa;
     }
 
-    /* إخفاء شريط التنقل الجانبي الافتراضي لتسليط الضوء على الهيدر العلوي */
     [data-testid="stSidebar"] {
         display: none;
     }
 
-    /* شريط التنقل العلوي المماثل للصورة (Navigation Bar) */
+    /* شريط التنقل العلوي */
     .top-navbar {
-        background-color: #0b1a3e; /* اللون الكحلي الغامق */
+        background-color: #0b1a3e;
         padding: 12px 30px;
         display: flex;
         align-items: center;
@@ -62,7 +64,6 @@ st.markdown("""
         gap: 10px;
     }
 
-    /* زر منصة المعلم باللون الأحمر المائل للذهبي */
     .teacher-platform-btn {
         background: linear-gradient(135deg, #c02425 0%, #b21f1f 100%);
         color: white !important;
@@ -80,7 +81,6 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* العناوين المنسقة بوسط الصفحة */
     .centered-header {
         text-align: center;
         margin: 25px 0 35px 0;
@@ -102,14 +102,6 @@ st.markdown("""
     }
 
     /* شبكة عرض الإدارات التعليمية */
-    .edarat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 15px;
-        direction: rtl;
-        margin-top: 20px;
-    }
-
     .edara-card {
         background-color: #ffffff;
         border: 1px solid #e2e8f0;
@@ -121,6 +113,7 @@ st.markdown("""
         color: #1a202c;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         transition: all 0.3s ease;
+        margin-bottom: 15px;
     }
 
     .edara-card:hover {
@@ -130,7 +123,6 @@ st.markdown("""
         background-color: #fdfdfd;
     }
 
-    /* تصميم بطاقات البرامج التدريبية */
     .program-card {
         background-color: #1b2631;
         border: 2px solid #937B2B;
@@ -168,7 +160,6 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /* تخصيص أزرار Streamlit */
     .stButton>button {
         background-color: #b22222 !important;
         color: white !important;
@@ -197,7 +188,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# أزرار اختيار التبويبات بالهيدر العلوي مطابق للشريط المطلوب
+# أزرار اختيار التبويبات بالهيدر العلوي
 cols = st.columns([1, 1.2, 1.3, 1.3, 1.2, 1.2, 1.5])
 
 with cols[0]:
@@ -241,13 +232,15 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
+    # عرض اللوجو بأبعاد متناسقة في منتصف الصفحة
     col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
     with col_img2:
-        image_path = "image_526f40.jpg"
-        if os.path.exists(image_path):
-            st.image(image_path, use_container_width=True, caption="منصة الفرع والأكاديمية المهنية للمعلمين")
+        if os.path.exists(logo_path):
+            st.image(logo_path, use_container_width=True)
+        elif os.path.exists("Logo.png"):
+            st.image("Logo.png", use_container_width=True)
         else:
-            st.info("🎓 شعار الأكاديمية المهنية للمعلمين")
+            st.warning("🎓 لم يتم العثور على ملف Logo.png")
 
 # 2️⃣ عن الأكاديمية
 elif current_tab == "عن الأكاديمية":
