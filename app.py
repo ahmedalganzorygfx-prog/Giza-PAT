@@ -12,21 +12,21 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة مساعدة لتحويل الصورة المحلية إلى base64 لضمان عرضها بداخل HTML
-def load_local_image_base64(image_name):
+# دالة مساعدة لتحميل الصورة سواء كانت محلية أو رابطاً معالجة الأخطاء
+def get_image_url_or_base64(file_name, fallback_url):
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    img_path = os.path.join(script_dir, image_name)
+    img_path = os.path.join(script_dir, file_name)
     
+    # 1. البحث عن الصورة محلياً في مجلد المشروع
     if os.path.exists(img_path):
         with open(img_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode("utf-8")
-            # تحديد امتداد الملف
-            ext = image_name.split('.')[-1].lower()
+            ext = file_name.split('.')[-1].lower()
             mime_type = "image/png" if ext == "png" else "image/jpeg"
             return f"data:{mime_type};base64,{encoded}"
-    else:
-        # صورة افتراضية في حالة عدم وجود الملف محلياً
-        return "https://via.placeholder.com/1200x500?text=Image+Not+Found"
+    
+    # 2. في حالة عدم وجود الصورة محلياً يتم استخدام رابط الصورة عالية الجودة
+    return fallback_url
 
 # قائمة الإدارات التعليمية لمحافظة الجيزة
 EDARAT_LIST = [
@@ -38,19 +38,12 @@ EDARAT_LIST = [
 
 # قائمة الوظائف الحالية
 JOBS_LIST = [
-    "معلم مساعد", 
-    "معلم", 
-    "معلم أول", 
-    "معلم أول أ", 
-    "معلم خبير", 
-    "كبير معلمين"
+    "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو
-logo_html_tag = ""
-logo_src = load_local_image_base64("Logo.png")
-if "data:image" in logo_src:
-    logo_html_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">'
+# تحضير اللوجو للهيدر
+logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/150x50?text=PAT+Logo")
+logo_html_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 
 # تطبيق التنسيقات (CSS)
 st.markdown("""
@@ -116,7 +109,7 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض السلايدر المتكيف مع الصور المحلية 🎨 */
+    /* 🎨 تصميم العرض السلايدر المتكيف مع الشاشة بالكامل 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -342,7 +335,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (استخدام أسماء الصور المحلية)
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -352,23 +345,27 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة البرامج مع وضع اسم الملف المحلي مباشرة
+    # قائمة البرامج مع وضع اسم الملف المحلي والبديل الاحتياطي عالية الجودة من الإنترنت
     slides = [
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
-            "file_name": "leaders.jpg"
+            "file_name": "leaders.jpg",
+            "fallback": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
         },
         {
             "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
-            "file_name": "teachers.jpg"
+            "file_name": "teachers.jpg",
+            "fallback": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1600&auto=format&fit=crop"
         },
         {
             "title": "🔄 برنامج تغيير المسمى الوظيفي وتأهيل الكوادر التعليمية",
-            "file_name": "job_change.jpg"
+            "file_name": "job_change.jpg",
+            "fallback": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
         },
         {
             "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين المحترفين (TOT)",
-            "file_name": "tot.jpg"
+            "file_name": "tot.jpg",
+            "fallback": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1600&auto=format&fit=crop"
         }
     ]
 
@@ -377,10 +374,10 @@ if current_tab == "الرئيسية":
 
     current = slides[st.session_state['slide_index']]
     
-    # تحميل الصورة المحلية المحددة كـ base64
-    img_src = load_local_image_base64(current['file_name'])
+    # جلب رابط أو كود base64 للصورة
+    img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض المعرض التلقائي المخصص
+    # عرض المعرض المخصص
     st.markdown(f"""
         <div class="simple-slider-container">
             <img src="{img_src}" class="simple-slider-img" alt="صورة البرنامج">
