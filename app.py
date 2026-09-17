@@ -39,7 +39,7 @@ if os.path.exists(logo_path):
         encoded_logo = base64.b64encode(f.read()).decode("utf-8")
         logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS) متكيفة مع الوضعين الفاتح والداكن (Light & Dark Mode Compatible)
+# تطبيق التنسيقات (CSS) متكيفة مع الوضعين الفاتح والداكن
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -52,7 +52,7 @@ st.markdown("""
         display: none;
     }
 
-    /* شريط التنقل العلوي الهيدر - ثابت اللون لحفظ الهوية البصرية */
+    /* شريط التنقل العلوي الهيدر */
     .top-navbar {
         background-color: #0b1a3e !important;
         padding: 10px 30px;
@@ -79,7 +79,6 @@ st.markdown("""
         gap: 12px;
     }
 
-    /* حجم وتنسيق صورة اللوجو الصغيرة في الهيدر */
     .navbar-logo-img {
         height: 45px;
         width: auto;
@@ -127,7 +126,7 @@ st.markdown("""
         margin-top: 8px;
     }
 
-    /* بطاقات الإدارات التعليمية متكيفة مع خلفية الصفحة */
+    /* بطاقات الإدارات التعليمية */
     .edara-card {
         background-color: var(--secondary-background-color);
         border: 1px solid rgba(147, 123, 43, 0.3);
@@ -186,7 +185,7 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /* تصميم نموذج التواصل مع الدعم - متكيف مع الوضعين */
+    /* تصميم نموذج التواصل مع الدعم */
     .support-form-container {
         background-color: var(--secondary-background-color);
         padding: 35px;
@@ -245,6 +244,23 @@ st.markdown("""
         box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45);
         color: #ffffff !important;
     }
+
+    /* 🌟 تصميم الختام (Footer) 🌟 */
+    .app-footer {
+        margin-top: 50px;
+        padding: 20px 0;
+        background-color: #0b1a3e !important;
+        color: #ffffff !important;
+        text-align: center;
+        font-size: 1.05rem;
+        font-weight: bold;
+        border-top: 3px solid #937B2B;
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .app-footer span {
+        color: #FFD700;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -252,7 +268,7 @@ st.markdown("""
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# الشريط العلوي للهيدر مع زر منصة المعلم بالرابط الخارجي
+# الشريط العلوي للهيدر
 st.markdown(f"""
     <div class="top-navbar">
         <div class="nav-right-container">
@@ -524,7 +540,7 @@ elif current_tab == "التواصل مع الدعم":
                 wa_url = f"https://wa.me/{num}?text={encoded_msg}"
                 with cols_wa[idx]:
                     st.markdown(
-                        f'''<a href="{wa_url}" target="_blank" class="whatsapp-card">
+                        f'''<a href="{wa_url}" target="_blank" class="whatsapp-card">https://github.com/ahmedalganzorygfx-prog/Giza-PAT/blob/main/app.py
                             💬 {label}<br>
                             <span style="font-size: 0.9rem; opacity: 0.9;">({num.replace('20', '0')})</span>
                         </a>''', 
@@ -543,3 +559,10 @@ else:
         </div>
     """, unsafe_allow_html=True)
     st.info(f"قسم {current_tab} متاح وجاهز للإضافة والتخصيص.")
+
+# ----------------- 🏛️ الختام (Footer) -----------------
+st.markdown("""
+    <div class="app-footer">
+        تصميم وتنفيذ: <span>أحمد الجنزوري</span> - مدير الفرع
+    </div>
+""", unsafe_allow_html=True)
