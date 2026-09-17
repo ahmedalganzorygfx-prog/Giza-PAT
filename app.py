@@ -254,9 +254,9 @@ st.markdown(f"""
                 <span>الأكاديمية المهنية للمعلمين - فرع الجيزة</span>
             </div>
         </div>
-        <div class="teacher-platform-btn">
+        <a href="https://academy.emis.gov.eg" target="_blank" class="teacher-platform-btn">
             منصة المٌعلم 🎓
-        </div>
+        </a>
     </div>
 """, unsafe_allow_html=True)
 
@@ -504,7 +504,7 @@ elif current_tab == "التواصل مع الدعم":
             
             encoded_msg = urllib.parse.quote(msg_text)
 
-            st.markdown("<br><h4 style='text-align: center; color: #0b1a3e;'>📲 اضغط على أحد الأرقام التالية للإرسال الفوري:</h4>", unsafe_allow_html=True)
+            st.markdown("<br><h4 style='text-align: center; color: #0b1a3e;'>📲 اضغط على أحد الأرقام التالية للإرسال الفوري عبر الواتساب:</h4>", unsafe_allow_html=True)
             
             whatsapp_numbers = [
                 ("مسؤول الدعم (1)", "201069996245"),
@@ -524,7 +524,7 @@ elif current_tab == "التواصل مع الدعم":
                         unsafe_allow_html=True
                     )
             
-            st.info("📌 **تنويه هام:** بعد توجيهك لتطبيق الواتساب، يرجى إرفاق ملف صحيفة الأحوال المرفوع داخل شات المحادثة لتسريع معالجة طلبك.")
+            st.info("📌 **تنويه هام:** بعد فتح الواتساب، يرجى إعادة إرسال ملف صحيفة الأحوال الإلكترونية داخل شات المحادثة.")
             
         st.markdown('</div>', unsafe_allow_html=True)
 
