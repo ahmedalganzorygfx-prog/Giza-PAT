@@ -126,6 +126,28 @@ st.markdown("""
         margin-top: 8px;
     }
 
+    /* بطاقات المعرض في الصفحة الرئيسية */
+    .hero-card {
+        background-color: var(--secondary-background-color);
+        border: 2px solid #937B2B;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        margin-top: 10px;
+    }
+
+    .hero-caption {
+        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%);
+        color: #FFD700 !important;
+        font-size: 1.25rem;
+        font-weight: bold;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 15px;
+        border: 1px solid #937B2B;
+    }
+
     /* بطاقات الإدارات التعليمية */
     .edara-card {
         background-color: var(--secondary-background-color);
@@ -322,7 +344,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 25px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية
+# 1️⃣ الصفحة الرئيسية (محدثة بمجموعات صور متتابعة مع ظهور لوجو الفرع)
 if current_tab == "الرئيسية":
     st.markdown("""
         <div class="centered-header">
@@ -331,12 +353,62 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    col_img1, col_img2, col_img3 = st.columns([1, 1.5, 1])
-    with col_img2:
-        if os.path.exists(logo_path):
-            st.image(logo_path, use_container_width=True)
+    # قسم المعرض السلايدر التفاعلي
+    col_main1, col_main2, col_main3 = st.columns([1, 3, 1])
+    with col_main2:
+        st.markdown('<div class="hero-card">', unsafe_allow_html=True)
+        
+        # قائمة صور البرامج والأنشطة التدريبية المعتمدة
+        slides = [
+            {
+                "title": "🏛️ الشعار الرسمي لفرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة",
+                "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/800x400?text=Logo"
+            },
+            {
+                "title": "🎓 برامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - أساسيات التوجيه الفني)",
+                "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
+                "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                "title": "🔄 برامج إعادة التأهيل وتغيير المسمى الوظيفي لكوادر التعليم",
+                "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين (TOT)",
+                "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop"
+            }
+        ]
+
+        # إدارة التنقل بين الصور في المعرض
+        if 'slide_index' not in st.session_state:
+            st.session_state['slide_index'] = 0
+
+        current_slide = slides[st.session_state['slide_index']]
+
+        # عرض الصورة المحددة
+        if os.path.exists(current_slide["image"]):
+            st.image(current_slide["image"], use_container_width=True)
         else:
-            st.warning("🎓 الأكاديمية المهنية للمعلمين - فرع الجيزة")
+            st.image(current_slide["image"], use_container_width=True)
+
+        st.markdown(f'<div class="hero-caption">{current_slide["title"]}</div>', unsafe_allow_html=True)
+
+        # أزرار التنقل التفاعلية بين الصور
+        c_prev, c_space, c_next = st.columns([1, 2, 1])
+        with c_prev:
+            if st.button("⏩ التالي", key="btn_next_slide", use_container_width=True):
+                st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
+                st.rerun()
+
+        with c_next:
+            if st.button("السابق ⏪", key="btn_prev_slide", use_container_width=True):
+                st.session_state['slide_index'] = (st.session_state['slide_index'] - 1) % len(slides)
+                st.rerun()
+
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
@@ -540,7 +612,7 @@ elif current_tab == "التواصل مع الدعم":
                 wa_url = f"https://wa.me/{num}?text={encoded_msg}"
                 with cols_wa[idx]:
                     st.markdown(
-                        f'''<a href="{wa_url}" target="_blank" class="whatsapp-card">https://github.com/ahmedalganzorygfx-prog/Giza-PAT/blob/main/app.py
+                        f'''<a href="{wa_url}" target="_blank" class="whatsapp-card">
                             💬 {label}<br>
                             <span style="font-size: 0.9rem; opacity: 0.9;">({num.replace('20', '0')})</span>
                         </a>''', 
