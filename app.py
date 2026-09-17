@@ -40,7 +40,7 @@ if os.path.exists(logo_path):
         encoded_logo = base64.b64encode(f.read()).decode("utf-8")
         logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS) وتوسيط العناصر
+# تطبيق التنسيقات (CSS) والتخلص من الخلفية البيضاء
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -105,26 +105,23 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض المبسط للسلايدر (صورة وعنوان البرنامج أسفلها) 🎨 */
+    /* 🎨 تصميم العرض السلايدر بدون خلفية بيضاء وبعرض كامل المساحة 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
-        max-width: 850px;
         margin: 0 auto 30px auto;
         border-radius: 16px;
         overflow: hidden;
-        background-color: var(--secondary-background-color);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        background-color: transparent !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         border: 2px solid #937B2B;
     }
 
     .simple-slider-img {
         width: 100%;
-        height: 380px;
-        object-fit: contain;
-        background-color: #f8f9fa;
+        height: 440px;
+        object-fit: cover !important; /* ملء المساحة المخصصة بالكامل */
         display: block;
-        padding: 10px;
     }
 
     .simple-slider-caption {
@@ -132,7 +129,7 @@ st.markdown("""
         color: #FFD700 !important;
         font-size: 1.25rem;
         font-weight: bold;
-        padding: 14px;
+        padding: 16px;
         text-align: center !important;
         border-top: 2px solid #937B2B;
     }
@@ -359,7 +356,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (بداية باللوجو، ثم التتابع التلقائي لأسماء وصور البرامج)
+# 1️⃣ الصفحة الرئيسية (صور عربية عالية الجودة تغطي الشاشة وبدون خلفيات بيضاء)
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -369,27 +366,27 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة العرض التتابعي (تبدأ باللوجو ثم البرامج)
+    # قائمة العرض التتابعي (بداية باللوجو ثم صور عربية عالية الجودة كاملة المساحة)
     slides = [
         {
             "title": "🏛️ الشعار الرسمي للأكاديمية المهنية للمعلمين - فرع الجيزة",
-            "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/800x400?text=Logo"
+            "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/1200x500?text=Logo"
         },
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
-            "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop"
+            "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
         },
         {
             "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
-            "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+            "image": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1600&auto=format&fit=crop"
         },
         {
-            "title": "🔄 برنامج تغيير المسمى الوظيفي لكوادر التعليم",
-            "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop"
+            "title": "🔄 برنامج تغيير المسمى الوظيفي وتأهيل الكوادر التعليمية",
+            "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
         },
         {
-            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين (TOT)",
-            "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop"
+            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين المحترفين (TOT)",
+            "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1600&auto=format&fit=crop"
         }
     ]
 
@@ -398,7 +395,7 @@ if current_tab == "الرئيسية":
 
     current = slides[st.session_state['slide_index']]
 
-    # تجهيز الصورة للعرض (سواء ملف محلي للوجو أو رابط)
+    # تجهيز الصورة للعرض
     if os.path.exists(current['image']):
         with open(current['image'], "rb") as f:
             img_bytes = f.read()
@@ -407,7 +404,7 @@ if current_tab == "الرئيسية":
     else:
         img_src = current['image']
 
-    # عرض المعرض التلقائي (صورة وعنوان البرنامج أسفلها فقط)
+    # عرض المعرض المخصص بعرض الشاشة وبدون خلفيات بيضاء
     st.markdown(f"""
         <div class="simple-slider-container">
             <img src="{img_src}" class="simple-slider-img" alt="صورة البرنامج">
@@ -415,7 +412,7 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # التتابع والتنقل التلقائي كل 4 ثوانٍ
+    # الانتقال التلقائي كل 4 ثوانٍ
     time.sleep(4)
     st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
     st.rerun()
