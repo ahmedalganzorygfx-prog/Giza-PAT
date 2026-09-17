@@ -39,7 +39,7 @@ if os.path.exists(logo_path):
         encoded_logo = base64.b64encode(f.read()).decode("utf-8")
         logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS) متكيفة مع تصميم الصورة المطلوبة
+# تطبيق التنسيقات (CSS) متكيفة مع العرض المبسط
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -104,115 +104,34 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض السلايدر المتطابق مع الصورة المرفقة 🎨 */
-    .slider-container {
+    /* 🎨 تصميم العرض المبسط للسلايدر بظهور عنوان فقط أسفل الصورة 🎨 */
+    .simple-slider-container {
         position: relative;
         width: 100%;
-        height: 460px;
-        border-radius: 12px;
+        max-width: 900px;
+        margin: 0 auto 30px auto;
+        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        margin-bottom: 30px;
+        background-color: var(--secondary-background-color);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        border: 2px solid #937B2B;
     }
 
-    .slider-bg-img {
+    .simple-slider-img {
         width: 100%;
-        height: 100%;
+        height: 400px;
         object-fit: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
+        display: block;
     }
 
-    .slider-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.35);
-        z-index: 2;
-    }
-
-    /* البطاقة الكحلية الشفافة في المنتصف */
-    .slider-card {
-        position: absolute;
-        top: 50%;
-        right: 15%;
-        transform: translateY(-50%);
-        width: 320px;
-        background: rgba(11, 26, 62, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: 30px 20px;
-        text-align: center !important;
-        color: white;
-        z-index: 3;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        backdrop-filter: blur(5px);
-    }
-
-    .slider-card-title {
-        font-size: 2.8rem;
-        font-weight: 900;
-        color: #ffffff;
-        margin-bottom: 15px;
-        font-family: 'Arial Black', Gadget, sans-serif;
-        letter-spacing: 1px;
-    }
-
-    .slider-card-desc {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: #f0f0f0;
-        margin-bottom: 25px;
-        font-weight: 600;
-    }
-
-    .slider-card-btn {
-        display: inline-block;
-        background-color: #b89c3f;
-        color: #ffffff !important;
+    .simple-slider-caption {
+        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%);
+        color: #FFD700 !important;
+        font-size: 1.25rem;
         font-weight: bold;
-        font-size: 1rem;
-        padding: 10px 40px;
-        border-radius: 20px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .slider-card-btn:hover {
-        background-color: #937B2B;
-        transform: scale(1.05);
-    }
-
-    /* مؤشر النقط أسفل السلايدر */
-    .dots-indicator {
-        position: absolute;
-        bottom: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 8px;
-        z-index: 4;
-        background: rgba(255,255,255,0.7);
-        padding: 4px 12px;
-        border-radius: 12px;
-    }
-
-    .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #888888;
-    }
-
-    .dot.active {
-        background-color: #0b1a3e;
-        width: 14px;
-        border-radius: 10px;
+        padding: 15px;
+        text-align: center !important;
+        border-top: 2px solid #937B2B;
     }
 
     /* العناوين العامة */
@@ -437,31 +356,22 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (بتصميم السلايدر المماثل للصورة المرفقة)
+# 1️⃣ الصفحة الرئيسية (عرض الصورة وعنوان أسفلها فقط)
 if current_tab == "الرئيسية":
 
-    # قائمة بيانات السلايدر
+    # قائمة الصور والعناوين الخاصة بها
     slides = [
         {
-            "en_title": "Leaders",
-            "desc": "استكمال برامج القيادات التربوية على منصة المعلم بالأكاديمية PAT حرصاً على مصلحة المعلمين",
-            "link": "https://www.pat.edu.eg/platform-programs",
-            "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop",
-            "active_dot": 0
+            "title": "استكمال برامج القيادات التربوية على منصة المعلم بالأكاديمية PAT حرصاً على مصلحة المعلمين",
+            "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop"
         },
         {
-            "en_title": "Teachers",
-            "desc": "برامج التسكين والترقي والتطبيقات التربوية المعتمدة لمعلمي وزارة التربية والتعليم",
-            "link": "https://www.pat.edu.eg/platform-programs",
-            "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
-            "active_dot": 1
+            "title": "برامج التسكين والترقي والتطبيقات التربوية المعتمدة لمعلمي وزارة التربية والتعليم",
+            "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
         },
         {
-            "en_title": "TOT",
-            "desc": "البرنامج الرقمي المعتمد لتأهيل وإعداد المدربين الرقميين المحترفين بالأكاديمية",
-            "link": "https://www.pat.edu.eg/platform-programs",
-            "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop",
-            "active_dot": 2
+            "title": "البرنامج الرقمي المعتمد لتأهيل وإعداد المدربين الرقميين المحترفين بالأكاديمية (TOT)",
+            "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop"
         }
     ]
 
@@ -470,36 +380,11 @@ if current_tab == "الرئيسية":
 
     current = slides[st.session_state['slide_index']]
 
-    # تجهيز أزرار الأسهم
-    col_nav1, col_nav2, col_nav3 = st.columns([1, 10, 1])
-
-    with col_nav1:
-        if st.button("❮", key="prev_btn_slider"):
-            st.session_state['slide_index'] = (st.session_state['slide_index'] - 1) % len(slides)
-            st.rerun()
-
-    with col_nav3:
-        if st.button("❯", key="next_btn_slider"):
-            st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
-            st.rerun()
-
-    # تصميم العرض السلايدر بـ HTML & CSS
+    # عرض المعرض بظهور عنوان اسفل الصورة فقط
     st.markdown(f"""
-        <div class="slider-container">
-            <img src="{current['image']}" class="slider-bg-img" alt="خلفية">
-            <div class="slider-overlay"></div>
-            
-            <div class="slider-card">
-                <div class="slider-card-title">{current['en_title']}</div>
-                <div class="slider-card-desc">{current['desc']}</div>
-                <a href="{current['link']}" target="_blank" class="slider-card-btn">سجل الآن</a>
-            </div>
-
-            <div class="dots-indicator">
-                <div class="dot {'active' if current['active_dot'] == 0 else ''}"></div>
-                <div class="dot {'active' if current['active_dot'] == 1 else ''}"></div>
-                <div class="dot {'active' if current['active_dot'] == 2 else ''}"></div>
-            </div>
+        <div class="simple-slider-container">
+            <img src="{current['image']}" class="simple-slider-img" alt="صورة">
+            <div class="simple-slider-caption">{current['title']}</div>
         </div>
     """, unsafe_allow_html=True)
 
