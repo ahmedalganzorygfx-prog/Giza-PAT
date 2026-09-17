@@ -11,18 +11,28 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة مساعدة لتحميل الصورة كـ base64 من مجلد المشروع محلياً لسرعة العرض
-@st.cache_data
-def get_image_url_or_base64(file_name, fallback_url=""):
+# دالة مطورة ومباشرة للبحث عن أي صيغة للصورة تلقائياً (jpg, png, jpeg, webp)
+def find_and_load_image(base_file_name, fallback_url=""):
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    img_path = os.path.join(script_dir, file_name)
     
-    if os.path.exists(img_path):
-        with open(img_path, "rb") as f:
-            encoded = base64.b64encode(f.read()).decode("utf-8")
-            ext = file_name.split('.')[-1].lower()
-            mime_type = "image/png" if ext == "png" else "image/jpeg"
-            return f"data:{mime_type};base64,{encoded}"
+    # قائمة بجميع الصيغ والاحتمالات الممكنة لاسم الملف
+    name_without_ext = os.path.splitext(base_file_name)[0]
+    extensions = ['', '.jpg', '.jpeg', '.png', '.webp', '.JPG', '.PNG', '.JPEG']
+    
+    possible_filenames = [base_file_name, name_without_ext] + [f"{name_without_ext}{ext}" for ext in extensions]
+    
+    for fname in possible_filenames:
+        img_path = os.path.join(script_dir, fname)
+        if os.path.exists(img_path) and os.path.isfile(img_path):
+            try:
+                with open(img_path, "rb") as f:
+                    encoded = base64.b64encode(f.read()).decode("utf-8")
+                    ext = os.path.splitext(fname)[1].replace('.', '').lower()
+                    mime_type = "image/png" if ext == "png" else ("image/webp" if ext == "webp" else "image/jpeg")
+                    return f"data:{mime_type};base64,{encoded}"
+            except Exception:
+                continue
+                
     return fallback_url
 
 # قائمة الإدارات التعليمية لمحافظة الجيزة
@@ -39,7 +49,7 @@ JOBS_LIST = [
 ]
 
 # تحضير اللوجو
-logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo")
+logo_src = find_and_load_image("Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo")
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
 
@@ -161,8 +171,8 @@ st.markdown("""
     }
 
     .avatar-frame {
-        width: 140px;
-        height: 140px;
+        width: 150px;
+        height: 150px;
         margin: 0 auto 18px auto;
         border-radius: 50%;
         border: 4px solid #FFD700;
@@ -177,7 +187,7 @@ st.markdown("""
     .avatar-frame img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover !important;
     }
 
     .staff-name {
@@ -446,7 +456,7 @@ if current_tab == "الرئيسية":
         st.session_state['slide_idx'] = 0
 
     current = program_slides[st.session_state['slide_idx']]
-    img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
+    img_src = find_and_load_image(current['file_name'], current['fallback'])
 
     st.markdown(f"""
         <div class="simple-slider-container">
@@ -490,10 +500,10 @@ elif current_tab == "ادارات الافراد":
         </div>
     """, unsafe_allow_html=True)
 
-    # تجهيز الصور الشخصية للأفراد (يمكن وضع ملفات الصور ahmed.jpg, khaled.jpg, omar.jpg بمجلد المشروع)
-    img_ahmed = get_image_url_or_base64("ahmed.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
-    img_khaled = get_image_url_or_base64("khaled.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
-    img_omar = get_image_url_or_base64("omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
+    # البحث عن صورة أستاذ أحمد بأي امتداد متوقع تلقائياً
+    img_ahmed = find_and_load_image("ahmed.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
+    img_khaled = find_and_load_image("khaled.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
+    img_omar = find_and_load_image("omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
 
     c1, c2, c3 = st.columns(3)
 
@@ -644,7 +654,7 @@ elif current_tab == "منصة الفرع":
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
 # 6️⃣ نموذج التواصل مع فريق الدعم
 elif current_tab == "التواصل مع الدعم":
@@ -752,3 +762,12 @@ st.markdown("""
         تصميم وتنفيذ: <span>أحمد الجنزوري</span> - مدير الفرع
     </div>
 """, unsafe_allow_html=True)
+```يبدو أن صورة أحمد لم تظهر بسبب مشكلة في التحميل أو خطأ في مسار الملف/الرابط. 
+
+تأكد من الخطوات التالية لحل المشكلة:
+
+* **اسم الملف وامتداده:** تأكد من كتابة اسم الصورة بشكل صحيح (مثل `ahmed.jpg` أو `ahmed.png`) وأن الامتداد يطابق نوع الصورة الفعلي.
+* **مسار الصورة (Path):** إذا كنت تعمل على تطبيق أو موقع ويب، تأكد من وضع ملف الصورة في المجلد الصحيح (مثل مجلد `images` أو `assets`) وأن المسار المكتوب في الكود صحيح.
+* **الوصول للإنترنت:** إذا كانت الصورة مرفوعة على رابط خارجي (URL)، تحقق من الاتصال بالإنترنت ومن يعمل الرابط بشكل مباشر عند فتحه في المتصفح.
+
+إذا كنت تقصد إرفاق صورة هنا في المحادثة ولم تظهر، يرجى إعادة إرسالها أو توضيح السياق (كود برمجي، تطبيق
