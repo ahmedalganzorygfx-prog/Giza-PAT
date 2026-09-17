@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة مساعدة لتحميل الصورة سواء كانت محلية أو رابطاً مع معالجة الأخطاء
+# دالة مساعدة لتحميل الصورة كـ base64 من مجلد المشروع محلياً
 def get_image_url_or_base64(file_name, fallback_url):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     img_path = os.path.join(script_dir, file_name)
@@ -26,7 +26,7 @@ def get_image_url_or_base64(file_name, fallback_url):
             mime_type = "image/png" if ext == "png" else "image/jpeg"
             return f"data:{mime_type};base64,{encoded}"
     
-    # 2. في حالة عدم وجود الصورة محلياً يتم استخدام رابط الصورة عالية الجودة
+    # 2. البديل الاحتياطي في حال عدم العثور على الملف محلياً
     return fallback_url
 
 # قائمة الإدارات التعليمية لمحافظة الجيزة
@@ -110,7 +110,7 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم السلايدر لعرض الصور فقط دون أي نصوص أو أسماء 🎨 */
+    /* 🎨 تصميم العرض السلايدر مع كتابة اسم وعنوان البرنامج أسفل الصورة 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -124,9 +124,19 @@ st.markdown("""
 
     .simple-slider-img {
         width: 100%;
-        height: 460px;
+        height: 440px;
         object-fit: cover !important;
         display: block;
+    }
+
+    .simple-slider-caption {
+        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%);
+        color: #FFD700 !important;
+        font-size: 1.25rem;
+        font-weight: bold;
+        padding: 16px;
+        text-align: center !important;
+        border-top: 2px solid #937B2B;
     }
 
     .centered-header {
@@ -326,7 +336,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (البداية باللوجو، ثم عرض عشوائي للصور بدون أسماء)
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -336,52 +346,58 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة الصور (بداية باللوجو)
+    # شريحة البداية الخاصة باللوجو
     logo_slide = {
+        "title": "🏛️ الشعار الرسمي للأكاديمية المهنية للمعلمين - فرع الجيزة",
         "file_name": "Logo.png",
         "fallback": "https://via.placeholder.com/1200x500?text=PAT+Giza+Branch"
     }
 
+    # قائمة صور البرامج المرفوعة بمجلد المشروع مع أسماؤها وعناوينها
     program_slides = [
         {
+            "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
             "file_name": "leaders.jpg",
             "fallback": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
         },
         {
+            "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
             "file_name": "teachers.jpg",
             "fallback": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1600&auto=format&fit=crop"
         },
         {
+            "title": "🔄 برنامج تغيير المسمى الوظيفي وتأهيل الكوادر التعليمية",
             "file_name": "job_change.jpg",
             "fallback": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
         },
         {
+            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين المحترفين (TOT)",
             "file_name": "tot.jpg",
             "fallback": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1600&auto=format&fit=crop"
         }
     ]
 
-    # تهيئة أول عرض
+    # البداية أولاً باللوجو، ثم التنقل العشوائي بين صور البرامج
     if 'has_started' not in st.session_state:
         st.session_state['has_started'] = False
         st.session_state['current_slide'] = logo_slide
     else:
-        # اختيار صورة عشوائية من صور البرامج
         st.session_state['current_slide'] = random.choice(program_slides)
 
     current = st.session_state['current_slide']
     
-    # جلب رابط أو كود base64 للصورة
+    # جلب الصورة من المجلد محلياً
     img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض السلايدر (صورة فقط وبدون أي عنوان أو اسم أسفلها)
+    # عرض السلايدر شاملاً العنوان واسم البرنامج أسفل الصورة
     st.markdown(f"""
         <div class="simple-slider-container">
-            <img src="{img_src}" class="simple-slider-img" alt="عرض">
+            <img src="{img_src}" class="simple-slider-img" alt="صورة العرض">
+            <div class="simple-slider-caption">{current['title']}</div>
         </div>
     """, unsafe_allow_html=True)
 
-    # التتابع والتأخير الزمني (4 ثوانٍ) ثم الانتقال العشوائي التالي
+    # التتابع والتأخير الزمني 4 ثوانٍ
     time.sleep(4)
     st.session_state['has_started'] = True
     st.rerun()
