@@ -42,7 +42,7 @@ JOBS_LIST = [
     "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو للهيدر
+# تحضير اللوجو ووضعه في الهيدر بأعلى الصفحة
 logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/150x50?text=PAT+Logo")
 logo_html_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 
@@ -59,37 +59,41 @@ st.markdown("""
         display: none;
     }
 
+    /* شريط التنقل العلوي الهيدر المطور مع اللوجو في أعلى الصفحة */
     .top-navbar {
         background-color: #0b1a3e !important;
-        padding: 10px 30px;
+        padding: 12px 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         direction: rtl;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         margin-bottom: 20px;
+        border-bottom: 3px solid #937B2B;
     }
 
     .nav-right-container {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 15px;
     }
 
     .nav-logo-text {
         color: #ffffff !important;
         font-weight: bold;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 15px;
     }
 
     .navbar-logo-img {
-        height: 45px;
+        height: 55px;
         width: auto;
-        border-radius: 4px;
+        border-radius: 6px;
         object-fit: contain;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 3px;
     }
 
     .teacher-platform-btn {
@@ -110,23 +114,25 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض السلايدر مع كتابة اسم وعنوان البرنامج أسفل الصورة 🎨 */
+    /* 🎨 تصميم العرض السلايدر مع إظهار الصورة كاملة بدون كروب 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
         margin: 0 auto 30px auto;
         border-radius: 16px;
         overflow: hidden;
-        background-color: transparent !important;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        background-color: #0b1a3e !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
         border: 2px solid #937B2B;
     }
 
     .simple-slider-img {
         width: 100%;
-        height: 440px;
-        object-fit: cover !important;
+        height: 480px;
+        object-fit: contain !important; /* لضمان ظهور الصورة بالكامل دون قص الأطراف */
         display: block;
+        background-color: #0b1a3e;
+        padding: 10px;
     }
 
     .simple-slider-caption {
@@ -282,7 +288,7 @@ st.markdown("""
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# الشريط العلوي للهيدر
+# 🏛️ الشريط العلوي للهيدر (يحتوي على اللوجو واسم الفرع في أعلى الصفحة)
 st.markdown(f"""
     <div class="top-navbar">
         <div class="nav-right-container">
@@ -336,7 +342,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية
+# 1️⃣ الصفحة الرئيسية (السلايدر يحتوي على صور البرامج فقط بدون اللوجو، والصور تظهر بالكامل)
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -346,14 +352,7 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # شريحة البداية الخاصة باللوجو
-    logo_slide = {
-        "title": "🏛️ الشعار الرسمي للأكاديمية المهنية للمعلمين - فرع الجيزة",
-        "file_name": "Logo.png",
-        "fallback": "https://via.placeholder.com/1200x500?text=PAT+Giza+Branch"
-    }
-
-    # قائمة صور البرامج المرفوعة بمجلد المشروع مع أسماؤها وعناوينها
+    # قائمة صور البرامج المرفوعة بمجلد المشروع (تم استبعاد اللوجو منها)
     program_slides = [
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
@@ -377,19 +376,15 @@ if current_tab == "الرئيسية":
         }
     ]
 
-    # البداية أولاً باللوجو، ثم التنقل العشوائي بين صور البرامج
-    if 'has_started' not in st.session_state:
-        st.session_state['has_started'] = False
-        st.session_state['current_slide'] = logo_slide
-    else:
-        st.session_state['current_slide'] = random.choice(program_slides)
+    # العرض التتابع العشوائي بين صور البرامج
+    st.session_state['current_slide'] = random.choice(program_slides)
 
     current = st.session_state['current_slide']
     
     # جلب الصورة من المجلد محلياً
     img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض السلايدر شاملاً العنوان واسم البرنامج أسفل الصورة
+    # عرض السلايدر شاملاً العنوان واسم البرنامج أسفل الصورة وبدون قص للـ Crop
     st.markdown(f"""
         <div class="simple-slider-container">
             <img src="{img_src}" class="simple-slider-img" alt="صورة العرض">
@@ -399,7 +394,6 @@ if current_tab == "الرئيسية":
 
     # التتابع والتأخير الزمني 4 ثوانٍ
     time.sleep(4)
-    st.session_state['has_started'] = True
     st.rerun()
 
 # 2️⃣ عن الفرع
