@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import urllib.parse
 import base64
+import time
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
@@ -39,7 +40,7 @@ if os.path.exists(logo_path):
         encoded_logo = base64.b64encode(f.read()).decode("utf-8")
         logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS) متكيفة مع العرض المبسط
+# تطبيق التنسيقات (CSS) وتوسيط العناصر
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -104,11 +105,11 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض المبسط للسلايدر بظهور عنوان فقط أسفل الصورة 🎨 */
+    /* 🎨 تصميم العرض المبسط للسلايدر (صورة وعنوان البرنامج أسفلها) 🎨 */
     .simple-slider-container {
         position: relative;
         width: 100%;
-        max-width: 900px;
+        max-width: 850px;
         margin: 0 auto 30px auto;
         border-radius: 16px;
         overflow: hidden;
@@ -119,9 +120,11 @@ st.markdown("""
 
     .simple-slider-img {
         width: 100%;
-        height: 400px;
-        object-fit: cover;
+        height: 380px;
+        object-fit: contain;
+        background-color: #f8f9fa;
         display: block;
+        padding: 10px;
     }
 
     .simple-slider-caption {
@@ -129,7 +132,7 @@ st.markdown("""
         color: #FFD700 !important;
         font-size: 1.25rem;
         font-weight: bold;
-        padding: 15px;
+        padding: 14px;
         text-align: center !important;
         border-top: 2px solid #937B2B;
     }
@@ -356,21 +359,36 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (عرض الصورة وعنوان أسفلها فقط)
+# 1️⃣ الصفحة الرئيسية (بداية باللوجو، ثم التتابع التلقائي لأسماء وصور البرامج)
 if current_tab == "الرئيسية":
 
-    # قائمة الصور والعناوين الخاصة بها
+    st.markdown("""
+        <div class="centered-header">
+            <div class="main-header-title">الأكاديمية المهنية للمعلمين - فرع الجيزة</div>
+            <div class="sub-header-title">البوابة الرقمية للخدمات والتدريبات والاعتماد المهني للمعلمين</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # قائمة العرض التتابعي (تبدأ باللوجو ثم البرامج)
     slides = [
         {
-            "title": "استكمال برامج القيادات التربوية على منصة المعلم بالأكاديمية PAT حرصاً على مصلحة المعلمين",
+            "title": "🏛️ الشعار الرسمي للأكاديمية المهنية للمعلمين - فرع الجيزة",
+            "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/800x400?text=Logo"
+        },
+        {
+            "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
             "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop"
         },
         {
-            "title": "برامج التسكين والترقي والتطبيقات التربوية المعتمدة لمعلمي وزارة التربية والتعليم",
+            "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
             "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
         },
         {
-            "title": "البرنامج الرقمي المعتمد لتأهيل وإعداد المدربين الرقميين المحترفين بالأكاديمية (TOT)",
+            "title": "🔄 برنامج تغيير المسمى الوظيفي لكوادر التعليم",
+            "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop"
+        },
+        {
+            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين (TOT)",
             "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop"
         }
     ]
@@ -380,13 +398,27 @@ if current_tab == "الرئيسية":
 
     current = slides[st.session_state['slide_index']]
 
-    # عرض المعرض بظهور عنوان اسفل الصورة فقط
+    # تجهيز الصورة للعرض (سواء ملف محلي للوجو أو رابط)
+    if os.path.exists(current['image']):
+        with open(current['image'], "rb") as f:
+            img_bytes = f.read()
+            encoded_img = base64.b64encode(img_bytes).decode('utf-8')
+            img_src = f"data:image/png;base64,{encoded_img}"
+    else:
+        img_src = current['image']
+
+    # عرض المعرض التلقائي (صورة وعنوان البرنامج أسفلها فقط)
     st.markdown(f"""
         <div class="simple-slider-container">
-            <img src="{current['image']}" class="simple-slider-img" alt="صورة">
+            <img src="{img_src}" class="simple-slider-img" alt="صورة البرنامج">
             <div class="simple-slider-caption">{current['title']}</div>
         </div>
     """, unsafe_allow_html=True)
+
+    # التتابع والتنقل التلقائي كل 4 ثوانٍ
+    time.sleep(4)
+    st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
+    st.rerun()
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
