@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import urllib.parse
+import base64
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
@@ -28,11 +29,17 @@ JOBS_LIST = [
     "كبير معلمين"
 ]
 
-# تحديد مسار اللوجو المرفوع (Logo.png)
+# تحديد مسار وقراءة صورة اللوجو وتشفيرها لعرضها بداخل HTML
 script_dir = os.path.dirname(os.path.realpath(__file__))
 logo_path = os.path.join(script_dir, "Logo.png")
 
-# تطبيق التنسيقات (CSS) الجمالية والمطورة
+logo_html_tag = ""
+if os.path.exists(logo_path):
+    with open(logo_path, "rb") as f:
+        encoded_logo = base64.b64encode(f.read()).decode("utf-8")
+        logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
+
+# تطبيق التنسيقات (CSS)
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -49,7 +56,7 @@ st.markdown("""
     /* شريط التنقل العلوي الهيدر */
     .top-navbar {
         background-color: #0b1a3e;
-        padding: 12px 30px;
+        padding: 10px 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -61,7 +68,7 @@ st.markdown("""
     .nav-right-container {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
     }
 
     .nav-logo-text {
@@ -70,7 +77,15 @@ st.markdown("""
         font-size: 1.15rem;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+    }
+
+    /* حجم وتنسيق صورة اللوجو الصغيرة في الهيدر */
+    .navbar-logo-img {
+        height: 45px;
+        width: auto;
+        border-radius: 4px;
+        object-fit: contain;
     }
 
     .teacher-platform-btn {
@@ -164,7 +179,7 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /* 🎨 تحسين وتجميل تصميم نموذج التواصل مع الدعم */
+    /* تصميم نموذج التواصل مع الدعم */
     .support-form-container {
         background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
         padding: 35px;
@@ -187,7 +202,6 @@ st.markdown("""
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* تحسين زر تجهيز الطلب */
     .stButton>button {
         background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%) !important;
         color: #ffffff !important;
@@ -205,7 +219,6 @@ st.markdown("""
         transform: translateY(-2px);
     }
 
-    /* بطاقات أرقام الواتساب المميزة */
     .whatsapp-card {
         display: block;
         text-align: center;
@@ -232,12 +245,13 @@ st.markdown("""
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# الشريط العلوي للهيدر
-st.markdown("""
+# الشريط العلوي للهيدر مع اللوجو الصغير بجوار الاسم
+st.markdown(f"""
     <div class="top-navbar">
         <div class="nav-right-container">
             <div class="nav-logo-text">
-                🏛️ الأكاديمية المهنية للمعلمين - فرع الجيزة
+                {logo_html_tag}
+                <span>الأكاديمية المهنية للمعلمين - فرع الجيزة</span>
             </div>
         </div>
         <div class="teacher-platform-btn">
@@ -298,8 +312,6 @@ if current_tab == "الرئيسية":
     with col_img2:
         if os.path.exists(logo_path):
             st.image(logo_path, use_container_width=True)
-        elif os.path.exists("Logo.png"):
-            st.image("Logo.png", use_container_width=True)
         else:
             st.warning("🎓 الأكاديمية المهنية للمعلمين - فرع الجيزة")
 
@@ -427,7 +439,7 @@ elif current_tab == "منصة الفرع":
         st.button("التسجيل بالبرنامج", key="b7", use_container_width=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
-# 5️⃣ نموذج التواصل مع فريق الدعم المحسّن
+# 5️⃣ نموذج التواصل مع فريق الدعم
 elif current_tab == "التواصل مع الدعم":
     st.markdown("""
         <div class="centered-header">
@@ -477,7 +489,6 @@ elif current_tab == "التواصل مع الدعم":
                     }
                     st.success("🎉 تم تجهيز طلبك بنجاح! اختر أحد أرقام فريق الدعم بالأسفل للإرسال المباشر:")
 
-        # عرض خيارات الإرسال المباشر للواتساب
         if 'form_data' in st.session_state and st.session_state['form_data']:
             data = st.session_state['form_data']
             
