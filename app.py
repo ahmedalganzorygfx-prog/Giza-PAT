@@ -356,7 +356,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (صور عربية عالية الجودة تغطي الشاشة وبدون خلفيات بيضاء)
+# 1️⃣ الصفحة الرئيسية (صور عربية عالية الجودة للبرامج فقط دون إضافة اللوجو داخل السلايدر)
 if current_tab == "الرئيسية":
 
     st.markdown("""
@@ -366,12 +366,8 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة العرض التتابعي (بداية باللوجو ثم صور عربية عالية الجودة كاملة المساحة)
+    # قائمة برامج السلايدر بدون اللوجو
     slides = [
-        {
-            "title": "🏛️ الشعار الرسمي للأكاديمية المهنية للمعلمين - فرع الجيزة",
-            "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/1200x500?text=Logo"
-        },
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
             "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
@@ -395,19 +391,10 @@ if current_tab == "الرئيسية":
 
     current = slides[st.session_state['slide_index']]
 
-    # تجهيز الصورة للعرض
-    if os.path.exists(current['image']):
-        with open(current['image'], "rb") as f:
-            img_bytes = f.read()
-            encoded_img = base64.b64encode(img_bytes).decode('utf-8')
-            img_src = f"data:image/png;base64,{encoded_img}"
-    else:
-        img_src = current['image']
-
-    # عرض المعرض المخصص بعرض الشاشة وبدون خلفيات بيضاء
+    # عرض المعرض التلقائي المخصص
     st.markdown(f"""
         <div class="simple-slider-container">
-            <img src="{img_src}" class="simple-slider-img" alt="صورة البرنامج">
+            <img src="{current['image']}" class="simple-slider-img" alt="صورة البرنامج">
             <div class="simple-slider-caption">{current['title']}</div>
         </div>
     """, unsafe_allow_html=True)
