@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تطبيق تنسيقات CSS المتقدمة وتوسيط العناوين وتحسين RTL
+# تطبيق تنسيقات CSS لتوسيط العناوين والمحاذاة من اليمين لليسار (RTL)
 st.markdown("""
     <style>
     /* محاذاة الصفحة العامة والخطوط */
@@ -32,7 +32,7 @@ st.markdown("""
         text-align: right !important;
     }
 
-    /* 🌟 تنسيق وتوسيط العناوين الرئيسية 🌟 */
+    /* توسيط وتجميل العناوين الرئيسية */
     .centered-title-container {
         text-align: center;
         margin: 20px 0 35px 0;
@@ -55,7 +55,7 @@ st.markdown("""
         margin-top: 10px;
     }
 
-    /* 🌟 عنوان القسم الذهبي المؤطر في منتصف الصفحة 🌟 */
+    /* عنوان القسم الذهبي المؤطر في منتصف الصفحة */
     .section-header-centered {
         display: flex;
         justify-content: center;
@@ -74,15 +74,7 @@ st.markdown("""
         text-align: center;
     }
 
-    /* 🌟 تصميم شعار الصفحة الرئيسية 🌟 */
-    .logo-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    /* 🌟 تصميم بطاقات البرامج 🌟 */
+    /* تصميم بطاقات البرامج */
     .program-card {
         background-color: #1b2631;
         border: 2px solid #937B2B;
@@ -129,7 +121,7 @@ st.markdown("""
         font-size: 0.95rem;
     }
 
-    /* تخصيص أزرار Streamlit لتشبه تصميم المنصة */
+    /* تخصيص الأزرار */
     .stButton>button {
         background-color: #b22222 !important;
         color: white !important;
@@ -146,7 +138,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ---------------- القائمة الجانبية (الشريط العلوي للتنقل) ----------------
+# ---------------- القائمة الجانبية ----------------
 st.sidebar.markdown("### 📌 التبويبات الرئيسية")
 main_tab = st.sidebar.radio(
     "انتقل إلى:",
@@ -155,7 +147,7 @@ main_tab = st.sidebar.radio(
 
 # ---------------- المحتوى الرئيسي حسب التبويب ----------------
 
-# 1️⃣ الصفحة الرئيسية
+# 1. الصفحة الرئيسية
 if main_tab == "الرئيسية":
     st.markdown("""
         <div class="centered-title-container">
@@ -169,9 +161,8 @@ if main_tab == "الرئيسية":
     with col_l2:
         image_path = "image_526f40.jpg"
         if os.path.exists(image_path):
-            st.image(image_path, use_container_width=True, caption="شعار الأكاديمية المهنية للمعلمين - منصة الفرع")
+            st.image(image_path, use_container_width=True, caption="شعار منصة الفرع")
         else:
-            # لوحة تعويضية في حال عدم وجود ملف الصورة
             st.markdown("""
                 <div style="background-color:#937B2B; color:white; padding:40px; text-align:center; border-radius:20px; font-size:1.5rem; font-weight:bold;">
                     🎓 شعار منصة الفرع التعليمية
@@ -181,7 +172,7 @@ if main_tab == "الرئيسية":
     st.markdown("<br>", unsafe_allow_html=True)
     st.info("💡 تقدم المنصة مجموعة متكاملة من البرامج التدريبية المعتمدة للقيادات التربوية، المعلمين المساعدين، والراغبين في الترقي وتغيير المسمى الوظيفي.")
 
-# 2️⃣ عن الفرع
+# 2. عن الفرع
 elif main_tab == "عن الفرع":
     st.markdown("""
         <div class="centered-title-container">
@@ -196,7 +187,7 @@ elif main_tab == "عن الفرع":
         </div>
     """, unsafe_allow_html=True)
 
-# 3️⃣ الإدارات التعليمية
+# 3. الإدارات التعليمية
 elif main_tab == "الادارات التعليمية":
     st.markdown("""
         <div class="centered-title-container">
@@ -216,7 +207,7 @@ elif main_tab == "الادارات التعليمية":
         </div>
     """, unsafe_allow_html=True)
 
-# 4️⃣ منصة الفرع
+# 4. منصة الفرع
 elif main_tab == "منصة الفرع":
     st.markdown("""
         <div class="centered-title-container">
@@ -225,7 +216,6 @@ elif main_tab == "منصة الفرع":
         </div>
     """, unsafe_allow_html=True)
 
-    # اختيارات البرامج
     sub_category = st.selectbox(
         "اختر الفئة التدريبية المطلوبة:",
         [
@@ -236,7 +226,7 @@ elif main_tab == "منصة الفرع":
         ]
     )
 
-    # 🔹 1. برامج القيادات التربوية
+    # 🔹 برامج القيادات التربوية
     if sub_category == "برامج القيادات التربوية":
         st.markdown('''
             <div class="section-header-centered">
@@ -279,7 +269,7 @@ elif main_tab == "منصة الفرع":
                 st.success("تم التوجيه لصفحة التسجيل ببرنامج أساسيات التوجيه الفني")
             st.markdown('<div class="card-footer">برنامج أساسيات التوجيه الفني</div>', unsafe_allow_html=True)
 
-    # 🔹 2. برامج التسكين والترقي
+    # 🔹 برامج التسكين والترقي
     elif sub_category == "برامج التسكين والترقي":
         st.markdown('''
             <div class="section-header-centered">
@@ -311,7 +301,7 @@ elif main_tab == "منصة الفرع":
                 st.success("تم التوجيه لصفحة التسجيل ببرنامج مهارات التدريس")
             st.markdown('<div class="card-footer">برنامج مهارات عامة في التدريس</div>', unsafe_allow_html=True)
 
-    # 🔹 3. برنامج تغيير المسمى الوظيفي
+    # 🔹 برنامج تغيير المسمى الوظيفي
     elif sub_category == "برنامج تغيير المسمى الوظيفي":
         st.markdown('''
             <div class="section-header-centered">
@@ -331,7 +321,7 @@ elif main_tab == "منصة الفرع":
                 st.success("تم التوجيه لصفحة التسجيل ببرنامج تغيير المسمى الوظيفي")
             st.markdown('<div class="card-footer">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
 
-    # 🔹 4. برامج الاعتماد
+    # 🔹 برامج الاعتماد
     elif sub_category == "برامج الاعتماد":
         st.markdown('''
             <div class="section-header-centered">
@@ -350,180 +340,3 @@ elif main_tab == "منصة الفرع":
             if st.button("التسجيل بالبرنامج", key="btn7", use_container_width=True):
                 st.success("تم التوجيه لصفحة التسجيل ببرنامج TOT")
             st.markdown('<div class="card-footer">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
-```eof
-
-### التعديلات التي تم إضافتها:
-1. **توسيط العناوين وتجميلها**: تم وضع خط ذهبي أنيق تحت العنوان الرئيسي وجعله في منتصف الصفحة دائماً.
-2. **إظهار شعار الفرع**: تم إدراج الشعار المرفق (`image_526f40.jpg`) بوسط الصفحة الرئيسية.
-3. **تحديث شريط التنقل الفرعي والقوائم**: محاذاة من اليمين إلى اليسار مع تنسيق الأزرار الحمراء والألوان المعتمدة في التصميم الأصلي.لإظهار الصفحة الرئيسية وتجميل العناوين وتوسيطها مع إضافة شعار (لوجو) الفرع، يمكنك استخدام الكود التالي بلغة **HTML & CSS**. 
-
-هذا الكود منظم ومصمم بشكل عصري ومتجاوب، ويضم القائمة الرئيسية وشعار الفرع وتوسيط جميع العناوين بشكل أنيق:
-
-```html
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة الرئيسية للفرع</title>
-    <style>
-        /* إعدادات عامة */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f9;
-            color: #333;
-        }
-
-        /* رأس الصفحة والتصميم */
-        header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            padding: 30px 20px;
-            text-align: center; /* توسيط محتوى الهيدر */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        /* تنسيق اللوجو */
-        .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #ffffff;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        /* تجميل وتوسيط العناوين */
-        h1, h2, h3 {
-            text-align: center; /* توسيط العنوان */
-            margin-top: 10px;
-            margin-bottom: 15px;
-        }
-
-        .main-title {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-
-        /* قائمة التنقل */
-        nav {
-            background-color: #ffffff;
-            border-bottom: 2px solid #e0e0e0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center; /* توسيط روابط التنقل */
-            flex-wrap: wrap;
-        }
-
-        nav ul li {
-            margin: 0;
-        }
-
-        nav ul li a {
-            display: block;
-            padding: 15px 25px;
-            color: #2a5298;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: #2a5298;
-            color: #ffffff;
-        }
-
-        /* محتوى الصفحة الرئيسية */
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .section-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-
-        /* تجميل العناوين الفرعية خط سفلي أنيق */
-        .decorated-header {
-            position: relative;
-            color: #1e3c72;
-            padding-bottom: 10px;
-        }
-
-        .decorated-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: #2a5298;
-            border-radius: 2px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- الهيدر مع اللوجو والعنوان الرئيسي -->
-    <header>
-        <!-- استبدل logo.png برابط صورة الشعار الخاص بك -->
-        <img src="https://via.placeholder.com/120" alt="لوجو الفرع" class="logo">
-        <h1 class="main-title">الصفحة الرئيسية لفرع التعليم</h1>
-    </header>
-
-    <!-- شريط التنقل العلوي -->
-    <nav>
-        <ul>
-            <li><a href="#home">الصفحة الرئيسية</a></li>
-            <li><a href="#about">عن الفرع</a></li>
-            <li><a href="#administrations">الإدارات التعليمية</a></li>
-            <li><a href="#platform">منصة الفرع</a></li>
-        </ul>
-    </nav>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        
-        <div class="section-card" id="about">
-            <h2 class="decorated-header">عن الفرع</h2>
-            <p style="text-align: center; line-height: 1.8; margin-top: 20px;">
-                مرحباً بكم في المنصة الرسمية. يهدف الفرع إلى تقديم أفضل الخدمات التعليمية والتنظيمية للإدارات والطلاب.
-            </p>
-        </div>
-
-        <div class="section-card" id="administrations">
-            <h2 class="decorated-header">الإدارات التعليمية</h2>
-            <p style="text-align: center; line-height: 1.8; margin-top: 20px;">
-                يمكنك من خلال هذا القسم المتابعة والاطلاع على كافة الإدارات التعليمية التابعة للفرع.
-            </p>
-        </div>
-
-        <div class="section-card" id="platform">
-            <h2 class="decorated-header">منصة الفرع</h2>
-            <p style="text-align: center; line-height: 1.8; margin-top: 20px;">
-                بوابة معلوماتية متكاملة لتقديم الخدمات الإلكترونية للجميع بسرعة وكفاءة.
-            </p>
-        </div>
-
-    </div>
-
-</body>
-</html>
