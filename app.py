@@ -39,23 +39,22 @@ if os.path.exists(logo_path):
         encoded_logo = base64.b64encode(f.read()).decode("utf-8")
         logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS)
+# تطبيق التنسيقات (CSS) متكيفة مع الوضعين الفاتح والداكن (Light & Dark Mode Compatible)
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         direction: rtl;
         text-align: right;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f4f6f9;
     }
 
     [data-testid="stSidebar"] {
         display: none;
     }
 
-    /* شريط التنقل العلوي الهيدر */
+    /* شريط التنقل العلوي الهيدر - ثابت اللون لحفظ الهوية البصرية */
     .top-navbar {
-        background-color: #0b1a3e;
+        background-color: #0b1a3e !important;
         padding: 10px 30px;
         display: flex;
         align-items: center;
@@ -72,7 +71,7 @@ st.markdown("""
     }
 
     .nav-logo-text {
-        color: white;
+        color: #ffffff !important;
         font-weight: bold;
         font-size: 1.15rem;
         display: flex;
@@ -89,7 +88,7 @@ st.markdown("""
     }
 
     .teacher-platform-btn {
-        background: linear-gradient(135deg, #c02425 0%, #b21f1f 100%);
+        background: linear-gradient(135deg, #c02425 0%, #b21f1f 100%) !important;
         color: white !important;
         padding: 8px 24px;
         border-radius: 20px 8px 20px 8px;
@@ -106,13 +105,14 @@ st.markdown("""
         transform: scale(1.03);
     }
 
+    /* عناوين تتكيف تلقائياً مع Dark/Light Mode */
     .centered-header {
         text-align: center;
         margin: 20px 0 30px 0;
     }
 
     .main-header-title {
-        color: #0b1a3e;
+        color: var(--text-color);
         font-size: 2.2rem;
         font-weight: 800;
         display: inline-block;
@@ -121,21 +121,22 @@ st.markdown("""
     }
 
     .sub-header-title {
-        color: #555555;
+        color: var(--text-color);
+        opacity: 0.8;
         font-size: 1.1rem;
         margin-top: 8px;
     }
 
-    /* بطاقات الإدارات التعليمية */
+    /* بطاقات الإدارات التعليمية متكيفة مع خلفية الصفحة */
     .edara-card {
-        background-color: #ffffff;
-        border: 1px solid #e2e8f0;
+        background-color: var(--secondary-background-color);
+        border: 1px solid rgba(147, 123, 43, 0.3);
         border-right: 4px solid #0b1a3e;
         border-radius: 8px;
         padding: 15px;
         text-align: center;
         font-weight: bold;
-        color: #1a202c;
+        color: var(--text-color);
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         margin-bottom: 15px;
         transition: all 0.3s ease;
@@ -144,16 +145,16 @@ st.markdown("""
     .edara-card:hover {
         border-right-color: #937B2B;
         transform: translateY(-3px);
-        box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
     }
 
     /* بطاقات البرامج التدريبية */
     .program-card {
-        background-color: #1b2631;
+        background-color: #1b2631 !important;
         border: 2px solid #937B2B;
         border-radius: 30px 0px 30px 0px;
         padding: 25px 20px;
-        color: white;
+        color: white !important;
         text-align: right;
         direction: rtl;
         min-height: 230px;
@@ -162,7 +163,7 @@ st.markdown("""
     }
 
     .program-title {
-        color: #FFD700;
+        color: #FFD700 !important;
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 12px;
@@ -171,11 +172,11 @@ st.markdown("""
     .program-desc {
         font-size: 0.95rem;
         line-height: 1.7;
-        color: #e0e0e0;
+        color: #e0e0e0 !important;
     }
 
     .card-footer {
-        background-color: #ffffff;
+        background-color: var(--secondary-background-color);
         color: #937B2B;
         text-align: center;
         padding: 8px;
@@ -185,21 +186,21 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /* تصميم نموذج التواصل مع الدعم */
+    /* تصميم نموذج التواصل مع الدعم - متكيف مع الوضعين */
     .support-form-container {
-        background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
+        background-color: var(--secondary-background-color);
         padding: 35px;
         border-radius: 20px;
-        box-shadow: 0 8px 25px rgba(11, 26, 62, 0.1);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         border-top: 6px solid #937B2B;
-        border-right: 1px solid #e0e0e0;
-        border-left: 1px solid #e0e0e0;
+        border-right: 1px solid rgba(147, 123, 43, 0.2);
+        border-left: 1px solid rgba(147, 123, 43, 0.2);
         max-width: 850px;
         margin: 0 auto;
     }
 
     .support-form-title {
-        color: #0b1a3e;
+        color: var(--text-color);
         text-align: center;
         font-size: 1.4rem;
         font-weight: bold;
@@ -251,7 +252,7 @@ st.markdown("""
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# الشريط العلوي للهيدر مع زر ربط منصة المعلم بالرابط الجديد
+# الشريط العلوي للهيدر مع زر منصة المعلم بالرابط الخارجي
 st.markdown(f"""
     <div class="top-navbar">
         <div class="nav-right-container">
@@ -329,7 +330,7 @@ elif current_tab == "عن الفرع":
         </div>
     """, unsafe_allow_html=True)
     st.markdown("""
-        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; font-size: 1.1rem;">
+        <div style="background-color: var(--secondary-background-color); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; font-size: 1.1rem; color: var(--text-color);">
             يقدم فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة البرامج التدريبية المعتمدة لترقي وتسكين أعضاء هيئة التعليم، وإعداد القيادات التربوية وتغيير المسمى الوظيفي بجميع الإدارات التعليمية التابعة للمحافظة.
         </div>
     """, unsafe_allow_html=True)
@@ -377,7 +378,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">أحد البرامج الرقمية المعتمدة على منصة المعلم في الأكاديمية المهنية للمعلمين المتاحة للفئات المستهدفة.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة مدرسية</div>', unsafe_allow_html=True)
 
         with c2:
@@ -387,7 +388,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">إعداد وتأهيل القيادات للإدارات التعليمية لتطوير المهارات القيادية والإدارية.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة تعليمية</div>', unsafe_allow_html=True)
 
         with c3:
@@ -397,7 +398,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">تمكين الموجهين الفنيين من المهارات الأساسية للإشراف ومتابعة الأداء التعليمي.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج أساسيات التوجيه الفني</div>', unsafe_allow_html=True)
 
     elif sub_category == "برامج التسكين والترقي":
@@ -410,7 +411,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج التطبيقات التربوية للمعلم المساعد</div>', unsafe_allow_html=True)
 
         with c2:
@@ -420,7 +421,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج مهارات عامة في التدريس</div>', unsafe_allow_html=True)
 
     elif sub_category == "برنامج تغيير المسمى الوظيفي":
@@ -431,7 +432,7 @@ elif current_tab == "منصة الفرع":
                 <div class="program-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
             </div>
         """, unsafe_allow_html=True)
-        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
+        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
 
     elif sub_category == "برامج الاعتماد":
@@ -442,7 +443,7 @@ elif current_tab == "منصة الفرع":
                 <div class="program-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
             </div>
         """, unsafe_allow_html=True)
-        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
+        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
 # 5️⃣ نموذج التواصل مع فريق الدعم
@@ -510,7 +511,7 @@ elif current_tab == "التواصل مع الدعم":
             
             encoded_msg = urllib.parse.quote(msg_text)
 
-            st.markdown("<br><h4 style='text-align: center; color: #0b1a3e;'>📲 اضغط على أحد الأرقام التالية للإرسال الفوري عبر الواتساب:</h4>", unsafe_allow_html=True)
+            st.markdown("<br><h4 style='text-align: center; color: var(--text-color);'>📲 اضغط على أحد الأرقام التالية للإرسال الفوري عبر الواتساب:</h4>", unsafe_allow_html=True)
             
             whatsapp_numbers = [
                 ("مسؤول الدعم (1)", "201069996245"),
