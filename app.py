@@ -13,25 +13,23 @@ st.set_page_config(
 
 # دالة مطورة ومباشرة للبحث عن أي صيغة للصورة تلقائياً (jpg, png, jpeg, webp)
 def find_and_load_image(base_file_name, fallback_url=""):
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    
-    # قائمة بجميع الصيغ والاحتمالات الممكنة لاسم الملف
-    name_without_ext = os.path.splitext(base_file_name)[0]
-    extensions = ['', '.jpg', '.jpeg', '.png', '.webp', '.JPG', '.PNG', '.JPEG']
-    
-    possible_filenames = [base_file_name, name_without_ext] + [f"{name_without_ext}{ext}" for ext in extensions]
-    
-    for fname in possible_filenames:
-        img_path = os.path.join(script_dir, fname)
-        if os.path.exists(img_path) and os.path.isfile(img_path):
-            try:
+    try:
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        name_without_ext = os.path.splitext(base_file_name)[0]
+        extensions = ['', '.jpg', '.jpeg', '.png', '.webp', '.JPG', '.PNG', '.JPEG']
+        
+        possible_filenames = [base_file_name, name_without_ext] + [f"{name_without_ext}{ext}" for ext in extensions]
+        
+        for fname in possible_filenames:
+            img_path = os.path.join(script_dir, fname)
+            if os.path.exists(img_path) and os.path.isfile(img_path):
                 with open(img_path, "rb") as f:
                     encoded = base64.b64encode(f.read()).decode("utf-8")
                     ext = os.path.splitext(fname)[1].replace('.', '').lower()
                     mime_type = "image/png" if ext == "png" else ("image/webp" if ext == "webp" else "image/jpeg")
                     return f"data:{mime_type};base64,{encoded}"
-            except Exception:
-                continue
+    except Exception:
+        pass
                 
     return fallback_url
 
@@ -154,7 +152,7 @@ st.markdown("""
         text-align: center !important;
     }
 
-    /* 🎨 تصميم كروت وفريمات الأفراد (Profile Frames) 🎨 */
+    /* تصميم كروت وفريمات الأفراد */
     .staff-card {
         background-color: #1b2631 !important;
         border: 2px solid #937B2B;
@@ -490,7 +488,7 @@ elif current_tab == "عن الفرع":
         </div>
     """, unsafe_allow_html=True)
 
-# 3️⃣ إدارات الأفراد (الهيكل الإداري والقيادي)
+# 3️⃣ إدارات الأفراد
 elif current_tab == "ادارات الافراد":
     st.markdown(f"""
         <div class="centered-header">
@@ -500,7 +498,6 @@ elif current_tab == "ادارات الافراد":
         </div>
     """, unsafe_allow_html=True)
 
-    # البحث عن صورة أستاذ أحمد بأي امتداد متوقع تلقائياً
     img_ahmed = find_and_load_image("ahmed.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
     img_khaled = find_and_load_image("khaled.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
     img_omar = find_and_load_image("omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
@@ -762,12 +759,3 @@ st.markdown("""
         تصميم وتنفيذ: <span>أحمد الجنزوري</span> - مدير الفرع
     </div>
 """, unsafe_allow_html=True)
-```يبدو أن صورة أحمد لم تظهر بسبب مشكلة في التحميل أو خطأ في مسار الملف/الرابط. 
-
-تأكد من الخطوات التالية لحل المشكلة:
-
-* **اسم الملف وامتداده:** تأكد من كتابة اسم الصورة بشكل صحيح (مثل `ahmed.jpg` أو `ahmed.png`) وأن الامتداد يطابق نوع الصورة الفعلي.
-* **مسار الصورة (Path):** إذا كنت تعمل على تطبيق أو موقع ويب، تأكد من وضع ملف الصورة في المجلد الصحيح (مثل مجلد `images` أو `assets`) وأن المسار المكتوب في الكود صحيح.
-* **الوصول للإنترنت:** إذا كانت الصورة مرفوعة على رابط خارجي (URL)، تحقق من الاتصال بالإنترنت ومن يعمل الرابط بشكل مباشر عند فتحه في المتصفح.
-
-إذا كنت تقصد إرفاق صورة هنا في المحادثة ولم تظهر، يرجى إعادة إرسالها أو توضيح السياق (كود برمجي، تطبيق
