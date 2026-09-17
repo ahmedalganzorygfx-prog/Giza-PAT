@@ -42,8 +42,8 @@ JOBS_LIST = [
     "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو لاستخدامه أعلى العنوان الرئيسي وفي الهيدر
-logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/150x150?text=PAT+Logo")
+# تحضير اللوجو لاستخدامه أعلي العنوان الرئيسي وفي الهيدر
+logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo")
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
 
@@ -115,24 +115,24 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎯 تنسيق اللوجو في المنتصف أعلى العنوان الرئيسي 🎯 */
+    /* 🎯 تكبير اللوجو بشكل أكبر وأوضح في المنتصف أعلى العنوان 🎯 */
     .centered-header {
         text-align: center !important;
-        margin: 15px 0 30px 0;
+        margin: 10px 0 35px 0;
     }
 
     .center-main-logo {
-        height: 110px;
+        height: 180px; /* تم التكبير بشكل ملحوظ بارز واحترافي */
         width: auto;
         object-fit: contain;
-        margin-bottom: 15px;
+        margin-bottom: 18px;
         display: inline-block;
-        filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3));
+        filter: drop-shadow(0px 6px 12px rgba(0,0,0,0.4));
     }
 
     .main-header-title {
         color: var(--text-color);
-        font-size: 2.3rem;
+        font-size: 2.4rem;
         font-weight: 800;
         display: inline-block;
         padding-bottom: 8px;
@@ -143,8 +143,8 @@ st.markdown("""
     .sub-header-title {
         color: var(--text-color);
         opacity: 0.85;
-        font-size: 1.15rem;
-        margin-top: 12px;
+        font-size: 1.2rem;
+        margin-top: 14px;
         text-align: center !important;
     }
 
@@ -353,7 +353,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (عرض اللوجو أعلى العنوان الرئيسي في المنتصف)
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
 
     st.markdown(f"""
