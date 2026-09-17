@@ -98,6 +98,12 @@ st.markdown("""
         text-decoration: none;
         box-shadow: 0 3px 8px rgba(178, 31, 31, 0.4);
         border: 1px solid #ffd700;
+        display: inline-block;
+        transition: transform 0.2s ease;
+    }
+
+    .teacher-platform-btn:hover {
+        transform: scale(1.03);
     }
 
     .centered-header {
@@ -245,7 +251,7 @@ st.markdown("""
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# الشريط العلوي للهيدر مع اللوجو الصغير بجوار الاسم
+# الشريط العلوي للهيدر مع زر ربط منصة المعلم بالرابط الجديد
 st.markdown(f"""
     <div class="top-navbar">
         <div class="nav-right-container">
@@ -254,7 +260,7 @@ st.markdown(f"""
                 <span>الأكاديمية المهنية للمعلمين - فرع الجيزة</span>
             </div>
         </div>
-        <a href="https://academy.emis.gov.eg" target="_blank" class="teacher-platform-btn">
+        <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
             منصة المٌعلم 🎓
         </a>
     </div>
@@ -371,7 +377,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">أحد البرامج الرقمية المعتمدة على منصة المعلم في الأكاديمية المهنية للمعلمين المتاحة للفئات المستهدفة.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.button("التسجيل بالبرنامج", key="b1", use_container_width=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة مدرسية</div>', unsafe_allow_html=True)
 
         with c2:
@@ -381,7 +387,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">إعداد وتأهيل القيادات للإدارات التعليمية لتطوير المهارات القيادية والإدارية.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.button("التسجيل بالبرنامج", key="b2", use_container_width=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة تعليمية</div>', unsafe_allow_html=True)
 
         with c3:
@@ -391,7 +397,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">تمكين الموجهين الفنيين من المهارات الأساسية للإشراف ومتابعة الأداء التعليمي.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.button("التسجيل بالبرنامج", key="b3", use_container_width=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج أساسيات التوجيه الفني</div>', unsafe_allow_html=True)
 
     elif sub_category == "برامج التسكين والترقي":
@@ -404,7 +410,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.button("التسجيل بالبرنامج", key="b4", use_container_width=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج التطبيقات التربوية للمعلم المساعد</div>', unsafe_allow_html=True)
 
         with c2:
@@ -414,7 +420,7 @@ elif current_tab == "منصة الفرع":
                     <div class="program-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
                 </div>
             """, unsafe_allow_html=True)
-            st.button("التسجيل بالبرنامج", key="b5", use_container_width=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
             st.markdown('<div class="card-footer">برنامج مهارات عامة في التدريس</div>', unsafe_allow_html=True)
 
     elif sub_category == "برنامج تغيير المسمى الوظيفي":
@@ -425,7 +431,7 @@ elif current_tab == "منصة الفرع":
                 <div class="program-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
             </div>
         """, unsafe_allow_html=True)
-        st.button("التسجيل بالبرنامج", key="b6", use_container_width=True)
+        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
 
     elif sub_category == "برامج الاعتماد":
@@ -436,7 +442,7 @@ elif current_tab == "منصة الفرع":
                 <div class="program-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
             </div>
         """, unsafe_allow_html=True)
-        st.button("التسجيل بالبرنامج", key="b7", use_container_width=True)
+        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
 # 5️⃣ نموذج التواصل مع فريق الدعم
