@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import urllib.parse
 import base64
+import time
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
@@ -39,7 +40,7 @@ if os.path.exists(logo_path):
         encoded_logo = base64.b64encode(f.read()).decode("utf-8")
         logo_html_tag = f'<img src="data:image/png;base64,{encoded_logo}" class="navbar-logo-img" alt="لوجو">'
 
-# تطبيق التنسيقات (CSS) متكيفة مع الوضعين الفاتح والداكن
+# تطبيق التنسيقات (CSS) وتوسيط كافة العناوين
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -104,9 +105,9 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* عناوين تتكيف تلقائياً مع Dark/Light Mode */
+    /* 🎯 توسيط العناوين الرئيسية */
     .centered-header {
-        text-align: center;
+        text-align: center !important;
         margin: 20px 0 30px 0;
     }
 
@@ -117,6 +118,7 @@ st.markdown("""
         display: inline-block;
         padding-bottom: 8px;
         border-bottom: 4px solid #937B2B;
+        text-align: center !important;
     }
 
     .sub-header-title {
@@ -124,15 +126,16 @@ st.markdown("""
         opacity: 0.8;
         font-size: 1.1rem;
         margin-top: 8px;
+        text-align: center !important;
     }
 
-    /* بطاقات المعرض في الصفحة الرئيسية */
+    /* بطاقة عرض الصور السلايدر بمنتصف الصفحة */
     .hero-card {
         background-color: var(--secondary-background-color);
         border: 2px solid #937B2B;
         border-radius: 20px;
         padding: 20px;
-        text-align: center;
+        text-align: center !important;
         box-shadow: 0 6px 18px rgba(0,0,0,0.1);
         margin-top: 10px;
     }
@@ -146,6 +149,7 @@ st.markdown("""
         border-radius: 10px;
         margin-top: 15px;
         border: 1px solid #937B2B;
+        text-align: center !important;
     }
 
     /* بطاقات الإدارات التعليمية */
@@ -155,7 +159,7 @@ st.markdown("""
         border-right: 4px solid #0b1a3e;
         border-radius: 8px;
         padding: 15px;
-        text-align: center;
+        text-align: center !important;
         font-weight: bold;
         color: var(--text-color);
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -176,7 +180,7 @@ st.markdown("""
         border-radius: 30px 0px 30px 0px;
         padding: 25px 20px;
         color: white !important;
-        text-align: right;
+        text-align: center !important;
         direction: rtl;
         min-height: 230px;
         box-shadow: 0 6px 15px rgba(0,0,0,0.15);
@@ -188,18 +192,20 @@ st.markdown("""
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 12px;
+        text-align: center !important;
     }
 
     .program-desc {
         font-size: 0.95rem;
         line-height: 1.7;
         color: #e0e0e0 !important;
+        text-align: center !important;
     }
 
     .card-footer {
         background-color: var(--secondary-background-color);
         color: #937B2B;
-        text-align: center;
+        text-align: center !important;
         padding: 8px;
         font-weight: bold;
         border: 1.5px solid #937B2B;
@@ -222,7 +228,7 @@ st.markdown("""
 
     .support-form-title {
         color: var(--text-color);
-        text-align: center;
+        text-align: center !important;
         font-size: 1.4rem;
         font-weight: bold;
         margin-bottom: 20px;
@@ -249,7 +255,7 @@ st.markdown("""
 
     .whatsapp-card {
         display: block;
-        text-align: center;
+        text-align: center !important;
         background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
         color: white !important;
         font-weight: bold;
@@ -273,7 +279,7 @@ st.markdown("""
         padding: 20px 0;
         background-color: #0b1a3e !important;
         color: #ffffff !important;
-        text-align: center;
+        text-align: center !important;
         font-size: 1.05rem;
         font-weight: bold;
         border-top: 3px solid #937B2B;
@@ -344,7 +350,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 25px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (محدثة بمجموعات صور متتابعة مع ظهور لوجو الفرع)
+# 1️⃣ الصفحة الرئيسية (عرض الصور متتابعة أوتوماتيكياً كل 5 ثوان وبدون أزرار)
 if current_tab == "الرئيسية":
     st.markdown("""
         <div class="centered-header">
@@ -353,62 +359,51 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قسم المعرض السلايدر التفاعلي
+    # قائمة صور البرامج والأنشطة التدريبية المعتمدة
+    slides = [
+        {
+            "title": "🏛️ الشعار الرسمي لفرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة",
+            "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/800x400?text=Logo"
+        },
+        {
+            "title": "🎓 برامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - أساسيات التوجيه الفني)",
+            "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop"
+        },
+        {
+            "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
+            "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
+        },
+        {
+            "title": "🔄 برامج إعادة التأهيل وتغيير المسمى الوظيفي لكوادر التعليم",
+            "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop"
+        },
+        {
+            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين (TOT)",
+            "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop"
+        }
+    ]
+
+    if 'slide_index' not in st.session_state:
+        st.session_state['slide_index'] = 0
+
     col_main1, col_main2, col_main3 = st.columns([1, 3, 1])
     with col_main2:
         st.markdown('<div class="hero-card">', unsafe_allow_html=True)
         
-        # قائمة صور البرامج والأنشطة التدريبية المعتمدة
-        slides = [
-            {
-                "title": "🏛️ الشعار الرسمي لفرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة",
-                "image": logo_path if os.path.exists(logo_path) else "https://via.placeholder.com/800x400?text=Logo"
-            },
-            {
-                "title": "🎓 برامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - أساسيات التوجيه الفني)",
-                "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop"
-            },
-            {
-                "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
-                "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
-            },
-            {
-                "title": "🔄 برامج إعادة التأهيل وتغيير المسمى الوظيفي لكوادر التعليم",
-                "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop"
-            },
-            {
-                "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين (TOT)",
-                "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop"
-            }
-        ]
-
-        # إدارة التنقل بين الصور في المعرض
-        if 'slide_index' not in st.session_state:
-            st.session_state['slide_index'] = 0
-
         current_slide = slides[st.session_state['slide_index']]
 
-        # عرض الصورة المحددة
-        if os.path.exists(current_slide["image"]):
-            st.image(current_slide["image"], use_container_width=True)
-        else:
-            st.image(current_slide["image"], use_container_width=True)
+        # عرض الصورة المتتابعة
+        st.image(current_slide["image"], use_container_width=True)
 
+        # عنوان الصورة المقتبس والمدعوم في المنتصف
         st.markdown(f'<div class="hero-caption">{current_slide["title"]}</div>', unsafe_allow_html=True)
 
-        # أزرار التنقل التفاعلية بين الصور
-        c_prev, c_space, c_next = st.columns([1, 2, 1])
-        with c_prev:
-            if st.button("⏩ التالي", key="btn_next_slide", use_container_width=True):
-                st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
-                st.rerun()
-
-        with c_next:
-            if st.button("السابق ⏪", key="btn_prev_slide", use_container_width=True):
-                st.session_state['slide_index'] = (st.session_state['slide_index'] - 1) % len(slides)
-                st.rerun()
-
         st.markdown('</div>', unsafe_allow_html=True)
+
+    # التحديث التلقائي والانتقال للصورة التالية كل 5 ثوانٍ
+    time.sleep(5)
+    st.session_state['slide_index'] = (st.session_state['slide_index'] + 1) % len(slides)
+    st.rerun()
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
@@ -418,7 +413,7 @@ elif current_tab == "عن الفرع":
         </div>
     """, unsafe_allow_html=True)
     st.markdown("""
-        <div style="background-color: var(--secondary-background-color); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; font-size: 1.1rem; color: var(--text-color);">
+        <div style="background-color: var(--secondary-background-color); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; font-size: 1.1rem; color: var(--text-color); text-align: center;">
             يقدم فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة البرامج التدريبية المعتمدة لترقي وتسكين أعضاء هيئة التعليم، وإعداد القيادات التربوية وتغيير المسمى الوظيفي بجميع الإدارات التعليمية التابعة للمحافظة.
         </div>
     """, unsafe_allow_html=True)
