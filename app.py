@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # دالة مساعدة لتحميل الصورة كـ base64 من مجلد المشروع محلياً
-def get_image_url_or_base64(file_name, fallback_url):
+def get_image_url_or_base64(file_name, fallback_url=""):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     img_path = os.path.join(script_dir, file_name)
     
@@ -42,9 +42,10 @@ JOBS_LIST = [
     "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو ووضعه في الهيدر بأعلى الصفحة
-logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/150x50?text=PAT+Logo")
-logo_html_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
+# تحضير اللوجو لاستخدامه أعلى العنوان الرئيسي وفي الهيدر
+logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/150x150?text=PAT+Logo")
+logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
+logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
 
 # تطبيق التنسيقات (CSS)
 st.markdown("""
@@ -59,7 +60,7 @@ st.markdown("""
         display: none;
     }
 
-    /* شريط التنقل العلوي الهيدر المطور مع اللوجو في أعلى الصفحة */
+    /* شريط التنقل العلوي الهيدر */
     .top-navbar {
         background-color: #0b1a3e !important;
         padding: 12px 30px;
@@ -88,7 +89,7 @@ st.markdown("""
     }
 
     .navbar-logo-img {
-        height: 55px;
+        height: 45px;
         width: auto;
         border-radius: 6px;
         object-fit: contain;
@@ -114,7 +115,40 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎨 تصميم العرض السلايدر مع إظهار الصورة كاملة بدون كروب 🎨 */
+    /* 🎯 تنسيق اللوجو في المنتصف أعلى العنوان الرئيسي 🎯 */
+    .centered-header {
+        text-align: center !important;
+        margin: 15px 0 30px 0;
+    }
+
+    .center-main-logo {
+        height: 110px;
+        width: auto;
+        object-fit: contain;
+        margin-bottom: 15px;
+        display: inline-block;
+        filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3));
+    }
+
+    .main-header-title {
+        color: var(--text-color);
+        font-size: 2.3rem;
+        font-weight: 800;
+        display: inline-block;
+        padding-bottom: 8px;
+        border-bottom: 4px solid #937B2B;
+        text-align: center !important;
+    }
+
+    .sub-header-title {
+        color: var(--text-color);
+        opacity: 0.85;
+        font-size: 1.15rem;
+        margin-top: 12px;
+        text-align: center !important;
+    }
+
+    /* تصميم السلايدر مع إظهار الصورة كاملة بدون قص */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -129,7 +163,7 @@ st.markdown("""
     .simple-slider-img {
         width: 100%;
         height: 480px;
-        object-fit: contain !important; /* لضمان ظهور الصورة بالكامل دون قص الأطراف */
+        object-fit: contain !important;
         display: block;
         background-color: #0b1a3e;
         padding: 10px;
@@ -143,29 +177,6 @@ st.markdown("""
         padding: 16px;
         text-align: center !important;
         border-top: 2px solid #937B2B;
-    }
-
-    .centered-header {
-        text-align: center !important;
-        margin: 20px 0 30px 0;
-    }
-
-    .main-header-title {
-        color: var(--text-color);
-        font-size: 2.2rem;
-        font-weight: 800;
-        display: inline-block;
-        padding-bottom: 8px;
-        border-bottom: 4px solid #937B2B;
-        text-align: center !important;
-    }
-
-    .sub-header-title {
-        color: var(--text-color);
-        opacity: 0.8;
-        font-size: 1.1rem;
-        margin-top: 8px;
-        text-align: center !important;
     }
 
     .edara-card {
@@ -288,12 +299,12 @@ st.markdown("""
 if 'current_tab' not in st.session_state:
     st.session_state['current_tab'] = 'الرئيسية'
 
-# 🏛️ الشريط العلوي للهيدر (يحتوي على اللوجو واسم الفرع في أعلى الصفحة)
+# الشريط العلوي للهيدر
 st.markdown(f"""
     <div class="top-navbar">
         <div class="nav-right-container">
             <div class="nav-logo-text">
-                {logo_html_tag}
+                {logo_navbar_tag}
                 <span>الأكاديمية المهنية للمعلمين - فرع الجيزة</span>
             </div>
         </div>
@@ -342,17 +353,18 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (السلايدر يحتوي على صور البرامج فقط بدون اللوجو، والصور تظهر بالكامل)
+# 1️⃣ الصفحة الرئيسية (عرض اللوجو أعلى العنوان الرئيسي في المنتصف)
 if current_tab == "الرئيسية":
 
-    st.markdown("""
+    st.markdown(f"""
         <div class="centered-header">
+            <div>{logo_header_tag}</div>
             <div class="main-header-title">الأكاديمية المهنية للمعلمين - فرع الجيزة</div>
             <div class="sub-header-title">البوابة الرقمية للخدمات والتدريبات والاعتماد المهني للمعلمين</div>
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة صور البرامج المرفوعة بمجلد المشروع (تم استبعاد اللوجو منها)
+    # قائمة صور البرامج المرفوعة بمجلد المشروع
     program_slides = [
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
@@ -384,7 +396,7 @@ if current_tab == "الرئيسية":
     # جلب الصورة من المجلد محلياً
     img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض السلايدر شاملاً العنوان واسم البرنامج أسفل الصورة وبدون قص للـ Crop
+    # عرض السلايدر
     st.markdown(f"""
         <div class="simple-slider-container">
             <img src="{img_src}" class="simple-slider-img" alt="صورة العرض">
@@ -398,8 +410,9 @@ if current_tab == "الرئيسية":
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
-    st.markdown("""
+    st.markdown(f"""
         <div class="centered-header">
+            <div>{logo_header_tag}</div>
             <div class="main-header-title">عن فرع الجيزة</div>
         </div>
     """, unsafe_allow_html=True)
@@ -411,8 +424,9 @@ elif current_tab == "عن الفرع":
 
 # 3️⃣ الإدارات التعليمية
 elif current_tab == "الادارات التعليمية":
-    st.markdown("""
+    st.markdown(f"""
         <div class="centered-header">
+            <div>{logo_header_tag}</div>
             <div class="main-header-title">الإدارات التعليمية - محافظة الجيزة</div>
             <div class="sub-header-title">دليل الإدارات التعليمية والديوان التابعة لفرع الجيزة</div>
         </div>
@@ -426,8 +440,9 @@ elif current_tab == "الادارات التعليمية":
 
 # 4️⃣ منصة الفرع والبرامج
 elif current_tab == "منصة الفرع":
-    st.markdown("""
+    st.markdown(f"""
         <div class="centered-header">
+            <div>{logo_header_tag}</div>
             <div class="main-header-title">منصة فرع الجيزة - البرامج الرقمية</div>
         </div>
     """, unsafe_allow_html=True)
@@ -522,8 +537,9 @@ elif current_tab == "منصة الفرع":
 
 # 5️⃣ نموذج التواصل مع فريق الدعم
 elif current_tab == "التواصل مع الدعم":
-    st.markdown("""
+    st.markdown(f"""
         <div class="centered-header">
+            <div>{logo_header_tag}</div>
             <div class="main-header-title">التواصل مع فريق الدعم الفني</div>
             <div class="sub-header-title">يرجى تسجيل البيانات أدناه لتوجيه طلبك مباشرة إلى فريق الدعم المختص عبر الواتساب</div>
         </div>
@@ -613,6 +629,7 @@ elif current_tab == "التواصل مع الدعم":
 else:
     st.markdown(f"""
         <div class="centered-header">
+            <div>{logo_header_tag}</div>
             <div class="main-header-title">{current_tab}</div>
         </div>
     """, unsafe_allow_html=True)
