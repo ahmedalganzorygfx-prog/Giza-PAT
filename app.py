@@ -2,8 +2,6 @@ import streamlit as st
 import os
 import urllib.parse
 import base64
-import time
-import random
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
@@ -13,20 +11,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة مساعدة لتحميل الصورة كـ base64 من مجلد المشروع محلياً
+# دالة مساعدة لتحميل الصورة كـ base64 من مجلد المشروع محلياً لسرعة العرض
+@st.cache_data
 def get_image_url_or_base64(file_name, fallback_url=""):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     img_path = os.path.join(script_dir, file_name)
     
-    # 1. البحث عن الصورة محلياً في مجلد المشروع
     if os.path.exists(img_path):
         with open(img_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode("utf-8")
             ext = file_name.split('.')[-1].lower()
             mime_type = "image/png" if ext == "png" else "image/jpeg"
             return f"data:{mime_type};base64,{encoded}"
-    
-    # 2. البديل الاحتياطي في حال عدم العثور على الملف محلياً
     return fallback_url
 
 # قائمة الإدارات التعليمية لمحافظة الجيزة
@@ -42,12 +38,12 @@ JOBS_LIST = [
     "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو لاستخدامه أعلي العنوان الرئيسي وفي الهيدر
+# تحضير اللوجو
 logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo")
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
 
-# تطبيق التنسيقات (CSS)
+# تطبيق التنسيقات (CSS) السريعة والخفيفة
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -115,14 +111,14 @@ st.markdown("""
         transform: scale(1.03);
     }
 
-    /* 🎯 تكبير اللوجو بشكل أكبر وأوضح في المنتصف أعلى العنوان 🎯 */
+    /* تنسيق اللوجو في المنتصف أعلى العنوان الرئيسي */
     .centered-header {
         text-align: center !important;
-        margin: 10px 0 35px 0;
+        margin: 10px 0 25px 0;
     }
 
     .center-main-logo {
-        height: 180px; /* تم التكبير بشكل ملحوظ بارز واحترافي */
+        height: 180px;
         width: auto;
         object-fit: contain;
         margin-bottom: 18px;
@@ -148,11 +144,11 @@ st.markdown("""
         text-align: center !important;
     }
 
-    /* تصميم السلايدر مع إظهار الصورة كاملة بدون قص */
+    /* تصميم العرض السلايدر السريع */
     .simple-slider-container {
         position: relative;
         width: 100%;
-        margin: 0 auto 30px auto;
+        margin: 0 auto 15px auto;
         border-radius: 16px;
         overflow: hidden;
         background-color: #0b1a3e !important;
@@ -190,7 +186,6 @@ st.markdown("""
         color: var(--text-color);
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         margin-bottom: 15px;
-        transition: all 0.3s ease;
     }
 
     .program-card {
@@ -262,7 +257,6 @@ st.markdown("""
         border-radius: 10px !important;
         border: 1px solid #937B2B !important;
         padding: 10px 20px !important;
-        transition: all 0.3s ease !important;
     }
 
     .whatsapp-card {
@@ -353,7 +347,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية
+# 1️⃣ الصفحة الرئيسية (سريعة وتفاعلية مع أزرار التنقل الفوري)
 if current_tab == "الرئيسية":
 
     st.markdown(f"""
@@ -364,7 +358,7 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة صور البرامج المرفوعة بمجلد المشروع
+    # قائمة صور البرامج
     program_slides = [
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
@@ -388,15 +382,13 @@ if current_tab == "الرئيسية":
         }
     ]
 
-    # العرض التتابع العشوائي بين صور البرامج
-    st.session_state['current_slide'] = random.choice(program_slides)
+    if 'slide_idx' not in st.session_state:
+        st.session_state['slide_idx'] = 0
 
-    current = st.session_state['current_slide']
-    
-    # جلب الصورة من المجلد محلياً
+    current = program_slides[st.session_state['slide_idx']]
     img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض السلايدر
+    # عرض المعرض
     st.markdown(f"""
         <div class="simple-slider-container">
             <img src="{img_src}" class="simple-slider-img" alt="صورة العرض">
@@ -404,9 +396,17 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # التتابع والتأخير الزمني 4 ثوانٍ
-    time.sleep(4)
-    st.rerun()
+    # أزرار تنقل تفاعلية فورية ومباشرة بدون بطء
+    col_prev, col_blank, col_next = st.columns([2, 8, 2])
+    with col_prev:
+        if st.button("❮ السابق", use_container_width=True):
+            st.session_state['slide_idx'] = (st.session_state['slide_idx'] - 1) % len(program_slides)
+            st.rerun()
+
+    with col_next:
+        if st.button("التالي ❯", use_container_width=True):
+            st.session_state['slide_idx'] = (st.session_state['slide_idx'] + 1) % len(program_slides)
+            st.rerun()
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
