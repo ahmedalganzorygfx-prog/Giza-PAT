@@ -32,14 +32,14 @@ JOBS_LIST = [
 script_dir = os.path.dirname(os.path.realpath(__file__))
 logo_path = os.path.join(script_dir, "Logo.png")
 
-# تطبيق التنسيقات (CSS)
+# تطبيق التنسيقات (CSS) الجمالية والمطورة
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         direction: rtl;
         text-align: right;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f8f9fa;
+        background-color: #f4f6f9;
     }
 
     [data-testid="stSidebar"] {
@@ -164,23 +164,66 @@ st.markdown("""
         margin-top: 5px;
     }
 
-    /* تصميم نموذج التواصل مع الدعم */
+    /* 🎨 تحسين وتجميل تصميم نموذج التواصل مع الدعم */
     .support-form-container {
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        border-top: 5px solid #0b1a3e;
-        max-width: 800px;
+        background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(11, 26, 62, 0.1);
+        border-top: 6px solid #937B2B;
+        border-right: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        max-width: 850px;
         margin: 0 auto;
     }
 
+    .support-form-title {
+        color: #0b1a3e;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px dashed #937B2B;
+    }
+
+    /* تحسين زر تجهيز الطلب */
     .stButton>button {
-        background-color: #b22222 !important;
-        color: white !important;
+        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%) !important;
+        color: #ffffff !important;
         font-weight: bold !important;
-        border-radius: 8px !important;
-        border: none !important;
+        font-size: 1.1rem !important;
+        border-radius: 10px !important;
+        border: 1px solid #937B2B !important;
+        padding: 10px 20px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 10px rgba(11, 26, 62, 0.2) !important;
+    }
+
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #937B2B 0%, #0b1a3e 100%) !important;
+        transform: translateY(-2px);
+    }
+
+    /* بطاقات أرقام الواتساب المميزة */
+    .whatsapp-card {
+        display: block;
+        text-align: center;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        color: white !important;
+        font-weight: bold;
+        padding: 15px 10px;
+        border-radius: 12px;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        transition: all 0.3s ease;
+        border: 1px solid #ffffff;
+    }
+
+    .whatsapp-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45);
+        color: #ffffff !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -384,41 +427,45 @@ elif current_tab == "منصة الفرع":
         st.button("التسجيل بالبرنامج", key="b7", use_container_width=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
-# 5️⃣ نموذج التواصل مع فريق الدعم
+# 5️⃣ نموذج التواصل مع فريق الدعم المحسّن
 elif current_tab == "التواصل مع الدعم":
     st.markdown("""
         <div class="centered-header">
             <div class="main-header-title">التواصل مع فريق الدعم الفني</div>
-            <div class="sub-header-title">قم بملء النموذج التالي وإرساله عبر الواتساب إلى أحد أرقام الدعم الفني</div>
+            <div class="sub-header-title">يرجى تسجيل البيانات أدناه لتوجيه طلبك مباشرة إلى فريق الدعم المختص عبر الواتساب</div>
         </div>
     """, unsafe_allow_html=True)
 
     with st.container():
-        st.markdown('<div class="support-form-container">', unsafe_allow_html=True)
+        st.markdown('''
+            <div class="support-form-container">
+                <div class="support-form-title">📋 استمارة تقديم طلب دعم فني</div>
+        ''', unsafe_allow_html=True)
         
         with st.form("support_form", clear_on_submit=False):
-            name = st.text_input("الاسم ثلاثي / رباعي *", placeholder="أدخل اسمك بالكامل")
+            name = st.text_input("👤 الاسم ثلاثي / رباعي *", placeholder="أدخل اسمك بالكامل كما هو بالصحيفة")
             
             col_f1, col_f2 = st.columns(2)
             with col_f1:
-                edara = st.selectbox("الإدارة التعليمية *", EDARAT_LIST)
+                edara = st.selectbox("📍 الإدارة التعليمية *", EDARAT_LIST)
             with col_f2:
-                job = st.selectbox("الوظيفة الحالية *", JOBS_LIST)
+                job = st.selectbox("💼 الوظيفة الحالية *", JOBS_LIST)
                 
-            phone = st.text_input("رقم الموبايل (واتس آب للتواصل) *", placeholder="مثال: 01012345678")
+            phone = st.text_input("📱 رقم الموبايل (واتس آب للتواصل) *", placeholder="مثال: 01012345678")
             
-            problem = st.text_area("شرح المشكلة *", placeholder="اكتب تفاصيل المشكلة التي تواجهك هنا...", height=120)
+            problem = st.text_area("📝 شرح المشكلة بالتفصيل *", placeholder="اكتب تفاصيل المشكلة أو الاستفسار بدقة...", height=120)
             
             file_uploaded = st.file_uploader(
-                "إرفاق صحيفة أحوال إلكترونية حديثة (PDF أو صورة) *", 
+                "📑 إرفاق صحيفة أحوال إلكترونية حديثة (PDF أو صورة) *", 
                 type=["pdf", "png", "jpg", "jpeg"]
             )
             
-            submitted = st.form_submit_button("تجهيز رسالة الواتساب", use_container_width=True)
+            st.markdown("<br>", unsafe_allow_html=True)
+            submitted = st.form_submit_button("🚀 تجهيز الرسالة وتأكيد الطلب", use_container_width=True)
             
             if submitted:
                 if not name or not phone or not problem or file_uploaded is None:
-                    st.error("⚠️ يرجى ملء كافة الحقول المطلوبة وإرفاق صحيفة الأحوال الإلكترونية.")
+                    st.error("⚠️ يرجى استكمال كافة البيانات المطلوبة وإرفاق صحيفة الأحوال الإلكترونية.")
                 else:
                     st.session_state['form_data'] = {
                         'name': name,
@@ -428,9 +475,9 @@ elif current_tab == "التواصل مع الدعم":
                         'problem': problem,
                         'file_name': file_uploaded.name
                     }
-                    st.success("✅ تم تجهيز بيانات النموذج! اختر أحد أرقام الدعم الفني أدناه للإرسال المباشر عبر الواتساب:")
+                    st.success("🎉 تم تجهيز طلبك بنجاح! اختر أحد أرقام فريق الدعم بالأسفل للإرسال المباشر:")
 
-        # إظهار أرقام التواصل عند اكتمال النموذج
+        # عرض خيارات الإرسال المباشر للواتساب
         if 'form_data' in st.session_state and st.session_state['form_data']:
             data = st.session_state['form_data']
             
@@ -446,12 +493,12 @@ elif current_tab == "التواصل مع الدعم":
             
             encoded_msg = urllib.parse.quote(msg_text)
 
-            st.markdown("### 📲 اختر رقم الدعم الفني للإرسال:")
+            st.markdown("<br><h4 style='text-align: center; color: #0b1a3e;'>📲 اضغط على أحد الأرقام التالية للإرسال الفوري:</h4>", unsafe_allow_html=True)
             
             whatsapp_numbers = [
-                ("فريق الدعم الفني (1)", "201069996245"),
-                ("فريق الدعم الفني (2)", "201120807631"),
-                ("فريق الدعم الفني (3)", "201201109892")
+                ("مسؤول الدعم (1)", "201069996245"),
+                ("مسؤول الدعم (2)", "201120807631"),
+                ("مسؤول الدعم (3)", "201201109892")
             ]
 
             cols_wa = st.columns(3)
@@ -459,21 +506,14 @@ elif current_tab == "التواصل مع الدعم":
                 wa_url = f"https://wa.me/{num}?text={encoded_msg}"
                 with cols_wa[idx]:
                     st.markdown(
-                        f'''<a href="{wa_url}" target="_blank" style="
-                            display: block;
-                            text-align: center;
-                            background-color: #25D366;
-                            color: white;
-                            font-weight: bold;
-                            padding: 12px;
-                            border-radius: 8px;
-                            text-decoration: none;
-                            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-                        ">💬 إرسال إلى {label}<br><small>{num.replace('20', '0')}</small></a>''', 
+                        f'''<a href="{wa_url}" target="_blank" class="whatsapp-card">
+                            💬 {label}<br>
+                            <span style="font-size: 0.9rem; opacity: 0.9;">({num.replace('20', '0')})</span>
+                        </a>''', 
                         unsafe_allow_html=True
                     )
             
-            st.info("💡 **تنبيه:** بعد الضغط على زر الواتساب، يرجى إرفاق ملف صحيفة الأحوال الإلكترونية داخل المحادثة.")
+            st.info("📌 **تنويه هام:** بعد توجيهك لتطبيق الواتساب، يرجى إرفاق ملف صحيفة الأحوال المرفوع داخل شات المحادثة لتسريع معالجة طلبك.")
             
         st.markdown('</div>', unsafe_allow_html=True)
 
