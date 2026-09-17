@@ -43,7 +43,7 @@ logo_src = get_image_url_or_base64("Logo.png", "https://via.placeholder.com/220x
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
 
-# تطبيق التنسيقات (CSS) السريعة والخفيفة
+# تطبيق التنسيقات (CSS)
 st.markdown("""
     <style>
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
@@ -144,7 +144,67 @@ st.markdown("""
         text-align: center !important;
     }
 
-    /* تصميم العرض السلايدر السريع */
+    /* 🎨 تصميم كروت وفريمات الأفراد (Profile Frames) 🎨 */
+    .staff-card {
+        background-color: #1b2631 !important;
+        border: 2px solid #937B2B;
+        border-radius: 20px;
+        padding: 30px 20px;
+        text-align: center !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .staff-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .avatar-frame {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 18px auto;
+        border-radius: 50%;
+        border: 4px solid #FFD700;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        overflow: hidden;
+        background-color: #0b1a3e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .avatar-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .staff-name {
+        color: #FFD700 !important;
+        font-size: 1.35rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .staff-role {
+        color: #ffffff !important;
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .staff-dept {
+        color: #937B2B !important;
+        font-size: 0.95rem;
+        font-weight: bold;
+        background-color: rgba(147, 123, 43, 0.15);
+        padding: 4px 12px;
+        border-radius: 12px;
+        display: inline-block;
+    }
+
+    /* تصميم العرض السلايدر */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -347,7 +407,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (سريعة وتفاعلية مع أزرار التنقل الفوري)
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
 
     st.markdown(f"""
@@ -388,7 +448,6 @@ if current_tab == "الرئيسية":
     current = program_slides[st.session_state['slide_idx']]
     img_src = get_image_url_or_base64(current['file_name'], current['fallback'])
 
-    # عرض المعرض
     st.markdown(f"""
         <div class="simple-slider-container">
             <img src="{img_src}" class="simple-slider-img" alt="صورة العرض">
@@ -396,7 +455,6 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # أزرار تنقل تفاعلية فورية ومباشرة بدون بطء
     col_prev, col_blank, col_next = st.columns([2, 8, 2])
     with col_prev:
         if st.button("❮ السابق", use_container_width=True):
@@ -422,7 +480,60 @@ elif current_tab == "عن الفرع":
         </div>
     """, unsafe_allow_html=True)
 
-# 3️⃣ الإدارات التعليمية
+# 3️⃣ إدارات الأفراد (الهيكل الإداري والقيادي)
+elif current_tab == "ادارات الافراد":
+    st.markdown(f"""
+        <div class="centered-header">
+            <div>{logo_header_tag}</div>
+            <div class="main-header-title">إدارات الأفراد - الهيكل الإداري</div>
+            <div class="sub-header-title">قيادات وكوادر الأكاديمية المهنية للمعلمين - فرع الجيزة</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # تجهيز الصور الشخصية للأفراد (يمكن وضع ملفات الصور ahmed.jpg, khaled.jpg, omar.jpg بمجلد المشروع)
+    img_ahmed = get_image_url_or_base64("ahmed.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
+    img_khaled = get_image_url_or_base64("khaled.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
+    img_omar = get_image_url_or_base64("omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown(f"""
+            <div class="staff-card">
+                <div class="avatar-frame">
+                    <img src="{img_ahmed}" alt="أحمد حسني الجنزوري">
+                </div>
+                <div class="staff-name">أحمد حسني الجنزوري</div>
+                <div class="staff-role">👔 مدير الفرع</div>
+                <div class="staff-dept">Information Technology</div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown(f"""
+            <div class="staff-card">
+                <div class="avatar-frame">
+                    <img src="{img_khaled}" alt="خالد عبدالحكيم هارون">
+                </div>
+                <div class="staff-name">خالد عبدالحكيم هارون</div>
+                <div class="staff-role">🤝 مسئول الموارد البشرية</div>
+                <div class="staff-dept">Information Technology</div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown(f"""
+            <div class="staff-card">
+                <div class="avatar-frame">
+                    <img src="{img_omar}" alt="أحمد محمد عمر">
+                </div>
+                <div class="staff-name">أحمد محمد عمر</div>
+                <div class="staff-role">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-dept">التنمية المهنية والاعتماد</div>
+            </div>
+        """, unsafe_allow_html=True)
+
+# 4️⃣ الإدارات التعليمية
 elif current_tab == "الادارات التعليمية":
     st.markdown(f"""
         <div class="centered-header">
@@ -438,7 +549,7 @@ elif current_tab == "الادارات التعليمية":
         with col_target:
             st.markdown(f'<div class="edara-card">📍 إدارة {edara}</div>', unsafe_allow_html=True)
 
-# 4️⃣ منصة الفرع والبرامج
+# 5️⃣ منصة الفرع والبرامج
 elif current_tab == "منصة الفرع":
     st.markdown(f"""
         <div class="centered-header">
@@ -533,9 +644,9 @@ elif current_tab == "منصة الفرع":
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
 
-# 5️⃣ نموذج التواصل مع فريق الدعم
+# 6️⃣ نموذج التواصل مع فريق الدعم
 elif current_tab == "التواصل مع الدعم":
     st.markdown(f"""
         <div class="centered-header">
