@@ -9,12 +9,22 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# قائمة الإدارات التعليمية التابعة لفرع الجيزة
+# قائمة الإدارات التعليمية لمحافظة الجيزة
 EDARAT_LIST = [
     "أبو النمرس", "أطفيح", "أكتوبر", "أوسيم", "البدرشين", "الحوامدية", 
     "الدقى", "الديوان العام", "الشيخ زايد", "الصف", "العجوزة", "العمرانية", 
     "الهرم", "الواحات البحرية", "الوراق", "بولاق الدكرور", "جنوب الجيزة", 
     "حدائق أكتوبر", "ديوان المديرية", "شمال الجيزة", "كرداسة", "منشأة القناطر"
+]
+
+# قائمة الوظائف الحالية
+JOBS_LIST = [
+    "معلم مساعد", 
+    "معلم", 
+    "معلم أول", 
+    "معلم أول أ", 
+    "معلم خبير", 
+    "كبير معلمين"
 ]
 
 # تحديد مسار اللوجو المرفوع (Logo.png)
@@ -153,6 +163,17 @@ st.markdown("""
         margin-top: 5px;
     }
 
+    /* تصميم نموذج التواصل مع الدعم */
+    .support-form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        border-top: 5px solid #0b1a3e;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
     .stButton>button {
         background-color: #b22222 !important;
         color: white !important;
@@ -182,7 +203,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # أزرار التبويبات الرئيسية
-cols = st.columns([1, 1.2, 1.3, 1.3, 1.2, 1.2, 1.5])
+cols = st.columns([1, 1, 1.1, 1.2, 1.2, 1.1, 1.3, 1.4])
 
 with cols[0]:
     if st.button("الرئيسية", use_container_width=True):
@@ -212,6 +233,10 @@ with cols[6]:
     if st.button("منصة الفرع والبرامج", use_container_width=True):
         st.session_state['current_tab'] = 'منصة الفرع'
 
+with cols[7]:
+    if st.button("التواصل مع الدعم", use_container_width=True):
+        st.session_state['current_tab'] = 'التواصل مع الدعم'
+
 st.markdown("<hr style='margin-top: 5px; margin-bottom: 25px;'>", unsafe_allow_html=True)
 
 current_tab = st.session_state['current_tab']
@@ -225,7 +250,6 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # عرض اللوجو الخاص بالمشروع Logo.png
     col_img1, col_img2, col_img3 = st.columns([1, 1.5, 1])
     with col_img2:
         if os.path.exists(logo_path):
@@ -358,6 +382,46 @@ elif current_tab == "منصة الفرع":
         """, unsafe_allow_html=True)
         st.button("التسجيل بالبرنامج", key="b7", use_container_width=True)
         st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
+
+# 5️⃣ نموذج التواصل مع فريق الدعم
+elif current_tab == "التواصل مع الدعم":
+    st.markdown("""
+        <div class="centered-header">
+            <div class="main-header-title">التواصل مع فريق الدعم الفني</div>
+            <div class="sub-header-title">قم بملء النموذج التالي وسيتم التواصل معك لمعالجة المشكلة</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    with st.container():
+        st.markdown('<div class="support-form-container">', unsafe_allow_html=True)
+        
+        with st.form("support_form", clear_on_submit=True):
+            name = st.text_input("الاسم ثلاثي / رباعي *", placeholder="أدخل اسمك بالكامل")
+            
+            col_f1, col_f2 = st.columns(2)
+            with col_f1:
+                edara = st.selectbox("الإدارة التعليمية *", EDARAT_LIST)
+            with col_f2:
+                job = st.selectbox("الوظيفة الحالية *", JOBS_LIST)
+                
+            phone = st.text_input("رقم الموبايل (واتس آب للتواصل) *", placeholder="مثال: 01012345678")
+            
+            problem = st.text_area("شرح المشكلة *", placeholder="اكتب تفاصيل المشكلة التي تواجهك هنا...", height=120)
+            
+            file_uploaded = st.file_uploader(
+                "إرفاق صحيفة أحوال إلكترونية حديثة (PDF أو صورة) *", 
+                type=["pdf", "png", "jpg", "jpeg"]
+            )
+            
+            submitted = st.form_submit_button("إرسال الطلب لفريق الدعم", use_container_width=True)
+            
+            if submitted:
+                if not name or not phone or not problem or file_uploaded is None:
+                    st.error("⚠️ يرجى ملء كافة الحقول المطلوبة وإرفاق صحيفة الأحوال الإلكترونية.")
+                else:
+                    st.success(f"✅ تم إرسال طلبك بنجاح يا أستاذ/ة ({name}). سيتواصل معك فريق الدعم الفني عبر الواتساب على الرقم ({phone}) في أقرب وقت.")
+        
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # باقي التبويبات
 else:
