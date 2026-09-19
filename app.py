@@ -108,7 +108,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) مع تصغير وتنسيق البانر العلوي
+# 4️⃣ تصميم الأنماط (CSS) مع تكبير حجم اللوجو في البانر العلوي
 st.markdown(
     """
     <style>
@@ -429,11 +429,11 @@ st.markdown(
         box-shadow: 0 6px 18px rgba(201, 162, 39, 0.4) !important;
     }
 
-    /* تصميم البانر العلوي المصغر والمطابق للصورة */
+    /* تصميم البانر العلوي مع تكبير حجم اللوجو بشكل جذاب */
     .hero-banner {
         background: linear-gradient(135deg, rgba(11, 26, 62, 0.95) 0%, rgba(15, 32, 67, 0.85) 100%);
         border-radius: 18px;
-        padding: 22px 15px;
+        padding: 25px 15px;
         text-align: center !important;
         margin: 10px 0 25px 0;
         border: 1.5px solid rgba(201, 162, 39, 0.4);
@@ -441,17 +441,17 @@ st.markdown(
     }
 
     .center-main-logo {
-        height: 85px;
+        height: 140px;
         width: auto;
         object-fit: contain;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
         display: inline-block;
-        filter: drop-shadow(0px 6px 15px rgba(0,0,0,0.4));
+        filter: drop-shadow(0px 8px 20px rgba(0,0,0,0.5));
     }
 
     .main-header-title {
         color: #ffffff !important;
-        font-size: 1.75rem;
+        font-size: 1.85rem;
         font-weight: 800;
         display: inline-block;
         padding-bottom: 8px;
@@ -463,7 +463,7 @@ st.markdown(
 
     .sub-header-title {
         color: #94a3b8 !important;
-        font-size: 0.98rem;
+        font-size: 1.02rem;
         font-weight: 500;
         text-align: center !important;
     }
