@@ -757,8 +757,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# قائمة التبويبات العلوية
-cols = st.columns([1.1, 1, 1.1, 1.2, 1.2, 1.1, 1.4, 1.3])
+# قائمة التبويبات العلوية (تمت إضافة "أحدث التعليمات والقرارات")
+cols = st.columns([1, 1, 1, 1, 1, 1, 1, 1.2, 1.2])
 
 tabs_names = [
     "الرئيسية",
@@ -766,6 +766,7 @@ tabs_names = [
     "ادارات الافراد",
     "الادارات التعليمية",
     "خدمات الأكاديمية",
+    "أحدث التعليمات",
     "مجتمعات التعلم",
     "التواصل مع الدعم",
 ]
@@ -775,7 +776,7 @@ for idx, name in enumerate(tabs_names):
     if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
       st.session_state["current_tab"] = name
 
-with cols[7]:
+with cols[8]:
   st.markdown(
       f"""
         <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
@@ -1331,7 +1332,71 @@ elif current_tab == "خدمات الأكاديمية":
       unsafe_allow_html=True,
   )
 
-# 6️⃣ مجتمعات التعلم
+# 6️⃣ أحدث التعليمات والقرارات
+elif current_tab == "أحدث التعليمات":
+  st.markdown(
+      f"""
+        <div class="hero-banner">
+            <div>{logo_header_tag}</div>
+            <div class="main-header-title">أحدث التعليمات والقرارات التنظيمية</div>
+            <div class="sub-header-title">الكتب الوزارية، النشرات الدورية، والقرارات الصادرة عن الأكاديمية المهنية للمعلمين</div>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  st.markdown(
+      """
+        <div class="info-card-box">
+            <h3>📌 التعليمات التنفيذية لملفات الترقي والتسكين</h3>
+            <p>
+                تابِع أحدث التعليمات الواردة من الإدارة العامة لصلاحية الترقي بشأن استيفاء ملفات الإنجاز، واختبارات التنمية المهنية، والمدد البينية اللازمة للترقي على الكادر الوظيفي لجميع الإدارات التعليمية بالجيزة.
+            </p>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  st.markdown(
+      """
+        <div class="info-card-box">
+            <h3>📜 ضوابط شروط التقدم لبرامج القيادات التربوية</h3>
+            <p>
+                تم اعتماد الشروط والخطوات التنفيذية للتقدم لبرامج (مدير ووكيل إدارة مدرسية، مدير ووكيل إدارة تعليمية، والتوجيه الفني) عبر منصة المعلم الرقمية وفقاً للكتب الدوريّة المنظمة.
+            </p>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  st.markdown(
+      """
+        <div class="info-card-box">
+            <h3>🔄 شروط وإجراءات تغيير المسمى الوظيفي</h3>
+            <p>
+                التعليمات الخاصة بالمؤهلات الحاصل عليها أعضاء هيئة التعليم الراغبين في تعديل المسمى الوظيفي وفقاً للقانون رقم 155 لسنة 2007 وتعديلاته.
+            </p>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  st.markdown(
+      """
+        <div class="support-form-container" style="text-align: center;">
+            <p style="font-size: 1.15rem; line-height: 1.9; color: #ffffff;">
+                للاطلاع على النصوص الكاملة للقرارات والتعاميم الرسمية وتنزيل النشرات بصيغة PDF، يرجى زيارة الموقع الرسمي للأكاديمية المهنية للمعلمين.
+            </p>
+            <br>
+            <a href="https://www.pat.edu.eg" target="_blank" class="location-btn" style="text-decoration: none;">
+                🌐 زيارة الموقع الرسمي للأكاديمية
+            </a>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+# 7️⃣ مجتمعات التعلم
 elif current_tab == "مجتمعات التعلم":
   st.markdown(
       f"""
@@ -1433,7 +1498,7 @@ elif current_tab == "مجتمعات التعلم":
         unsafe_allow_html=True,
     )
 
-# 7️⃣ التواصل مع الدعم
+# 8️⃣ التواصل مع الدعم
 elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
