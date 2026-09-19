@@ -108,13 +108,10 @@ FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 st.markdown(
     """
     <style>
-    /* 🎯 إلغاء أيقونات GitHub و Fork نهائياً من الشريط العلوي 🎯 */
+    /* 🎯 إلغاء أيقونة GitHub فقط من الشريط العلوي 🎯 */
     header a[href*="github"],
     header button[title*="GitHub"],
-    header button[title*="Fork"],
-    header a[href*="fork"],
-    .stAppToolbar a[href*="github"],
-    .stAppToolbar button[title*="Fork"] {
+    .stAppToolbar a[href*="github"] {
         display: none !important;
     }
 
