@@ -138,20 +138,18 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ إدارة حالة اللغة الحالية للمنصة
+# إدارة حالة اللغة
 if "language" not in st.session_state:
   st.session_state["language"] = "ar"
 
 lang = st.session_state["language"]
 is_ar = lang == "ar"
 
-# نصوص مترجمة ديناميكياً حسب اللغة
 TEXTS = {
     "ar": {
         "page_title": "الأكاديمية المهنية للمعلمين - فرع الجيزة",
         "nav_title": "الأكاديمية المهنية للمعلمين - فرع الجيزة",
         "platform_btn": "منصة المعلم 🎓",
-        "lang_btn": "🇺🇸 English",
         "tabs": [
             "الرئيسية",
             "عن الفرع",
@@ -359,7 +357,6 @@ TEXTS = {
         "page_title": "Professional Academy for Teachers - Giza Branch",
         "nav_title": "Professional Academy for Teachers - Giza Branch",
         "platform_btn": "Teacher Platform 🎓",
-        "lang_btn": "🇸🇦 العربية",
         "tabs": [
             "Home",
             "About Branch",
@@ -597,7 +594,10 @@ TEXTS = {
             " Google Maps using the link below:"
         ),
         "loc_btn": "🗺️ Open Location in Google Maps",
-        "footer": "Designed & Implemented by: <span>Ahmed Al-Ganzoury</span> - Branch Director",
+        "footer": (
+            "Designed & Implemented by: <span>Ahmed Al-Ganzoury</span> - Branch"
+            " Director"
+        ),
         "fb_btn": "📘 Branch Facebook",
     },
 }
@@ -606,7 +606,7 @@ t = TEXTS[lang]
 edarat_list = EDARAT_LIST_AR if is_ar else EDARAT_LIST_EN
 jobs_list = JOBS_LIST_AR if is_ar else JOBS_LIST_EN
 
-# 4️⃣ تصميم الموقع الإلكتروني المطور
+# 4️⃣ تصميم واجهة الموقع
 st.markdown(
     f"""
     <style>
@@ -623,16 +623,16 @@ st.markdown(
     }}
 
     html, body, [data-testid="stAppViewContainer"] {{
-        direction: {'rtl' if is_ar else 'ltr'};
-        text-align: {'right' if is_ar else 'left'};
+        direction: {"rtl" if is_ar else "ltr"};
+        text-align: {"right" if is_ar else "left"};
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #060d1f !important;
         color: #ffffff !important;
     }}
 
     .info-card-box {{
-        direction: {'rtl' if is_ar else 'ltr'};
-        text-align: {'right' if is_ar else 'left'};
+        direction: {"rtl" if is_ar else "ltr"};
+        text-align: {"right" if is_ar else "left"};
         background: linear-gradient(145deg, rgba(15, 32, 67, 0.95) 0%, rgba(8, 18, 41, 0.9) 100%) !important;
         backdrop-filter: blur(12px);
         color: #ffffff !important;
@@ -642,12 +642,12 @@ st.markdown(
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         margin-bottom: 26px;
         transition: all 0.3s ease;
-    }
+    }}
 
     .info-card-box:hover {{
         border-color: #FFD700;
         box-shadow: 0 14px 35px rgba(201, 162, 39, 0.3);
-    }
+    }}
 
     .info-card-box h3 {{
         color: #FFD700 !important;
@@ -656,7 +656,7 @@ st.markdown(
         margin-top: 0;
         padding-bottom: 14px;
         border-bottom: 1.5px dashed rgba(201, 162, 39, 0.5);
-    }
+    }}
 
     .info-card-box p {{
         font-size: 1.18rem !important;
@@ -664,13 +664,13 @@ st.markdown(
         color: #f1f5f9 !important;
         font-weight: 500 !important;
         margin-bottom: 15px;
-    }
+    }}
 
     .staff-item-badge {{
         background: rgba(11, 26, 62, 0.8) !important;
         border: 1px solid rgba(201, 162, 39, 0.4) !important;
-        border-right: {'5px solid #FFD700' if is_ar else 'none'} !important;
-        border-left: {'none' if is_ar else '5px solid #FFD700'} !important;
+        border-right: {"5px solid #FFD700" if is_ar else "none"} !important;
+        border-left: {"none" if is_ar else "5px solid #FFD700"} !important;
         border-radius: 12px !important;
         padding: 12px 18px !important;
         margin-bottom: 10px !important;
@@ -682,13 +682,13 @@ st.markdown(
         gap: 10px !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
         transition: all 0.25s ease !important;
-    }
+    }}
 
     .staff-item-badge:hover {{
         transform: translateY(-2px) !important;
         background: rgba(201, 162, 39, 0.15) !important;
         border-color: #FFD700 !important;
-    }
+    }}
 
     .highlight-name {{
         color: #FFD700 !important;
@@ -718,7 +718,7 @@ st.markdown(
         color: #ffffff !important;
         border-radius: 12px !important;
         border: 1.5px solid rgba(201, 162, 39, 0.45) !important;
-    }
+    }}
 
     div[data-baseweb="input"] > div:focus-within, textarea:focus {{
         border-color: #FFD700 !important;
@@ -736,7 +736,7 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-    }
+    }}
 
     div[data-testid="stFormSubmitButton"] > button:hover {{
         background: linear-gradient(135deg, #FFD700 0%, #C9A227 100%) !important;
@@ -774,7 +774,7 @@ st.markdown(
         border-radius: 8px !important;
         box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
         transition: all 0.3s ease !important;
-    }
+    }}
 
     div[data-testid="stFileUploaderDropzone"] button:hover {{
         background: #C9A227 !important;
@@ -788,7 +788,7 @@ st.markdown(
         display: flex;
         align-items: center;
         justify-content: space-between;
-        direction: {'rtl' if is_ar else 'ltr'};
+        direction: {"rtl" if is_ar else "ltr"};
         box-shadow: 0 4px 25px rgba(0,0,0,0.5);
         margin: 0 -1rem 20px -1rem;
         border-bottom: 2px solid rgba(201, 162, 39, 0.5);
@@ -846,25 +846,6 @@ st.markdown(
     .teacher-platform-btn:hover {{
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(211, 47, 47, 0.7);
-    }}
-
-    .lang-toggle-btn {{
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%) !important;
-        color: #FFD700 !important;
-        padding: 10px 18px;
-        border-radius: 30px;
-        font-weight: bold;
-        font-size: 0.95rem;
-        border: 1.5px solid #C9A227;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
-        transition: all 0.3s ease;
-    }}
-
-    .lang-toggle-btn:hover {{
-        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
-        color: #0b1a3e !important;
-        transform: translateY(-2px);
     }}
 
     .stButton>button {{
@@ -1072,8 +1053,8 @@ st.markdown(
     .edara-card {{
         background: rgba(15, 32, 67, 0.7) !important;
         border: 1px solid rgba(201, 162, 39, 0.25);
-        border-right: {'5px solid #C9A227' if is_ar else '1px solid rgba(201, 162, 39, 0.25)'} !important;
-        border-left: {'1px solid rgba(201, 162, 39, 0.25)' if is_ar else '5px solid #C9A227'} !important;
+        border-right: {"5px solid #C9A227" if is_ar else "1px solid rgba(201, 162, 39, 0.25)"} !important;
+        border-left: {"1px solid rgba(201, 162, 39, 0.25)" if is_ar else "5px solid #C9A227"} !important;
         border-radius: 12px;
         padding: 15px;
         text-align: center !important;
@@ -1098,8 +1079,8 @@ st.markdown(
         border-radius: 24px;
         box-shadow: 0 12px 35px rgba(0,0,0,0.3);
         border-top: 5px solid #C9A227;
-        border-right: {'1px solid rgba(201, 162, 39, 0.3)' if is_ar else '5px solid #C9A227'};
-        border-left: {'5px solid #C9A227' if is_ar else '1px solid rgba(201, 162, 39, 0.3)'};
+        border-right: {"1px solid rgba(201, 162, 39, 0.3)" if is_ar else "5px solid #C9A227"};
+        border-left: {"5px solid #C9A227" if is_ar else "1px solid rgba(201, 162, 39, 0.3)"};
         max-width: 900px;
         margin: 0 auto;
     }
@@ -1227,7 +1208,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = t["tabs"][0]
 
-# الشريط العلوي للهيدر مع زر تبديل اللغة
+# الشريط العلوي للهيدر
 col_logo, col_actions = st.columns([2.5, 1.5])
 with col_logo:
   st.markdown(
@@ -1284,7 +1265,7 @@ with cols_tabs[7]:
   st.markdown(
       f"""
         <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
-            {t["fb_btn"]}
+            📘 فرع الجيزة
         </a>
     """,
       unsafe_allow_html=True,
@@ -1899,7 +1880,9 @@ elif current_tab == tabs_names[6]:
 
       phone = st.text_input(t["f_phone"], placeholder=t["f_phone_ph"])
       problem = st.text_area(t["f_prob"], placeholder=t["f_prob_ph"], height=120)
-      file_uploaded = st.file_uploader(t["f_file"], type=["pdf", "png", "jpg", "jpeg"])
+      file_uploaded = st.file_uploader(
+          t["f_file"], type=["pdf", "png", "jpg", "jpeg"]
+      )
 
       st.markdown("<br>", unsafe_allow_html=True)
       submitted = st.form_submit_button(t["f_btn"], use_container_width=True)
