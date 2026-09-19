@@ -11,27 +11,30 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة مطورة ومباشرة للبحث عن أي صيغة للصورة تلقائياً (jpg, png, jpeg, webp)
-def find_and_load_image(base_file_name, fallback_url=""):
+# تخزين مؤقت للصور لمنع إعادة تحميلها وقراءتها في كل مرة (يُسرّع الموقع جداً)
+@st.cache_data(show_spinner=False)
+def get_image_base64_cached(file_name):
     try:
         script_dir = os.path.dirname(os.path.realpath(__file__))
-        name_without_ext = os.path.splitext(base_file_name)[0]
+        name_without_ext = os.path.splitext(file_name)[0]
         extensions = ['', '.jpg', '.jpeg', '.png', '.webp', '.JPG', '.PNG', '.JPEG']
         
-        possible_filenames = [base_file_name, name_without_ext] + [f"{name_without_ext}{ext}" for ext in extensions]
-        
-        for fname in possible_filenames:
+        for ext in extensions:
+            fname = f"{name_without_ext}{ext}" if ext else file_name
             img_path = os.path.join(script_dir, fname)
             if os.path.exists(img_path) and os.path.isfile(img_path):
                 with open(img_path, "rb") as f:
                     encoded = base64.b64encode(f.read()).decode("utf-8")
-                    ext = os.path.splitext(fname)[1].replace('.', '').lower()
-                    mime_type = "image/png" if ext == "png" else ("image/webp" if ext == "webp" else "image/jpeg")
+                    ext_name = os.path.splitext(fname)[1].replace('.', '').lower()
+                    mime_type = "image/png" if ext_name == "png" else ("image/webp" if ext_name == "webp" else "image/jpeg")
                     return f"data:{mime_type};base64,{encoded}"
     except Exception:
         pass
-                
-    return fallback_url
+    return None
+
+def find_and_load_image(base_file_name, fallback_url=""):
+    cached_img = get_image_base64_cached(base_file_name)
+    return cached_img if cached_img else fallback_url
 
 # قائمة الإدارات التعليمية لمحافظة الجيزة
 EDARAT_LIST = [
@@ -46,7 +49,7 @@ JOBS_LIST = [
     "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو
+# تحضير اللوجو مرة واحدة
 logo_src = find_and_load_image("Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo")
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
@@ -60,11 +63,8 @@ st.markdown("""
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    [data-testid="stSidebar"] {
-        display: none;
-    }
+    [data-testid="stSidebar"] { display: none; }
 
-    /* شريط التنقل العلوي الهيدر */
     .top-navbar {
         background-color: #0b1a3e !important;
         padding: 12px 30px;
@@ -77,11 +77,7 @@ st.markdown("""
         border-bottom: 3px solid #937B2B;
     }
 
-    .nav-right-container {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
+    .nav-right-container { display: flex; align-items: center; gap: 15px; }
 
     .nav-logo-text {
         color: #ffffff !important;
@@ -112,18 +108,9 @@ st.markdown("""
         box-shadow: 0 3px 8px rgba(178, 31, 31, 0.4);
         border: 1px solid #ffd700;
         display: inline-block;
-        transition: transform 0.2s ease;
     }
 
-    .teacher-platform-btn:hover {
-        transform: scale(1.03);
-    }
-
-    /* تنسيق اللوجو في المنتصف أعلى العنوان الرئيسي */
-    .centered-header {
-        text-align: center !important;
-        margin: 10px 0 25px 0;
-    }
+    .centered-header { text-align: center !important; margin: 10px 0 25px 0; }
 
     .center-main-logo {
         height: 180px;
@@ -152,7 +139,6 @@ st.markdown("""
         text-align: center !important;
     }
 
-    /* تصميم كروت وفريمات الأفراد */
     .staff-card {
         background-color: #1b2631 !important;
         border: 2px solid #937B2B;
@@ -161,11 +147,6 @@ st.markdown("""
         text-align: center !important;
         box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         margin-bottom: 20px;
-        transition: transform 0.3s ease;
-    }
-
-    .staff-card:hover {
-        transform: translateY(-5px);
     }
 
     .avatar-frame {
@@ -182,26 +163,9 @@ st.markdown("""
         justify-content: center;
     }
 
-    .avatar-frame img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover !important;
-    }
-
-    .staff-name {
-        color: #FFD700 !important;
-        font-size: 1.35rem;
-        font-weight: bold;
-        margin-bottom: 8px;
-    }
-
-    .staff-role {
-        color: #ffffff !important;
-        font-size: 1.05rem;
-        font-weight: 600;
-        margin-bottom: 6px;
-    }
-
+    .avatar-frame img { width: 100%; height: 100%; object-fit: cover !important; }
+    .staff-name { color: #FFD700 !important; font-size: 1.35rem; font-weight: bold; margin-bottom: 8px; }
+    .staff-role { color: #ffffff !important; font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
     .staff-dept {
         color: #937B2B !important;
         font-size: 0.95rem;
@@ -212,7 +176,6 @@ st.markdown("""
         display: inline-block;
     }
 
-    /* تصميم العرض السلايدر */
     .simple-slider-container {
         position: relative;
         width: 100%;
@@ -269,20 +232,8 @@ st.markdown("""
         margin-bottom: 12px;
     }
 
-    .program-title {
-        color: #FFD700 !important;
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 12px;
-        text-align: center !important;
-    }
-
-    .program-desc {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: #e0e0e0 !important;
-        text-align: center !important;
-    }
+    .program-title { color: #FFD700 !important; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; text-align: center !important; }
+    .program-desc { font-size: 0.95rem; line-height: 1.7; color: #e0e0e0 !important; text-align: center !important; }
 
     .card-footer {
         background-color: var(--secondary-background-color);
@@ -351,9 +302,7 @@ st.markdown("""
         border-radius: 12px 12px 0 0;
     }
     
-    .app-footer span {
-        color: #FFD700;
-    }
+    .app-footer span { color: #FFD700; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -379,37 +328,15 @@ st.markdown(f"""
 # أزرار التبويبات الرئيسية
 cols = st.columns([1, 1, 1.1, 1.2, 1.2, 1.1, 1.3, 1.4])
 
-with cols[0]:
-    if st.button("الرئيسية", use_container_width=True):
-        st.session_state['current_tab'] = 'الرئيسية'
+tabs_names = [
+    "الرئيسية", "عن الفرع", "ادارات الافراد", "الادارات التعليمية", 
+    "خدمات الأكاديمية", "مجتمعات التعلم", "منصة الفرع والبرامج", "التواصل مع الدعم"
+]
 
-with cols[1]:
-    if st.button("عن الفرع", use_container_width=True):
-        st.session_state['current_tab'] = 'عن الفرع'
-
-with cols[2]:
-    if st.button("ادارات الافراد", use_container_width=True):
-        st.session_state['current_tab'] = 'ادارات الافراد'
-
-with cols[3]:
-    if st.button("الادارات التعليمية", use_container_width=True):
-        st.session_state['current_tab'] = 'الادارات التعليمية'
-
-with cols[4]:
-    if st.button("خدمات الأكاديمية", use_container_width=True):
-        st.session_state['current_tab'] = 'خدمات الأكاديمية'
-
-with cols[5]:
-    if st.button("مجتمعات التعلم", use_container_width=True):
-        st.session_state['current_tab'] = 'مجتمعات التعلم'
-
-with cols[6]:
-    if st.button("منصة الفرع والبرامج", use_container_width=True):
-        st.session_state['current_tab'] = 'منصة الفرع'
-
-with cols[7]:
-    if st.button("التواصل مع الدعم", use_container_width=True):
-        st.session_state['current_tab'] = 'التواصل مع الدعم'
+for idx, name in enumerate(tabs_names):
+    with cols[idx]:
+        if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
+            st.session_state['current_tab'] = name
 
 st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_html=True)
 
@@ -426,7 +353,6 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # قائمة صور البرامج
     program_slides = [
         {
             "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
@@ -465,14 +391,12 @@ if current_tab == "الرئيسية":
 
     col_prev, col_blank, col_next = st.columns([2, 8, 2])
     with col_prev:
-        if st.button("❮ السابق", use_container_width=True):
+        if st.button("❮ السابق", key="btn_prev_slide", use_container_width=True):
             st.session_state['slide_idx'] = (st.session_state['slide_idx'] - 1) % len(program_slides)
-            st.rerun()
 
     with col_next:
-        if st.button("التالي ❯", use_container_width=True):
+        if st.button("التالي ❯", key="btn_next_slide", use_container_width=True):
             st.session_state['slide_idx'] = (st.session_state['slide_idx'] + 1) % len(program_slides)
-            st.rerun()
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
@@ -557,7 +481,7 @@ elif current_tab == "الادارات التعليمية":
             st.markdown(f'<div class="edara-card">📍 إدارة {edara}</div>', unsafe_allow_html=True)
 
 # 5️⃣ منصة الفرع والبرامج
-elif current_tab == "منصة الفرع":
+elif current_tab == "منصة الفرع والبرامج":
     st.markdown(f"""
         <div class="centered-header">
             <div>{logo_header_tag}</div>
