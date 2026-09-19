@@ -332,23 +332,6 @@ st.markdown(
         border: 1px solid rgba(201, 162, 39, 0.5);
     }
 
-    .live-clock-badge {
-        background: rgba(11, 26, 62, 0.85);
-        border: 1px solid rgba(201, 162, 39, 0.5);
-        border-radius: 12px;
-        padding: 6px 14px;
-        color: #FFD700;
-        font-weight: 700;
-        font-size: 0.95rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
-        white-space: nowrap;
-        direction: ltr;
-        unicode-bidi: isolate;
-    }
-
     .nav-left-actions {
         display: flex;
         align-items: center;
@@ -762,7 +745,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# ⏱️ الشريط العلوي مع الساعة والتاريخ المحلي لجهاز المستخدم (Client-side JavaScript)
+# ⏱️ الشريط العلوي بدون ساعة أو تاريخ
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -773,37 +756,11 @@ st.markdown(
             </div>
         </div>
         <div class="nav-left-actions">
-            <div id="live-client-clock" class="live-clock-badge">
-                🕒 جاري تحميل الوقت المحلي...
-            </div>
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
                 منصة المٌعلم 🎓
             </a>
         </div>
     </div>
-
-    <script>
-    function updateClientClock() {{
-        const now = new Date();
-        const options = {{ 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit' 
-        }};
-        // جلب التاريخ والوقت المحلي بناءً على جهاز الزائر وتنسيق اللغة العربية (مصر)
-        const formattedString = now.toLocaleDateString('ar-EG', options);
-        const clockEl = document.getElementById('live-client-clock');
-        if (clockEl) {{
-            clockEl.innerHTML = '🕒 ' + formattedString;
-        }}
-    }}
-    updateClientClock();
-    setInterval(updateClientClock, 1000);
-    </script>
 """,
     unsafe_allow_html=True,
 )
