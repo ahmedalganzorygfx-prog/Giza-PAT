@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الموقع الإلكتروني المطور وإصلاح تباين وحجم خطوط الكروت (Info Card High Visibility CSS)
+# 4️⃣ تصميم الكروت الفاخر وإصلاح تنسيق القوائم والنصوص (Premium Web UI CSS)
 st.markdown(
     """
     <style>
@@ -129,59 +129,65 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* 🏛️ إصلاح وتوضيح كروت قسم "عن الفرع" والمحتوى النصي 🏛️ */
+    /* 🏛️ تصميم فاخر لكروت "عن الفرع" والمحتوى النصي 🏛️ */
     .info-card-box {
         direction: rtl;
         text-align: right;
-        background: rgba(15, 32, 67, 0.9) !important;
-        backdrop-filter: blur(10px);
+        background: linear-gradient(145deg, rgba(15, 32, 67, 0.95) 0%, rgba(8, 18, 41, 0.9) 100%) !important;
+        backdrop-filter: blur(12px);
         color: #ffffff !important;
-        padding: 28px 26px;
-        border-radius: 20px;
+        padding: 30px 28px;
+        border-radius: 22px;
         border: 1.5px solid rgba(201, 162, 39, 0.45);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-        margin-bottom: 24px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        margin-bottom: 26px;
         transition: all 0.3s ease;
     }
 
     .info-card-box:hover {
         border-color: #FFD700;
-        box-shadow: 0 12px 30px rgba(201, 162, 39, 0.25);
+        box-shadow: 0 14px 35px rgba(201, 162, 39, 0.3);
     }
 
     .info-card-box h3 {
         color: #FFD700 !important;
-        font-size: 1.5rem !important;
+        font-size: 1.55rem !important;
         font-weight: 800 !important;
         margin-top: 0;
-        padding-bottom: 12px;
+        padding-bottom: 14px;
         border-bottom: 1.5px dashed rgba(201, 162, 39, 0.5);
     }
 
     .info-card-box p {
-        font-size: 1.15rem !important;
-        line-height: 1.95 !important;
-        color: #ffffff !important;
+        font-size: 1.18rem !important;
+        line-height: 2 !important;
+        color: #f1f5f9 !important;
         font-weight: 500 !important;
-        margin-bottom: 12px;
-    }
-
-    .info-card-box ul {
-        list-style-type: none !important;
-        padding-right: 0 !important;
-        margin-top: 15px;
         margin-bottom: 15px;
     }
 
-    .info-card-box li {
+    /* كروت عناصر الفريق الداخلية الاحترافية */
+    .staff-item-badge {
+        background: rgba(11, 26, 62, 0.8) !important;
+        border: 1px solid rgba(201, 162, 39, 0.4) !important;
+        border-right: 5px solid #FFD700 !important;
+        border-radius: 12px !important;
+        padding: 12px 18px !important;
+        margin-bottom: 10px !important;
         font-size: 1.1rem !important;
-        line-height: 2 !important;
-        color: #f8fafc !important;
-        background: rgba(11, 26, 62, 0.6);
-        padding: 8px 16px;
-        border-radius: 10px;
-        margin-bottom: 8px;
-        border-right: 4px solid #C9A227;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.25s ease !important;
+    }
+
+    .staff-item-badge:hover {
+        transform: translateX(-4px) !important;
+        background: rgba(201, 162, 39, 0.15) !important;
+        border-color: #FFD700 !important;
     }
 
     .highlight-name {
@@ -197,7 +203,7 @@ st.markdown(
         letter-spacing: 0.3px !important;
     }
 
-    /* 🎯 تحسين ألوان حقول الإدخال، مربع النص (Textarea) والـ Placeholder 🎯 */
+    /* 🎯 تحسين ألوان حقول الإدخال ومربع النص والـ Placeholder 🎯 */
     div[data-baseweb="input"] input, textarea {
         color: #ffffff !important;
         font-size: 1rem !important;
@@ -221,7 +227,7 @@ st.markdown(
         box-shadow: 0 0 12px rgba(255, 215, 0, 0.35) !important;
     }
 
-    /* 🚀 تحسين زر إرسال النماذج (Submit Button Fix) 🚀 */
+    /* 🚀 زر إرسال النماذج (Submit Button) 🚀 */
     div[data-testid="stFormSubmitButton"] > button {
         background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
         color: #0b1a3e !important;
@@ -1075,10 +1081,12 @@ elif current_tab == "عن الفرع":
             <p>
                 شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة <span class="highlight-name">الأستاذة / أمل عبد المقصود</span> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
             </p>
-            <ul>
-                <li>🔹 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)</li>
-                <li>🔹 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)</li>
-            </ul>
+            <div class="staff-item-badge">
+                💻 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)
+            </div>
+            <div class="staff-item-badge">
+                💻 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)
+            </div>
         </div>
     """,
       unsafe_allow_html=True,
@@ -1092,12 +1100,16 @@ elif current_tab == "عن الفرع":
             <p>
                 مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة <span class="highlight-name">الأستاذ / أحمد حسني الجنزوري</span> مديراً للفرع، وفريق عمل متميز يتكون من:
             </p>
-            <ul>
-                <li>🔹 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
-                <li>🔹 <span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)</li>
-                <li>🔹 <span class="highlight-name">أ . أمينة فوزي عبد الرحمن</span> (مسئول التنمية المهنية والاعتماد)</li>
-            </ul>
-            <p style="margin-top: 15px;">
+            <div class="staff-item-badge">
+                🤝 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)
+            </div>
+            <div class="staff-item-badge">
+                🎯 <span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)
+            </div>
+            <div class="staff-item-badge">
+                🎯 <span class="highlight-name">أ . أمينة فوزي عبد الرحمن</span> (مسئول التنمية المهنية والاعتماد)
+            </div>
+            <p style="margin-top: 18px;">
                 تتضافر الجهود حالياً لتسهيل حصول المعلمين على البرامج الرقمية للقيادات والترقي وتغيير المسمى الوظيفي والدعم الفني المباشر لجميع الإدارات التعليمية بمحافظة الجيزة.
             </p>
         </div>
