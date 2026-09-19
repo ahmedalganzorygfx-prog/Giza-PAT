@@ -88,7 +88,6 @@ JOBS_LIST = [
     "كبير معلمين",
 ]
 
-# تحضير اللوجو ورابط الفيسبوك والخريطة
 logo_src = find_and_load_image(
     "Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo"
 )
@@ -105,80 +104,83 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تطبيق التنسيقات العصرية الحديثة والتصميم الفاخر (Modern Glossy CSS)
+# 4️⃣ تصميم الموقع الإلكتروني الفاخر (Modern Enterprise Web Design CSS)
 st.markdown(
     """
     <style>
-    /* 🎯 إخفاء الأزرار الفرعية والإبقاء على القائمة الثلاثية ⋮ فقط 🎯 */
-    footer { visibility: hidden !important; }
-    
-    header[data-testid="stHeader"] {
-        background-color: transparent !important;
-        z-index: 99999 !important;
-    }
-
+    /* 🌐 تحويل Streamlit إلى مظهر موقع إلكتروني حقيقي 🌐 */
+    footer { visibility: hidden !important; display: none !important; }
+    header[data-testid="stHeader"] { display: none !important; }
     [data-testid="stToolbarActions"] { display: none !important; }
     [data-testid="stActionButtonIcon"] { display: none !important; }
+    [data-testid="stSidebar"] { display: none !important; }
+
+    /* إلغاء المسافات الحاشية العلوية الافتراضية لستريمليت */
+    .block-container {
+        padding-top: 0rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 95% !important;
+    }
 
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
         text-align: right;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #060d1f !important;
+        color: #e2e8f0 !important;
     }
 
-    [data-testid="stSidebar"] { display: none; }
-
-    /* 📱 الهيدر الأساسي العصري 📱 */
+    /* 📱 هيدر موقع إلكتروني مثبت أعلى الصفحة (Sticky Web Navbar) 📱 */
     .top-navbar {
-        background: linear-gradient(135deg, #0b1a3e 0%, #11224d 50%, #081026 100%) !important;
-        padding: 14px 24px;
+        background: linear-gradient(180deg, rgba(11, 26, 62, 0.98) 0%, rgba(6, 13, 31, 0.95) 100%) !important;
+        backdrop-filter: blur(12px);
+        padding: 14px 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         direction: rtl;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-        margin-bottom: 25px;
-        border-bottom: 3px solid #C9A227;
-        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+        margin: 0 -1rem 20px -1rem;
+        border-bottom: 2px solid rgba(201, 162, 39, 0.5);
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 15px;
     }
 
     .nav-right-container { 
         display: flex; 
         align-items: center; 
-        gap: 14px; 
+        gap: 15px; 
     }
 
     .nav-logo-text {
         color: #ffffff !important;
         font-weight: 800;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         display: flex;
         align-items: center;
-        gap: 14px;
-        letter-spacing: 0.3px;
+        gap: 15px;
+        letter-spacing: 0.5px;
     }
 
     .navbar-logo-img {
-        height: 46px;
+        height: 48px;
         width: auto;
         border-radius: 8px;
         object-fit: contain;
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.08);
         padding: 4px;
-        border: 1px solid rgba(201, 162, 39, 0.4);
+        border: 1px solid rgba(201, 162, 39, 0.5);
     }
 
     .teacher-platform-btn {
         background: linear-gradient(135deg, #d32f2f 0%, #9a0007 100%) !important;
         color: #ffffff !important;
-        padding: 9px 22px;
+        padding: 10px 24px;
         border-radius: 30px;
         font-weight: bold;
         font-size: 0.95rem;
         text-decoration: none;
-        box-shadow: 0 4px 14px rgba(211, 47, 47, 0.4);
+        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
         border: 1.5px solid #FFD700;
         display: inline-block;
         text-align: center;
@@ -187,36 +189,87 @@ st.markdown(
     
     .teacher-platform-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(211, 47, 47, 0.6);
+        box-shadow: 0 6px 20px rgba(211, 47, 47, 0.7);
     }
 
-    .centered-header { text-align: center !important; margin: 10px 0 30px 0; }
+    /* 🎨 شريط التنقل الإلكتروني (Navigation Bar Menu) 🎨 */
+    .stButton>button {
+        background: rgba(15, 32, 67, 0.8) !important;
+        color: #cbd5e1 !important;
+        font-weight: 700 !important;
+        font-size: 0.98rem !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(201, 162, 39, 0.3) !important;
+        padding: 10px 18px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        width: 100%;
+    }
+
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
+        color: #0b1a3e !important;
+        border-color: #ffffff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 18px rgba(201, 162, 39, 0.4) !important;
+    }
+
+    .facebook-btn-tab {
+        background: linear-gradient(135deg, #1877F2 0%, #0a52b2 100%) !important;
+        color: white !important;
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 0.95rem;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 12px rgba(24, 119, 242, 0.35);
+        transition: all 0.3s ease;
+    }
+
+    .facebook-btn-tab:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(24, 119, 242, 0.55);
+    }
+
+    /* 👑 هيدر الواجهة الرئيسية (Hero Banner) 👑 */
+    .hero-banner {
+        background: linear-gradient(135deg, rgba(11, 26, 62, 0.9) 0%, rgba(15, 32, 67, 0.7) 100%), 
+                    radial-gradient(circle at top right, rgba(201, 162, 39, 0.15), transparent);
+        border-radius: 24px;
+        padding: 40px 20px;
+        text-align: center !important;
+        margin: 15px 0 35px 0;
+        border: 1.5px solid rgba(201, 162, 39, 0.4);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
 
     .center-main-logo {
-        height: 155px;
+        height: 160px;
         width: auto;
         object-fit: contain;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         display: inline-block;
-        filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.4));
+        filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.5));
     }
 
     .main-header-title {
-        color: var(--text-color) !important;
-        font-size: 2.2rem;
+        color: #ffffff !important;
+        font-size: 2.4rem;
         font-weight: 900;
         display: inline-block;
-        padding-bottom: 10px;
+        padding-bottom: 12px;
         border-bottom: 4px solid #C9A227;
         text-align: center !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        text-shadow: 0 3px 6px rgba(0,0,0,0.4);
     }
 
     .sub-header-title {
-        color: var(--text-color) !important;
-        opacity: 0.9;
-        font-size: 1.15rem;
-        margin-top: 14px;
+        color: #94a3b8 !important;
+        font-size: 1.2rem;
+        margin-top: 15px;
         font-weight: 500;
         text-align: center !important;
     }
@@ -224,39 +277,40 @@ st.markdown(
     .section-title {
         text-align: center !important;
         color: #C9A227 !important;
-        font-size: 1.65rem;
+        font-size: 1.75rem;
         font-weight: 800;
-        margin-top: 35px;
-        margin-bottom: 25px;
+        margin-top: 40px;
+        margin-bottom: 30px;
         padding-bottom: 10px;
-        border-bottom: 2px dashed #937B2B;
+        border-bottom: 2px dashed rgba(201, 162, 39, 0.4);
     }
 
     .highlight-name {
-        color: #C9A227 !important;
+        color: #FFD700 !important;
         font-weight: bold !important;
     }
 
     /* 🎴 كروت البرامج والخدمات العصرية 🎴 */
     .program-card-wrapper {
-        background-color: var(--secondary-background-color) !important;
-        border: 1.5px solid rgba(201, 162, 39, 0.4);
+        background: rgba(15, 32, 67, 0.6) !important;
+        backdrop-filter: blur(8px);
+        border: 1.5px solid rgba(201, 162, 39, 0.35);
         border-radius: 20px;
         overflow: hidden;
         margin-bottom: 18px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        transition: all 0.35s ease;
     }
 
     .program-card-wrapper:hover {
-        transform: translateY(-5px);
+        transform: translateY(-6px);
         border-color: #C9A227;
-        box-shadow: 0 12px 28px rgba(201, 162, 39, 0.25);
+        box-shadow: 0 14px 32px rgba(201, 162, 39, 0.3);
     }
 
     .program-img-box {
         width: 100%;
-        height: 185px;
+        height: 190px;
         overflow: hidden;
         background-color: #0b1a3e;
     }
@@ -265,38 +319,38 @@ st.markdown(
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform 0.6s ease;
     }
 
     .program-card-wrapper:hover .program-img-box img {
-        transform: scale(1.05);
+        transform: scale(1.08);
     }
 
     .program-content-box {
-        padding: 20px 15px;
+        padding: 22px 18px;
         text-align: center !important;
     }
 
     .program-card-title {
         color: #C9A227 !important;
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 10px;
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin-bottom: 12px;
     }
 
     .program-card-desc {
-        color: var(--text-color) !important;
-        font-size: 0.95rem;
-        line-height: 1.6;
+        color: #cbd5e1 !important;
+        font-size: 0.96rem;
+        line-height: 1.65;
     }
 
     .card-footer-badge {
-        background-color: var(--secondary-background-color) !important;
-        color: #C9A227 !important;
+        background: rgba(11, 26, 62, 0.8) !important;
+        color: #FFD700 !important;
         text-align: center !important;
         padding: 10px;
         font-weight: bold;
-        border: 1px solid #937B2B;
+        border: 1px solid rgba(201, 162, 39, 0.4);
         border-radius: 12px;
         margin-top: 8px;
         margin-bottom: 25px;
@@ -305,29 +359,29 @@ st.markdown(
 
     /* 👤 كروت فريق العمل العصرية 👤 */
     .staff-card {
-        background: linear-gradient(145deg, var(--secondary-background-color) 0%, rgba(11, 26, 62, 0.3) 100%) !important;
+        background: linear-gradient(145deg, rgba(15, 32, 67, 0.8) 0%, rgba(6, 13, 31, 0.9) 100%) !important;
         border: 1.5px solid rgba(201, 162, 39, 0.35);
-        border-radius: 22px;
-        padding: 28px 18px;
+        border-radius: 24px;
+        padding: 30px 20px;
         text-align: center !important;
-        box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.3);
         margin-bottom: 20px;
-        transition: all 0.3s ease;
+        transition: all 0.35s ease;
     }
 
     .staff-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-5px);
         border-color: #C9A227;
-        box-shadow: 0 12px 28px rgba(201, 162, 39, 0.2);
+        box-shadow: 0 14px 32px rgba(201, 162, 39, 0.25);
     }
 
     .avatar-frame {
-        width: 135px;
-        height: 135px;
-        margin: 0 auto 16px auto;
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 18px auto;
         border-radius: 50%;
         border: 3.5px solid #C9A227;
-        box-shadow: 0 0 16px rgba(201, 162, 39, 0.35);
+        box-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
         overflow: hidden;
         background-color: #0b1a3e;
         display: flex;
@@ -336,30 +390,31 @@ st.markdown(
     }
 
     .avatar-frame img { width: 100%; height: 100%; object-fit: cover !important; }
-    .staff-name { color: #C9A227 !important; font-size: 1.22rem; font-weight: 800; margin-bottom: 6px; }
-    .staff-role { color: var(--text-color) !important; font-size: 0.98rem; font-weight: 600; margin-bottom: 8px; }
+    .staff-name { color: #C9A227 !important; font-size: 1.28rem; font-weight: 800; margin-bottom: 8px; }
+    .staff-role { color: #e2e8f0 !important; font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
     .staff-dept {
         color: #FFD700 !important;
         font-size: 0.88rem;
         font-weight: bold;
-        background-color: rgba(147, 123, 43, 0.22);
-        padding: 5px 12px;
+        background: rgba(201, 162, 39, 0.18);
+        padding: 6px 14px;
         border-radius: 20px;
         display: inline-block;
-        border: 1px solid rgba(201, 162, 39, 0.3);
+        border: 1px solid rgba(201, 162, 39, 0.4);
     }
 
     /* 🏛️ بطاقات المعلومات العصرية 🏛️ */
     .info-card-box {
         direction: rtl;
         text-align: right;
-        background-color: var(--secondary-background-color) !important;
-        color: var(--text-color) !important;
-        padding: 22px 20px;
-        border-radius: 18px;
+        background: rgba(15, 32, 67, 0.6) !important;
+        backdrop-filter: blur(10px);
+        color: #e2e8f0 !important;
+        padding: 24px 22px;
+        border-radius: 20px;
         border: 1.5px solid rgba(201, 162, 39, 0.35);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+        margin-bottom: 22px;
         transition: all 0.3s ease;
     }
 
@@ -369,125 +424,87 @@ st.markdown(
 
     /* 📍 كروت الإدارات التعليمية 📍 */
     .edara-card {
-        background-color: var(--secondary-background-color) !important;
-        border: 1px solid rgba(147, 123, 43, 0.3);
+        background: rgba(15, 32, 67, 0.7) !important;
+        border: 1px solid rgba(201, 162, 39, 0.25);
         border-right: 5px solid #C9A227;
-        border-radius: 10px;
-        padding: 14px;
+        border-radius: 12px;
+        padding: 15px;
         text-align: center !important;
         font-weight: bold;
-        color: var(--text-color) !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         margin-bottom: 14px;
         font-size: 0.98rem;
         transition: all 0.25s ease;
     }
 
     .edara-card:hover {
-        transform: scale(1.02);
+        transform: scale(1.03);
         border-color: #C9A227;
+        background: rgba(201, 162, 39, 0.2) !important;
     }
 
     /* 📋 حاوية نماذج الدعم 📋 */
     .support-form-container {
-        background-color: var(--secondary-background-color) !important;
-        padding: 28px 24px;
-        border-radius: 22px;
-        box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+        background: rgba(15, 32, 67, 0.8) !important;
+        backdrop-filter: blur(12px);
+        padding: 32px 28px;
+        border-radius: 24px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
         border-top: 5px solid #C9A227;
-        border-right: 1px solid rgba(147, 123, 43, 0.25);
-        border-left: 1px solid rgba(147, 123, 43, 0.25);
-        max-width: 880px;
+        border-right: 1px solid rgba(201, 162, 39, 0.3);
+        border-left: 1px solid rgba(201, 162, 39, 0.3);
+        max-width: 900px;
         margin: 0 auto;
     }
 
     .support-form-title {
-        color: var(--text-color) !important;
+        color: #ffffff !important;
         text-align: center !important;
-        font-size: 1.35rem;
+        font-size: 1.4rem;
         font-weight: bold;
-        margin-bottom: 22px;
-        padding-bottom: 10px;
-        border-bottom: 2px dashed #937B2B;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed rgba(201, 162, 39, 0.4);
     }
 
     /* 📍 خريطة الموقع المتكيفة 📍 */
     .location-card-container {
-        background-color: var(--secondary-background-color) !important;
+        background: rgba(15, 32, 67, 0.8) !important;
         border: 1.5px solid #C9A227;
-        border-radius: 22px;
-        padding: 24px 18px;
-        max-width: 880px;
-        margin: 30px auto 0 auto;
+        border-radius: 24px;
+        padding: 28px 20px;
+        max-width: 900px;
+        margin: 35px auto 0 auto;
         text-align: center !important;
-        box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
     }
 
     .location-btn {
         background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%) !important;
         color: #FFD700 !important;
-        padding: 12px 24px;
-        border-radius: 12px;
+        padding: 12px 26px;
+        border-radius: 14px;
         font-weight: bold;
-        font-size: 1.02rem;
+        font-size: 1.05rem;
         text-decoration: none;
         display: inline-block;
         border: 1.5px solid #C9A227;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-        margin-bottom: 18px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        margin-bottom: 20px;
         transition: all 0.3s ease;
     }
 
     .location-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(201, 162, 39, 0.3);
+        box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4);
     }
 
     .map-frame {
         width: 100%;
-        height: 330px;
-        border-radius: 14px;
+        height: 340px;
+        border-radius: 16px;
         border: 2px solid #C9A227;
-    }
-
-    /* 🎛️ أزرار Streamlit المحدثة 🎛️ */
-    .stButton>button {
-        background: linear-gradient(135deg, #0b1a3e 0%, #172a4d 100%) !important;
-        color: #ffffff !important;
-        font-weight: bold !important;
-        font-size: 0.98rem !important;
-        border-radius: 10px !important;
-        border: 1px solid rgba(201, 162, 39, 0.6) !important;
-        padding: 9px 16px !important;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.12) !important;
-        transition: all 0.3s ease !important;
-    }
-
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
-        color: #0b1a3e !important;
-        border-color: #ffffff !important;
-        transform: translateY(-1px) !important;
-    }
-
-    .facebook-btn-tab {
-        background: linear-gradient(135deg, #1877F2 0%, #0a52b2 100%) !important;
-        color: white !important;
-        padding: 9px 14px;
-        border-radius: 10px;
-        font-weight: bold;
-        font-size: 0.95rem;
-        text-decoration: none;
-        display: block;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: 0 4px 10px rgba(24, 119, 242, 0.35);
-        transition: all 0.3s ease;
-    }
-
-    .facebook-btn-tab:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 14px rgba(24, 119, 242, 0.5);
     }
 
     .whatsapp-card {
@@ -496,31 +513,31 @@ st.markdown(
         background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
         color: white !important;
         font-weight: bold;
-        padding: 14px 10px;
-        border-radius: 12px;
+        padding: 15px 12px;
+        border-radius: 14px;
         text-decoration: none;
         border: 1px solid #ffffff;
         margin-bottom: 12px;
-        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
         transition: all 0.3s ease;
     }
 
     .whatsapp-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(37, 211, 102, 0.5);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.55);
     }
 
     .app-footer {
-        margin-top: 45px;
-        padding: 20px 0;
-        background: linear-gradient(135deg, #0b1a3e 0%, #081026 100%) !important;
+        margin-top: 50px;
+        padding: 22px 0;
+        background: linear-gradient(180deg, #0b1a3e 0%, #040915 100%) !important;
         color: #ffffff !important;
         text-align: center !important;
-        font-size: 1rem;
+        font-size: 1.05rem;
         font-weight: bold;
         border-top: 3.5px solid #C9A227;
-        border-radius: 16px 16px 0 0;
-        box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
     }
     
     .app-footer span { color: #FFD700; }
@@ -541,23 +558,23 @@ st.markdown(
         }
 
         .main-header-title {
-            font-size: 1.65rem;
+            font-size: 1.7rem;
         }
 
         .sub-header-title {
-            font-size: 0.98rem;
+            font-size: 1rem;
         }
 
         .section-title {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
         }
 
         .center-main-logo {
-            height: 125px;
+            height: 130px;
         }
 
         .map-frame {
-            height: 260px;
+            height: 270px;
         }
 
         .support-form-container {
@@ -573,7 +590,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# الشريط العلوي للهيدر
+# الشريط العلوي للهيدر المطور للموقع الإلكتروني
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -591,7 +608,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# قائمة التبويبات
+# قائمة التبويبات كمجموعات أزرار تنقل إلكترونية
 cols = st.columns([1.1, 1, 1.1, 1.2, 1.2, 1.1, 1.4, 1.3])
 
 tabs_names = [
@@ -622,7 +639,9 @@ with cols[7]:
   )
 
 st.markdown(
-    "<hr style='margin-top: 5px; margin-bottom: 22px;'>", unsafe_allow_html=True
+    "<hr style='margin-top: 8px; margin-bottom: 25px; border-color:"
+    " rgba(201, 162, 39, 0.2);'>",
+    unsafe_allow_html=True,
 )
 
 current_tab = st.session_state["current_tab"]
@@ -679,7 +698,7 @@ if current_tab == "الرئيسية":
 
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">الأكاديمية المهنية للمعلمين - فرع الجيزة</div>
             <div class="sub-header-title">البوابة الرقمية للخدمات والتدريبات والاعتماد المهني للمعلمين</div>
@@ -712,9 +731,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -739,9 +758,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -766,9 +785,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -799,9 +818,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -827,9 +846,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -860,9 +879,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -887,9 +906,9 @@ if current_tab == "الرئيسية":
         '<a href="https://www.pat.edu.eg/platform-programs"'
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:10px;'
-        ' cursor:pointer; box-shadow: 0 4px 10px'
-        ' rgba(178,34,34,0.3);">التسجيل بالبرنامج</button></a>',
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer; box-shadow: 0 4px 12px'
+        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -901,7 +920,7 @@ if current_tab == "الرئيسية":
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">عن فرع الأكاديمية المهنية للمعلمين بالجيزة</div>
             <div class="sub-header-title">مسيرة العطاء، التأسيس، والتطوير الرقمي لخدمة المعلمين</div>
@@ -914,7 +933,7 @@ elif current_tab == "عن الفرع":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🏛️ التأسيس والانطلاقة (2017)</h3>
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">🏛️ التأسيس والانطلاقة (2017)</h3>
             <p style="font-size: 1.05rem; line-height: 1.85; margin-bottom: 0;">
                 أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
             </p>
@@ -927,7 +946,7 @@ elif current_tab == "عن الفرع":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
             <p style="font-size: 1.05rem; line-height: 1.85;">
                 شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة <span class="highlight-name">الأستاذة / أمل عبد المقصود</span> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
             </p>
@@ -944,7 +963,7 @@ elif current_tab == "عن الفرع":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
             <p style="font-size: 1.05rem; line-height: 1.85;">
                 مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة <span class="highlight-name">الأستاذ / أحمد حسني الجنزوري</span> مديراً للفرع، وفريق عمل متميز يتكون من:
             </p>
@@ -965,7 +984,7 @@ elif current_tab == "عن الفرع":
 elif current_tab == "ادارات الافراد":
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">إدارات الأفراد - الهيكل الإداري</div>
             <div class="sub-header-title">قيادات وكوادر الأكاديمية المهنية للمعلمين - فرع الجيزة</div>
@@ -1056,7 +1075,7 @@ elif current_tab == "ادارات الافراد":
 elif current_tab == "الادارات التعليمية":
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">الإدارات التعليمية - محافظة الجيزة</div>
             <div class="sub-header-title">دليل الإدارات التعليمية والديوان التابعة لفرع الجيزة</div>
@@ -1078,7 +1097,7 @@ elif current_tab == "الادارات التعليمية":
 elif current_tab == "خدمات الأكاديمية":
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">خدمات الأكاديمية المهنية للمعلمين</div>
             <div class="sub-header-title">دليل الخدمات والتسجيل الرقمي المتاح لجميع أعضاء هيئة التعليم</div>
@@ -1154,7 +1173,7 @@ elif current_tab == "خدمات الأكاديمية":
   st.markdown(
       """
         <div class="support-form-container" style="text-align: center;">
-            <p style="font-size: 1.1rem; line-height: 1.85; color: var(--text-color);">
+            <p style="font-size: 1.1rem; line-height: 1.85; color: #e2e8f0;">
                 تتيح الأكاديمية المهنية للمعلمين بفرع الجيزة إمكانية التقدم والتسجيل الإلكتروني المباشر للبرامج التدريبية مدفوعة الأجر والخاصة بالترقي والاعتماد وتطوير المهارات.
             </p>
             <br>
@@ -1170,7 +1189,7 @@ elif current_tab == "خدمات الأكاديمية":
 elif current_tab == "مجتمعات التعلم":
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">مجتمعات التعلم المهنية (PLCs)</div>
             <div class="sub-header-title">منصة التعاون المهني وتبادل الخبرات بين المعلمين والقيادات التربوية بفرع الجيزة</div>
@@ -1183,7 +1202,7 @@ elif current_tab == "مجتمعات التعلم":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 8px; border-bottom: 1px dashed #937B2B;">🌐 ما هي مجتمعات التعلم المهنية؟</h3>
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 8px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">🌐 ما هي مجتمعات التعلم المهنية؟</h3>
             <p style="font-size: 1.05rem; line-height: 1.85; margin-bottom: 0;">
                 هي بيئة تربوية تفاعلية تجمع المعلمين والموجهين والقيادات في فرق عمل تعاونية منظمة، تهدف إلى <b>تطوير مهارات التدريس</b>، و<b>تبادل الممارسات المتميزة</b>، و<b>حل المشكلات التعليمية</b> للارتقاء بنواتج تعلم الطلاب والتحول نحو مجتمع المعرفة.
             </p>
@@ -1275,7 +1294,7 @@ elif current_tab == "مجتمعات التعلم":
 elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">التواصل مع فريق الدعم الفني</div>
             <div class="sub-header-title">يرجى تسجيل البيانات أدناه لتوجيه طلبك مباشرة إلى فريق الدعم المختص عبر الواتساب</div>
@@ -1361,8 +1380,8 @@ elif current_tab == "التواصل مع الدعم":
       encoded_msg = urllib.parse.quote(msg_text)
 
       st.markdown(
-          "<br><h4 style='text-align: center; color: var(--text-color);'>📲"
-          " اضغط على أحد الأرقام التالية للإرسال الفوري عبر الواتساب:</h4>",
+          "<br><h4 style='text-align: center; color: #ffffff;'>📲 اضغط على أحد"
+          " الأرقام التالية للإرسال الفوري عبر الواتساب:</h4>",
           unsafe_allow_html=True,
       )
 
@@ -1379,7 +1398,7 @@ elif current_tab == "التواصل مع الدعم":
           st.markdown(
               f"""<a href="{wa_url}" target="_blank" class="whatsapp-card">
                             💬 {label}<br>
-                            <span style="font-size: 0.85rem; opacity: 0.9;">({num.replace('20', '0')})</span>
+                            <span style="font-size: 0.85rem; opacity: 0.95;">({num.replace('20', '0')})</span>
                         </a>""",
               unsafe_allow_html=True,
           )
@@ -1395,8 +1414,8 @@ elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
         <div class="location-card-container">
-            <h3 style="color: #C9A227; margin-top: 0; font-size: 1.4rem; margin-bottom: 12px;">📍 موقع فرع الأكاديمية المهنية للمعلمين بالجيزة</h3>
-            <p style="color: var(--text-color); font-size: 1rem; margin-bottom: 18px;">
+            <h3 style="color: #C9A227; margin-top: 0; font-size: 1.45rem; margin-bottom: 14px;">📍 موقع فرع الأكاديمية المهنية للمعلمين بالجيزة</h3>
+            <p style="color: #cbd5e1; font-size: 1.02rem; margin-bottom: 20px;">
                 يمكنكم زيارة مقر الفرع مباشرة أو فتح الخريطة عبر تطبيق خرائط جوجل من خلال الرابط أدناه:
             </p>
             <a href="{LOCATION_MAP_URL}" target="_blank" class="location-btn">
@@ -1420,7 +1439,7 @@ elif current_tab == "التواصل مع الدعم":
 else:
   st.markdown(
       f"""
-        <div class="centered-header">
+        <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">{current_tab}</div>
         </div>
