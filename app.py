@@ -108,7 +108,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS)
+# 4️⃣ تصميم الأنماط (CSS) مع إصلاح ألوان أزرار التبويبات
 st.markdown(
     """
     <style>
@@ -333,37 +333,6 @@ st.markdown(
         border: 1px solid rgba(201, 162, 39, 0.5);
     }
 
-    .nav-center-tabs {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-grow: 1;
-        justify-content: center;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
-
-    .nav-tab-link {
-        color: #ffffff !important;
-        background: rgba(255, 255, 255, 0.04);
-        padding: 8px 14px;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 0.92rem;
-        text-decoration: none;
-        white-space: nowrap;
-        border: 1px solid rgba(201, 162, 39, 0.3);
-        transition: all 0.25s ease;
-        cursor: pointer;
-    }
-
-    .nav-tab-link:hover, .nav-tab-link.active {
-        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
-        color: #0b1a3e !important;
-        border-color: #ffffff !important;
-        transform: translateY(-2px);
-    }
-
     .nav-left-actions {
         display: flex;
         align-items: center;
@@ -411,6 +380,29 @@ st.markdown(
     .facebook-btn-tab:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 18px rgba(24, 119, 242, 0.55);
+    }
+
+    /* تخصيص أزرار التبويبات العلوية لتعود بالشكل الداكن والمنسق المتناسق مع الهوية */
+    .stButton>button {
+        background: linear-gradient(135deg, rgba(15, 32, 67, 0.9) 0%, rgba(11, 22, 48, 0.95) 100%) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        border-radius: 12px !important;
+        border: 1.5px solid rgba(201, 162, 39, 0.4) !important;
+        padding: 8px 6px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        transition: all 0.3s ease !important;
+        width: 100%;
+        white-space: nowrap !important;
+    }
+
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
+        color: #0b1a3e !important;
+        border-color: #ffffff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 18px rgba(201, 162, 39, 0.4) !important;
     }
 
     .hero-banner {
@@ -711,7 +703,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات عبر أزرار Streamlit الخالصة لضمان عدم فتح أي تبويب في نافذة مستقلة
+# 5️⃣ إدارة حالة التبويبات عبر أزرار Streamlit داخل نفس الصفحة
 tabs_list = [
     "الرئيسية",
     "عن الفرع",
@@ -728,7 +720,7 @@ if "current_tab" not in st.session_state:
 
 current_tab = st.session_state["current_tab"]
 
-# شريط التنقل العلوي: اللوجو يميناً، أزرار التبويبات في المنتصف تماماً دون فتح نوافذ جديدة
+# شريط التنقل العلوي: اللوجو وأزرار السوشيال ميديا ومنصة المعلم
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -747,12 +739,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# عرض أزرار التبويبات التفاعلية داخل نفس الصفحة
+# عرض أزرار التبويبات المتناسقة أفقياً داخل نفس الصفحة دون نوافذ مستقلة
 cols_tabs = st.columns(len(tabs_list))
 for idx, t_name in enumerate(tabs_list):
   with cols_tabs[idx]:
-    # تمييز الزر النشط بلون مختلف
-    btn_type = "primary" if current_tab == t_name else "secondary"
     if st.button(t_name, key=f"tab_btn_{idx}", use_container_width=True):
       st.session_state["current_tab"] = t_name
       st.rerun()
@@ -1638,19 +1628,6 @@ elif current_tab == "التواصل مع الدعم":
 # الختام (Footer)
 st.markdown(
     """
-    .app-footer {
-        margin-top: 50px;
-        padding: 24px 0;
-        background: linear-gradient(135deg, #4a3515 0%, #1e294b 50%, #040915 100%) !important;
-        color: #ffffff !important;
-        text-align: center !important;
-        font-size: 1.05rem;
-        font-weight: bold;
-        border-top: 3.5px solid #d4af37;
-        border-radius: 20px 20px 0 0;
-        box-shadow: 0 -8px 25px rgba(0,0,0,0.4);
-    }
-    .app-footer span { color: #FFD700; }
     <div class="app-footer">
         تصميم وتنفيذ: <span>أحمد الجنزوري</span> - مدير الفرع
     </div>
