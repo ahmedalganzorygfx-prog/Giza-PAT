@@ -112,19 +112,13 @@ st.markdown(
     /* 🎯 إخفاء الأزرار الفرعية والإبقاء على القائمة الثلاثية ⋮ فقط 🎯 */
     footer { visibility: hidden !important; }
     
-    /* إظهار الهيدر والقائمة الثلاثية فقط وإخفاء باقي الأزرار */
     header[data-testid="stHeader"] {
         background-color: transparent !important;
         z-index: 99999 !important;
     }
 
-    [data-testid="stToolbarActions"] {
-        display: none !important;
-    }
-
-    [data-testid="stActionButtonIcon"] {
-        display: none !important;
-    }
+    [data-testid="stToolbarActions"] { display: none !important; }
+    [data-testid="stActionButtonIcon"] { display: none !important; }
 
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
@@ -318,11 +312,11 @@ st.markdown(
     }
 
     .avatar-frame img { width: 100%; height: 100%; object-fit: cover !important; }
-    .staff-name { color: #C9A227 !important; font-size: 1.25rem; font-weight: bold; margin-bottom: 6px; }
-    .staff-role { color: var(--text-color) !important; font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .staff-name { color: #C9A227 !important; font-size: 1.2rem; font-weight: bold; margin-bottom: 6px; }
+    .staff-role { color: var(--text-color) !important; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
     .staff-dept {
         color: #937B2B !important;
-        font-size: 0.90rem;
+        font-size: 0.88rem;
         font-weight: bold;
         background-color: rgba(147, 123, 43, 0.15);
         padding: 4px 10px;
@@ -874,6 +868,7 @@ elif current_tab == "عن الفرع":
             <ul style="font-size: 1rem; line-height: 2.2; padding-right: 20px;">
                 <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
                 <li><span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)</li>
+                <li><span class="highlight-name">أ . أمينة فوزي عبد الرحمن</span> (مسئول التنمية المهنية والاعتماد)</li>
             </ul>
             <p style="font-size: 1rem; line-height: 1.8; margin-top: 10px; margin-bottom: 0;">
                 تتضافر الجهود حالياً لتسهيل حصول المعلمين على البرامج الرقمية للقيادات والترقي وتغيير المسمى الوظيفي والدعم الفني المباشر لجميع الإدارات التعليمية بمحافظة الجيزة.
@@ -905,8 +900,14 @@ elif current_tab == "ادارات الافراد":
   img_omar = find_and_load_image(
       "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
   )
+  img_amina = find_and_load_image(
+      "amina.jpg",
+      find_and_load_image(
+          "fawzy.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
+      ),
+  )
 
-  c1, c2, c3 = st.columns([1, 1, 1])
+  c1, c2, c3, c4 = st.columns([1, 1, 1, 1])
 
   with c1:
     st.markdown(
@@ -946,6 +947,21 @@ elif current_tab == "ادارات الافراد":
                     <img src="{img_omar}" alt="أحمد محمد عمر">
                 </div>
                 <div class="staff-name"><span class="highlight-name">أحمد محمد عمر</span></div>
+                <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-dept">التنمية المهنية والاعتماد</div>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with c4:
+    st.markdown(
+        f"""
+            <div class="staff-card">
+                <div class="avatar-frame">
+                    <img src="{img_amina}" alt="أمينة فوزي عبدالرحمن">
+                </div>
+                <div class="staff-name"><span class="highlight-name">أمينة فوزي عبدالرحمن</span></div>
                 <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
                 <div class="staff-dept">التنمية المهنية والاعتماد</div>
             </div>
@@ -1086,7 +1102,7 @@ elif current_tab == "التواصل مع الدعم":
                             <span style="font-size: 0.85rem; opacity: 0.9;">({num.replace('20', '0')})</span>
                         </a>""",
               unsafe_allow_html=True,
-  )
+          )
 
       st.info(
           "📌 **تنويه هام:** بعد فتح الواتساب، يرجى إعادة إرسال ملف صحيفة الأحوال"
