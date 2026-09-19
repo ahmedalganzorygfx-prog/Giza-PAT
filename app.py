@@ -109,12 +109,22 @@ LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 st.markdown(
     """
     <style>
-    /* 🛑 إخفاء أزرار GitHub و Fork والعناصر الافتراضية لمنصة Streamlit 🛑 */
-    header[data-testid="stHeader"] { display: none !important; }
-    [data-testid="stToolbar"] { display: none !important; }
-    [data-testid="stActionButtonIcon"] { display: none !important; }
-    #MainMenu { visibility: hidden !important; }
+    /* 🎯 إخفاء الأزرار الفرعية والإبقاء على القائمة الثلاثية ⋮ فقط 🎯 */
     footer { visibility: hidden !important; }
+    
+    /* إظهار الهيدر والقائمة الثلاثية فقط وإخفاء باقي الأزرار */
+    header[data-testid="stHeader"] {
+        background-color: transparent !important;
+        z-index: 99999 !important;
+    }
+
+    [data-testid="stToolbarActions"] {
+        display: none !important;
+    }
+
+    [data-testid="stActionButtonIcon"] {
+        display: none !important;
+    }
 
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
@@ -1076,7 +1086,7 @@ elif current_tab == "التواصل مع الدعم":
                             <span style="font-size: 0.85rem; opacity: 0.9;">({num.replace('20', '0')})</span>
                         </a>""",
               unsafe_allow_html=True,
-          )
+  )
 
       st.info(
           "📌 **تنويه هام:** بعد فتح الواتساب، يرجى إعادة إرسال ملف صحيفة الأحوال"
