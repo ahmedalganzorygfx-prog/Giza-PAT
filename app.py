@@ -53,7 +53,7 @@ def find_and_load_image(base_file_name, fallback_url=""):
   return img_data if img_data else fallback_url
 
 
-# 3️⃣ قوائم البيانات الأساسية
+# 3️⃣ قوائم البيانات الأساسية ورابط الخريطة
 EDARAT_LIST = [
     "أبو النمرس",
     "أطفيح",
@@ -88,7 +88,7 @@ JOBS_LIST = [
     "كبير معلمين",
 ]
 
-# تحضير اللوجو ورابط الفيسبوك
+# تحضير اللوجو ورابط الفيسبوك والخريطة
 logo_src = find_and_load_image(
     "Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo"
 )
@@ -103,6 +103,7 @@ logo_header_tag = (
     else ""
 )
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
+LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
 # 4️⃣ تطبيق التنسيقات المتكيفة (CSS)
 st.markdown(
@@ -351,6 +352,44 @@ st.markdown(
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 2px dashed #937B2B;
+    }
+
+    /* 📍 تنسيق كارت خريطة الموقع 📍 */
+    .location-card-container {
+        background-color: var(--secondary-background-color) !important;
+        border: 2px solid #937B2B;
+        border-radius: 20px;
+        padding: 25px;
+        max-width: 850px;
+        margin: 30px auto 0 auto;
+        text-align: center !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .location-btn {
+        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%) !important;
+        color: #FFD700 !important;
+        padding: 12px 28px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-block;
+        border: 1.5px solid #937B2B;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+    }
+
+    .location-btn:hover {
+        border-color: #FFD700;
+        color: #ffffff !important;
+    }
+
+    .map-frame {
+        width: 100%;
+        height: 350px;
+        border-radius: 15px;
+        border: 2px solid #937B2B;
     }
 
     .stButton>button {
@@ -876,7 +915,7 @@ elif current_tab == "الادارات التعليمية":
           unsafe_allow_html=True,
       )
 
-# 5️⃣ نموذج التواصل مع فريق الدعم
+# 5️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع
 elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
@@ -995,6 +1034,31 @@ elif current_tab == "التواصل مع الدعم":
       )
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+  # 📍 قسم موقع/لوكيشن الفرع تحت التواصل مع الدعم مباشرة
+  st.markdown(
+      f"""
+        <div class="location-card-container">
+            <h3 style="color: #C9A227; margin-top: 0; font-size: 1.5rem; margin-bottom: 15px;">📍 موقع فرع الأكاديمية المهنية للمعلمين بالجيزة</h3>
+            <p style="color: var(--text-color); font-size: 1.05rem; margin-bottom: 20px;">
+                يمكنكم زيارة مقر الفرع مباشرة أو فتح الخريطة عبر تطبيق خرائط جوجل من خلال الرابط أدناه:
+            </p>
+            <a href="{LOCATION_MAP_URL}" target="_blank" class="location-btn">
+                🗺️ فتح الموقع في خرائط Google Maps
+            </a>
+            <div style="margin-top: 10px;">
+                <iframe 
+                    class="map-frame"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.513427958925!2d31.2081!3d30.0125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAwJzQ1LjAiTiAzMcKwMTInMjkuMiJF!5e0!3m2!1sar!2seg!4v1680000000000!5m2!1sar!2seg" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
 
 # باقي التبويبات
 else:
