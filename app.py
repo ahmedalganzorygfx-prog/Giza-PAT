@@ -108,19 +108,9 @@ FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 st.markdown(
     """
     <style>
-    /* 🎯 إلغاء أيقونات GitHub و Fork نهائياً من الشريط العلوي 🎯 */
-    header a[href*="github"],
-    header button[title*="GitHub"],
-    header button[title*="Fork"],
-    header a[href*="fork"],
-    .stAppToolbar a[href*="github"],
-    .stAppToolbar button[title*="Fork"] {
-        display: none !important;
-    }
-
+    /* 🎯 دعم التنسيقات والألوان المتكيفة ديناميكياً مع Dark & Light Mode 🎨 */
     footer { visibility: hidden; }
 
-    /* 🎨 ضبط اتجاه الواجهة والألوان المتكيفة مع المود (Dark & Light) 🎨 */
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
         text-align: right;
@@ -214,7 +204,6 @@ st.markdown(
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* ✨ تمييز الأسماء بلون متناسق ومميز ✨ */
     .highlight-name {
         color: #C9A227 !important;
         font-weight: bold !important;
