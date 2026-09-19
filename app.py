@@ -759,7 +759,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# قائمة التبويبات العلوية (تم ضبط توزيع الأعمدة وعرض النص بالكامل)
+# قائمة التبويبات العلوية
 cols = st.columns([1, 1, 1, 1, 1, 1.3, 1, 1.2, 1.2])
 
 tabs_names = [
@@ -1384,15 +1384,20 @@ elif current_tab == "أحدث التعليمات والقرارات":
   )
 
   st.markdown(
-      """
+      f"""
         <div class="support-form-container" style="text-align: center;">
             <p style="font-size: 1.15rem; line-height: 1.9; color: #ffffff;">
-                للاطلاع على النصوص الكاملة للقرارات والتعاميم الرسمية وتنزيل النشرات بصيغة PDF، يرجى زيارة الموقع الرسمي للأكاديمية المهنية للمعلمين.
+                للاطلاع على النصوص الكاملة للقرارات والتعاميم الرسمية وتنزيل النشرات بصيغة PDF، يرجى زيارة الموقع الرسمي أو متابعة صفحة الفيسبوك الرسمية لفرع الأكاديمية المهنية للمعلمين.
             </p>
             <br>
-            <a href="https://www.pat.edu.eg" target="_blank" class="location-btn" style="text-decoration: none;">
-                🌐 زيارة الموقع الرسمي للأكاديمية
-            </a>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="https://www.pat.edu.eg" target="_blank" class="location-btn" style="text-decoration: none; margin-bottom: 0;">
+                    🌐 زيارة الموقع الرسمي للأكاديمية
+                </a>
+                <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="location-btn" style="text-decoration: none; background: linear-gradient(135deg, #1877F2 0%, #0a52b2 100%) !important; color: white !important; border-color: #1877F2 !important; margin-bottom: 0;">
+                    📘 زيارة صفحة فيسبوك الفرع
+                </a>
+            </div>
         </div>
     """,
       unsafe_allow_html=True,
