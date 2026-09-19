@@ -1,4 +1,5 @@
 import base64
+import datetime
 import os
 import urllib.parse
 import streamlit as st
@@ -45,7 +46,7 @@ def find_and_load_image(base_file_name, fallback_url=""):
   return img_data if img_data else fallback_url
 
 
-# جلب اللوجو وتجهيز المتغيرات قبل أي استدعاء لمنع خطأ NameError
+# جلب اللوجو وتجهيز المتغيرات
 browser_logo_icon = find_and_load_image("Logo.png", "🎓")
 
 # 1️⃣ ضبط إعدادات الصفحة
@@ -344,6 +345,8 @@ st.markdown(
         gap: 8px;
         box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
         white-space: nowrap;
+        direction: ltr;
+        unicode-bidi: isolate;
     }
 
     .nav-left-actions {
@@ -759,7 +762,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# ⏱️ تحديث الساعة والتاريخ بشكل حي وفوري ودقيق
+# ⏱️ شريط العلوي مع ساعة دقيقة ومحدثة تماماً
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -771,7 +774,7 @@ st.markdown(
         </div>
         <div class="nav-left-actions">
             <div id="live-clock" class="live-clock-badge">
-                🕒 جاري التحديث...
+                🕒 جاري التحميل...
             </div>
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
                 منصة المٌعلم 🎓
@@ -780,21 +783,17 @@ st.markdown(
     </div>
 
     <script>
-    function updateClock() {{
+    function updateLiveClock() {{
         const now = new Date();
-        const optionsDate = {{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }};
-        const dateStr = now.toLocaleDateString('ar-EG', optionsDate);
-        const timeStr = now.toLocaleTimeString('ar-EG', {{ hour: '2-digit', minute: '2-digit', second: '2-digit' }});
-        
-        const clockElement = document.getElementById('live-clock');
-        if (clockElement) {{
-            clockElement.style.direction = "ltr";
-            clockElement.style.textAlign = "left";
-            clockElement.innerHTML = `${{dateStr}} &nbsp;|&nbsp; 🕒 ${{timeStr}}`;
+        const options = {{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }};
+        const formattedString = now.toLocaleDateString('ar-EG', options);
+        const clockEl = document.getElementById('live-clock');
+        if (clockEl) {{
+            clockEl.innerHTML = '🕒 ' + formattedString;
         }}
     }}
-    updateClock();
-    setInterval(updateClock, 1000);
+    updateLiveClock();
+    setInterval(updateLiveClock, 1000);
     </script>
 """,
     unsafe_allow_html=True,
@@ -1687,7 +1686,7 @@ elif current_tab == "التواصل مع الدعم":
 
   st.markdown(
       f"""
-        <location-card-container class="location-card-container">
+        <div class="location-card-container">
             <h3 style="color: #C9A227; margin-top: 0; font-size: 1.45rem; margin-bottom: 14px;">📍 موقع فرع الأكاديمية المهنية للمعلمين بالجيزة</h3>
             <p style="color: #cbd5e1; font-size: 1.02rem; margin-bottom: 20px;">
                 يمكنكم زيارة مقر الفرع مباشرة أو فتح الخريطة عبر تطبيق خرائط جوجل من خلال الرابط أدناه:
@@ -1698,7 +1697,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
