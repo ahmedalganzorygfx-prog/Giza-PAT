@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الكروت الفاخر والتنسيق المخصص (Premium Web UI CSS)
+# 4️⃣ تصميم الكروت الفاخر والتنسيق المخصص (إضافة اللون البرونزي/النحاسي المتدرج للتجميل)
 st.markdown(
     """
     <style>
@@ -278,17 +278,18 @@ st.markdown(
         color: #0b1a3e !important;
     }
 
+    /* 🌟 التعديل الجمالي: إضافة تدرج لوني برونزي/نحاسي فاخر في الهيدر */
     .top-navbar {
-        background: linear-gradient(180deg, rgba(11, 26, 62, 0.98) 0%, rgba(6, 13, 31, 0.95) 100%) !important;
+        background: linear-gradient(135deg, #0b1a3e 0%, #1e294b 50%, #4a3515 100%) !important;
         backdrop-filter: blur(12px);
         padding: 14px 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         direction: rtl;
-        box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+        box-shadow: 0 6px 30px rgba(0,0,0,0.6);
         margin: 0 -1rem 20px -1rem;
-        border-bottom: 2px solid rgba(201, 162, 39, 0.5);
+        border-bottom: 2.5px solid #d4af37;
         flex-wrap: wrap;
         gap: 15px;
     }
@@ -643,17 +644,18 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(37, 211, 102, 0.55);
     }
 
+    /* 🌟 التعديل الجمالي: إضافة تدرج لوني برونزي/نحاسي متناسق في الفوتر */
     .app-footer {
         margin-top: 50px;
-        padding: 22px 0;
-        background: linear-gradient(180deg, #0b1a3e 0%, #040915 100%) !important;
+        padding: 24px 0;
+        background: linear-gradient(135deg, #4a3515 0%, #1e294b 50%, #040915 100%) !important;
         color: #ffffff !important;
         text-align: center !important;
         font-size: 1.05rem;
         font-weight: bold;
-        border-top: 3.5px solid #C9A227;
+        border-top: 3.5px solid #d4af37;
         border-radius: 20px 20px 0 0;
-        box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 -8px 25px rgba(0,0,0,0.4);
     }
     
     .app-footer span { color: #FFD700; }
