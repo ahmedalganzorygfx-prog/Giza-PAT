@@ -226,7 +226,7 @@ st.markdown(
         font-weight: bold !important;
     }
 
-    /* 🎴 كروت البرامج المتكيفة 🎴 */
+    /* 🎴 كروت البرامج والخدمات المتكيفة 🎴 */
     .program-card-wrapper {
         background-color: var(--secondary-background-color) !important;
         border: 2px solid #937B2B;
@@ -991,7 +991,102 @@ elif current_tab == "الادارات التعليمية":
           unsafe_allow_html=True,
       )
 
-# 5️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع مع الـ Pin المباشر
+# 5️⃣ خدمات الأكاديمية
+elif current_tab == "خدمات الأكاديمية":
+  st.markdown(
+      f"""
+        <div class="centered-header">
+            <div>{logo_header_tag}</div>
+            <div class="main-header-title">خدمات الأكاديمية المهنية للمعلمين</div>
+            <div class="sub-header-title">دليل الخدمات والتسجيل الرقمي المتاح لجميع أعضاء هيئة التعليم</div>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # قسم 1: البرامج الاعتمادية والتدريبية
+  st.markdown(
+      '<div class="section-title">🎓 البرامج الاعتمادية والتأهيلية</div>',
+      unsafe_allow_html=True,
+  )
+  s1, s2 = st.columns([1, 1])
+  with s1:
+    st.markdown(
+        """
+            <div class="info-card-box">
+                <h3 style="color: #C9A227; margin-top:0;">🌟 برامج الترقي للكادر الوظيفي</h3>
+                <p style="line-height: 1.8;">
+                    تقديم التدريبات الرقمية المعتمدة لاستكمال متطلبات الترقي للمعلمين المستحقين بالنظام الإلكتروني الحديث، ومتابعة رفع واستيفاء ملفات الترقي بالتعاون مع الإدارات التعليمية.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+  with s2:
+    st.markdown(
+        """
+            <div class="info-card-box">
+                <h3 style="color: #C9A227; margin-top:0;">👑 برامج القيادات التربوية</h3>
+                <p style="line-height: 1.8;">
+                    تأهيل الكوادر التربوية لشغل وظائف (مدير ووكيل إدارة مدرسية، مدير ووكيل إدارة تعليمية، أساسيات التوجيه الفني) والحصول على شهادات التنمية المهنية المعتمدة.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  # قسم 2: الاعتماد وتعديل المسار الوظيفي
+  st.markdown(
+      '<div class="section-title">📜 الاعتماد وتغيير المسمى الوظيفي</div>',
+      unsafe_allow_html=True,
+  )
+  s3, s4 = st.columns([1, 1])
+  with s3:
+    st.markdown(
+        """
+            <div class="info-card-box">
+                <h3 style="color: #C9A227; margin-top:0;">🔄 تغيير المسمى الوظيفي</h3>
+                <p style="line-height: 1.8;">
+                    استقبال وتدقيق أوراق المعلمين الراغبين في تغيير المسمى الوظيفي، وتوفير برامج إعادة التأهيل التربوي والتخصصي المعتمدة لمطابقة المؤهلات والتسكين الصحيح.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+  with s4:
+    st.markdown(
+        """
+            <div class="info-card-box">
+                <h3 style="color: #C9A227; margin-top:0;">💼 واعتماد المدربين والمراكز (TOT)</h3>
+                <p style="line-height: 1.8;">
+                    منح شهادات الاعتماد الرقمية للمدربين المعتمدين (TOT)، واعتماد برامج التنمية المهنية المستمرة والمؤسسات التدريبية وفق معايير الجودة الشاملة.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  # قسم 3: التقدم للبرامج مدفوعة الأجر
+  st.markdown(
+      '<div class="section-title">📝 التقدم للبرامج مدفوعة الأجر</div>',
+      unsafe_allow_html=True,
+  )
+  st.markdown(
+      """
+        <div class="support-form-container" style="text-align: center;">
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-color);">
+                تتيح الأكاديمية المهنية للمعلمين بفرع الجيزة إمكانية التقدم والتسجيل الإلكتروني المباشر للبرامج التدريبية مدفوعة الأجر والخاصة بالترقي والاعتماد وتطوير المهارات.
+            </p>
+            <br>
+            <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="location-btn" style="text-decoration: none;">
+                🌐 الانتقال إلى منصة التقديم والتسجيل في البرامج
+            </a>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+# 6️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع مع الـ Pin المباشر
 elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
