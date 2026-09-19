@@ -18,7 +18,6 @@ def get_image_base64_direct(file_name):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     name_without_ext = os.path.splitext(file_name)[0]
 
-    # جميع الاحتمالات الممكنة لأسماء وامتدادات الملفات
     possible_names = [
         file_name,
         f"{name_without_ext}.jpg",
@@ -105,17 +104,18 @@ logo_header_tag = (
 )
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 
-# 4️⃣ تطبيق التنسيقات (CSS)
+# 4️⃣ تطبيق التنسيقات المتكيفة (CSS)
 st.markdown(
     """
     <style>
-    /* 🎯 إخفاء جميع أيقونات الشريط العلوي (GitHub, Edit, Star, Share) مع ترك قائمة التحكم في المظهر فقط 🎯 */
-    .stAppToolbar [data-testid="stToolbar"] a, 
-    .stAppToolbar [data-testid="stToolbar"] button:not(#MainMenu),
+    /* 🎯 1. إخفاء الأيقونات المحددة (GitHub, Edit, Star, Share) والإبقاء على قائمة التحكم والمظهر 🎯 */
+    [data-testid="stToolbarActionElement"],
+    .stAppToolbar [data-testid="stToolbar"] a,
     [data-testid="stHeader"] button[title*="GitHub"],
     [data-testid="stHeader"] a[href*="github"],
     button[title*="Edit"], 
     button[title*="Star"],
+    button[title*="Share"],
     .stAppToolbarActions > div:not(:has(#MainMenu)) {
         display: none !important;
     }
@@ -125,8 +125,9 @@ st.markdown(
         display: block !important;
     }
 
-    footer {visibility: hidden;}
+    footer { visibility: hidden; }
 
+    /* 🎨 2. ضبط الألوان ديناميكياً لتناسب المود الفاتح والداكن (Light & Dark Mode) 🎨 */
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
         text-align: right;
@@ -192,7 +193,7 @@ st.markdown(
     }
 
     .main-header-title {
-        color: var(--text-color);
+        color: var(--text-color) !important;
         font-size: 2.4rem;
         font-weight: 800;
         display: inline-block;
@@ -202,7 +203,7 @@ st.markdown(
     }
 
     .sub-header-title {
-        color: var(--text-color);
+        color: var(--text-color) !important;
         opacity: 0.85;
         font-size: 1.2rem;
         margin-top: 14px;
@@ -211,7 +212,7 @@ st.markdown(
 
     .section-title {
         text-align: center !important;
-        color: #FFD700 !important;
+        color: #C9A227 !important;
         font-size: 1.8rem;
         font-weight: bold;
         margin-top: 35px;
@@ -220,25 +221,26 @@ st.markdown(
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* ✨ تغيير لون الأسماء للون الذهبي بخط عريض فقط ✨ */
+    /* ✨ تمييز الأسماء بلون متناسق ومميز ✨ */
     .highlight-name {
-        color: #FFD700 !important;
+        color: #C9A227 !important;
         font-weight: bold !important;
     }
 
+    /* 🎴 كروت البرامج المتكيفة 🎴 */
     .program-card-wrapper {
-        background-color: #1b2631;
+        background-color: var(--secondary-background-color) !important;
         border: 2px solid #937B2B;
         border-radius: 60px 0px 60px 0px;
         overflow: hidden;
         margin-bottom: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         transition: transform 0.3s ease;
     }
 
     .program-card-wrapper:hover {
         transform: translateY(-5px);
-        border-color: #FFD700;
+        border-color: #C9A227;
     }
 
     .program-img-box {
@@ -260,21 +262,21 @@ st.markdown(
     }
 
     .program-card-title {
-        color: #FFD700 !important;
+        color: #C9A227 !important;
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 10px;
     }
 
     .program-card-desc {
-        color: #e0e0e0 !important;
+        color: var(--text-color) !important;
         font-size: 0.95rem;
         line-height: 1.6;
     }
 
     .card-footer-badge {
-        background-color: var(--secondary-background-color);
-        color: #937B2B;
+        background-color: var(--secondary-background-color) !important;
+        color: #937B2B !important;
         text-align: center !important;
         padding: 8px;
         font-weight: bold;
@@ -284,13 +286,14 @@ st.markdown(
         margin-bottom: 25px;
     }
 
+    /* 👤 كروت فريق العمل المتكيفة 👤 */
     .staff-card {
-        background-color: #1b2631 !important;
+        background-color: var(--secondary-background-color) !important;
         border: 2px solid #937B2B;
         border-radius: 20px;
         padding: 30px 20px;
         text-align: center !important;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         margin-bottom: 20px;
     }
 
@@ -299,8 +302,8 @@ st.markdown(
         height: 150px;
         margin: 0 auto 18px auto;
         border-radius: 50%;
-        border: 4px solid #FFD700;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        border: 4px solid #C9A227;
+        box-shadow: 0 0 15px rgba(201, 162, 39, 0.3);
         overflow: hidden;
         background-color: #0b1a3e;
         display: flex;
@@ -309,8 +312,8 @@ st.markdown(
     }
 
     .avatar-frame img { width: 100%; height: 100%; object-fit: cover !important; }
-    .staff-name { color: #FFD700 !important; font-size: 1.35rem; font-weight: bold; margin-bottom: 8px; }
-    .staff-role { color: #ffffff !important; font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+    .staff-name { color: #C9A227 !important; font-size: 1.35rem; font-weight: bold; margin-bottom: 8px; }
+    .staff-role { color: var(--text-color) !important; font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
     .staff-dept {
         color: #937B2B !important;
         font-size: 0.95rem;
@@ -321,21 +324,33 @@ st.markdown(
         display: inline-block;
     }
 
+    .info-card-box {
+        direction: rtl;
+        text-align: right;
+        background-color: var(--secondary-background-color) !important;
+        color: var(--text-color) !important;
+        padding: 25px;
+        border-radius: 20px 0px 20px 0px;
+        border: 2px solid #937B2B;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
     .edara-card {
-        background-color: var(--secondary-background-color);
+        background-color: var(--secondary-background-color) !important;
         border: 1px solid rgba(147, 123, 43, 0.3);
         border-right: 4px solid #0b1a3e;
         border-radius: 8px;
         padding: 15px;
         text-align: center !important;
         font-weight: bold;
-        color: var(--text-color);
+        color: var(--text-color) !important;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         margin-bottom: 15px;
     }
 
     .support-form-container {
-        background-color: var(--secondary-background-color);
+        background-color: var(--secondary-background-color) !important;
         padding: 35px;
         border-radius: 20px;
         box-shadow: 0 8px 25px rgba(0,0,0,0.12);
@@ -347,7 +362,7 @@ st.markdown(
     }
 
     .support-form-title {
-        color: var(--text-color);
+        color: var(--text-color) !important;
         text-align: center !important;
         font-size: 1.4rem;
         font-weight: bold;
@@ -740,9 +755,9 @@ elif current_tab == "عن الفرع":
   # تبويب 1: التأسيس والانطلاقة
   st.markdown(
       """
-        <div style="direction: rtl; text-align: right; background: linear-gradient(135deg, #1b2631 0%, #0b1a3e 100%); padding: 25px; border-radius: 20px 0px 20px 0px; border: 2px solid #937B2B; box-shadow: 0 6px 15px rgba(0,0,0,0.25); margin-bottom: 20px;">
-            <h3 style="color: #FFD700; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🏛️ التأسيس والانطلاقة (2017)</h3>
-            <p style="color: #e0e0e0; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
+        <div class="info-card-box">
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🏛️ التأسيس والانطلاقة (2017)</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
                 أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
             </p>
         </div>
@@ -753,12 +768,12 @@ elif current_tab == "عن الفرع":
   # تبويب 2: مرحلة البناء والتأسيس
   st.markdown(
       """
-        <div style="direction: rtl; text-align: right; background: linear-gradient(135deg, #1b2631 0%, #0b1a3e 100%); padding: 25px; border-radius: 20px 0px 20px 0px; border: 2px solid #937B2B; box-shadow: 0 6px 15px rgba(0,0,0,0.25); margin-bottom: 20px;">
-            <h3 style="color: #FFD700; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
-            <p style="color: #e0e0e0; font-size: 1.05rem; line-height: 1.8;">
+        <div class="info-card-box">
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8;">
                 شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة <span class="highlight-name">الأستاذة / أمل عبد المقصود</span> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
             </p>
-            <ul style="color: #ffffff; font-size: 1rem; line-height: 2.2; padding-right: 20px;">
+            <ul style="font-size: 1rem; line-height: 2.2; padding-right: 20px;">
                 <li><span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)</li>
                 <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)</li>
             </ul>
@@ -770,16 +785,16 @@ elif current_tab == "عن الفرع":
   # تبويب 3: مرحلة التطوير والتحول الرقمي
   st.markdown(
       """
-        <div style="direction: rtl; text-align: right; background: linear-gradient(135deg, #1b2631 0%, #0b1a3e 100%); padding: 25px; border-radius: 20px 0px 20px 0px; border: 2px solid #937B2B; box-shadow: 0 6px 15px rgba(0,0,0,0.25); margin-bottom: 20px;">
-            <h3 style="color: #FFD700; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
-            <p style="color: #e0e0e0; font-size: 1.05rem; line-height: 1.8;">
+        <div class="info-card-box">
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8;">
                 مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة <span class="highlight-name">الأستاذ / أحمد حسني الجنزوري</span> مديراً للفرع، وفريق عمل متميز يتكون من:
             </p>
-            <ul style="color: #ffffff; font-size: 1rem; line-height: 2.2; padding-right: 20px;">
+            <ul style="font-size: 1rem; line-height: 2.2; padding-right: 20px;">
                 <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
                 <li><span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)</li>
             </ul>
-            <p style="color: #e0e0e0; font-size: 1rem; line-height: 1.8; margin-top: 10px; margin-bottom: 0;">
+            <p style="font-size: 1rem; line-height: 1.8; margin-top: 10px; margin-bottom: 0;">
                 تتضافر الجهود حالياً لتسهيل حصول المعلمين على البرامج الرقمية للقيادات والترقي وتغيير المسمى الوظيفي والدعم الفني المباشر لجميع الإدارات التعليمية بمحافظة الجيزة.
             </p>
         </div>
