@@ -292,7 +292,7 @@ st.markdown(
     }
 
     .top-navbar {
-        background: linear-gradient(135deg, #0b1a3e 0%, #1e294b 50%, #040915 100%) !important;
+        background: linear-gradient(135deg, #0b1a3e 0%, #1e294b 50%, #4a3515 100%) !important;
         backdrop-filter: blur(12px);
         padding: 12px 20px;
         display: flex;
@@ -354,6 +354,7 @@ st.markdown(
         white-space: nowrap;
         border: 1px solid rgba(201, 162, 39, 0.3);
         transition: all 0.25s ease;
+        cursor: pointer;
     }
 
     .nav-tab-link:hover, .nav-tab-link.active {
@@ -710,16 +711,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات الحالية ونظام استقبال النقرات عبر Query Parameters
-query_params = st.query_params
-if "tab" in query_params:
-  st.session_state["current_tab"] = query_params["tab"]
-
-if "current_tab" not in st.session_state:
-  st.session_state["current_tab"] = "الرئيسية"
-
-current_tab = st.session_state["current_tab"]
-
+# 5️⃣ إدارة حالة التبويبات عبر أزرار Streamlit الخالصة لضمان عدم فتح أي تبويب في نافذة مستقلة
 tabs_list = [
     "الرئيسية",
     "عن الفرع",
@@ -731,17 +723,12 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# بناء روابط التبويبات الأفقية الموحدة في شريط علوي احترافي (مطابق للصورة)
-tabs_html_links = ""
-for t_name in tabs_list:
-  active_class = " active" if current_tab == t_name else ""
-  # نستخدم طريقة تحديث الـ query_params عبر إعادة تحميل الصفحة لتفعيل التبويب المختار فوراً
-  tabs_html_links += (
-      f'<a href="?tab={urllib.parse.quote(t_name)}" class="nav-tab-link'
-      f'{active_class}">{t_name}</a>'
-  )
+if "current_tab" not in st.session_state:
+  st.session_state["current_tab"] = "الرئيسية"
 
-# شريط التنقل العلوي المتكامل
+current_tab = st.session_state["current_tab"]
+
+# شريط التنقل العلوي: اللوجو يميناً، أزرار التبويبات في المنتصف تماماً دون فتح نوافذ جديدة
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -750,9 +737,6 @@ st.markdown(
                 {logo_navbar_tag}
                 <span>الأكاديمية المهنية للمعلمين</span>
             </div>
-        </div>
-        <div class="nav-center-tabs">
-            {tabs_html_links}
         </div>
         <div class="nav-left-actions">
             <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">📘 فيسبوك</a>
@@ -763,20 +747,23 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# إذا لم تكن في الصفحة الرئيسية، نضيف زر علوي سريع للعودة
-if current_tab != "الرئيسية":
-  col_b1, col_b2 = st.columns([6, 1])
-  with col_b1:
-    if st.button("🏠 العودة إلى الصفحة الرئيسية", use_container_width=False):
-      st.query_params["tab"] = "الرئيسية"
-      st.session_state["current_tab"] = "الرئيسية"
+# عرض أزرار التبويبات التفاعلية داخل نفس الصفحة
+cols_tabs = st.columns(len(tabs_list))
+for idx, t_name in enumerate(tabs_list):
+  with cols_tabs[idx]:
+    # تمييز الزر النشط بلون مختلف
+    btn_type = "primary" if current_tab == t_name else "secondary"
+    if st.button(t_name, key=f"tab_btn_{idx}", use_container_width=True):
+      st.session_state["current_tab"] = t_name
       st.rerun()
-  st.markdown(
-      "<hr style='margin-top: 5px; margin-bottom: 20px; border-color:"
-      " rgba(201, 162, 39, 0.2);'>",
-      unsafe_allow_html=True,
-  )
-else:
+
+st.markdown(
+    "<hr style='margin-top: 10px; margin-bottom: 20px; border-color:"
+    " rgba(201, 162, 39, 0.3);'>",
+    unsafe_allow_html=True,
+)
+
+if current_tab == "الرئيسية":
   st.markdown(
       """
         <div class="welcome-marquee-container">
@@ -1651,6 +1638,19 @@ elif current_tab == "التواصل مع الدعم":
 # الختام (Footer)
 st.markdown(
     """
+    .app-footer {
+        margin-top: 50px;
+        padding: 24px 0;
+        background: linear-gradient(135deg, #4a3515 0%, #1e294b 50%, #040915 100%) !important;
+        color: #ffffff !important;
+        text-align: center !important;
+        font-size: 1.05rem;
+        font-weight: bold;
+        border-top: 3.5px solid #d4af37;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -8px 25px rgba(0,0,0,0.4);
+    }
+    .app-footer span { color: #FFD700; }
     <div class="app-footer">
         تصميم وتنفيذ: <span>أحمد الجنزوري</span> - مدير الفرع
     </div>
