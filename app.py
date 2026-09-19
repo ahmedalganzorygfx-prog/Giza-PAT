@@ -107,7 +107,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الكروت الفاخر مع منع انقسام العناوين (white-space: nowrap) وتوحيد الارتفاع
+# 4️⃣ تصميم الكروت الفاخر مع تنسيق الساعة والتاريخ العلوي
 st.markdown(
     """
     <style>
@@ -308,7 +308,7 @@ st.markdown(
     .nav-right-container { 
         display: flex; 
         align-items: center; 
-        gap: 15px; 
+        gap: 20px; 
     }
 
     .nav-logo-text {
@@ -329,6 +329,28 @@ st.markdown(
         background: rgba(255, 255, 255, 0.08);
         padding: 4px;
         border: 1px solid rgba(201, 162, 39, 0.5);
+    }
+
+    /* شريط الوقت والتاريخ العلوي */
+    .live-clock-badge {
+        background: rgba(11, 26, 62, 0.85);
+        border: 1px solid rgba(201, 162, 39, 0.5);
+        border-radius: 12px;
+        padding: 6px 14px;
+        color: #FFD700;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        white-space: nowrap;
+    }
+
+    .nav-left-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
     /* 🌟 تصميم شريط الترحيب المتحرك (من اليمين إلى اليسار) */
@@ -360,7 +382,7 @@ st.markdown(
     .teacher-platform-btn {
         background: linear-gradient(135deg, #d32f2f 0%, #9a0007 100%) !important;
         color: #ffffff !important;
-        padding: 10px 24px;
+        padding: 10px 20px;
         border-radius: 30px;
         font-weight: bold;
         font-size: 0.95rem;
@@ -370,6 +392,7 @@ st.markdown(
         display: inline-block;
         text-align: center;
         transition: all 0.3s ease;
+        white-space: nowrap !important;
     }
     
     .teacher-platform-btn:hover {
@@ -738,7 +761,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# الشريط العلوي للهيدر
+# ⏱️ استخدام مكتبة JavaScript لتحديث الساعة والتاريخ بشكل حي وفوري في شريط الهيدر
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -748,10 +771,34 @@ st.markdown(
                 <span>الأكاديمية المهنية للمعلمين - فرع الجيزة</span>
             </div>
         </div>
-        <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
-            منصة المٌعلم 🎓
-        </a>
+        <div class="nav-left-actions">
+            <div id="live-clock" class="live-clock-badge">
+                ⏳ جاري تحميل الوقت...
+            </div>
+            <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
+                منصة المٌعلم 🎓
+            </a>
+        </div>
     </div>
+
+    <script>
+    function updateClock() {{
+        const now = new Date();
+        
+        // تنسيق التاريخ والوقت باللغة العربية
+        const optionsDate = {{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }};
+        const dateStr = now.toLocaleDateString('ar-EG', optionsDate);
+        
+        const timeStr = now.toLocaleTimeString('ar-EG', {{ hour: '2-digit', minute: '2-digit', second: '2-digit' }});
+        
+        const clockElement = document.getElementById('live-clock');
+        if (clockElement) {{
+            clockElement.innerHTML = `🕒 ${{timeStr}} &nbsp;|&nbsp; 📅 ${{dateStr}}`;
+        }}
+    }}
+    setInterval(updateClock, 1000);
+    updateClock();
+    </script>
 """,
     unsafe_allow_html=True,
 )
@@ -1071,7 +1118,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-# 2️⃣ عن الفرع (عناوين متسقة على سطر واحد وارتفاعات متساوية)
+# 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
@@ -1654,7 +1701,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
