@@ -387,7 +387,7 @@ st.markdown(
 
     .map-frame {
         width: 100%;
-        height: 350px;
+        height: 380px;
         border-radius: 15px;
         border: 2px solid #937B2B;
     }
@@ -915,7 +915,7 @@ elif current_tab == "الادارات التعليمية":
           unsafe_allow_html=True,
       )
 
-# 5️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع
+# 5️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع مع الـ Pin المباشر
 elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
@@ -1035,7 +1035,7 @@ elif current_tab == "التواصل مع الدعم":
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-  # 📍 قسم موقع/لوكيشن الفرع تحت التواصل مع الدعم مباشرة
+  # 📍 قسم موقع/لوكيشن الفرع بالـ Pin المباشر على الأكاديمية
   st.markdown(
       f"""
         <div class="location-card-container">
@@ -1049,7 +1049,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.513427958925!2d31.2081!3d30.0125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAwJzQ1LjAiTiAzMcKwMTInMjkuMiJF!5e0!3m2!1sar!2seg!4v1680000000000!5m2!1sar!2seg" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%86%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
