@@ -108,16 +108,26 @@ FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 st.markdown(
     """
     <style>
-    /* 🎯 إلغاء أيقونة GitHub فقط من الشريط العلوي 🎯 */
-    header a[href*="github"],
-    header button[title*="GitHub"],
-    .stAppToolbar a[href*="github"] {
+    /* 🎯 1. إخفاء الأيقونات المحددة (GitHub, Edit, Star, Share) والإبقاء على قائمة التحكم والمظهر 🎯 */
+    [data-testid="stToolbarActionElement"],
+    .stAppToolbar [data-testid="stToolbar"] a,
+    [data-testid="stHeader"] button[title*="GitHub"],
+    [data-testid="stHeader"] a[href*="github"],
+    button[title*="Edit"], 
+    button[title*="Star"],
+    button[title*="Share"],
+    .stAppToolbarActions > div:not(:has(#MainMenu)) {
         display: none !important;
+    }
+
+    #MainMenu {
+        visibility: visible !important;
+        display: block !important;
     }
 
     footer { visibility: hidden; }
 
-    /* 🎨 ضبط اتجاه الواجهة والألوان المتكيفة مع المود (Dark & Light) 🎨 */
+    /* 🎨 2. ضبط الألوان ديناميكياً لتناسب المود الفاتح والداكن (Light & Dark Mode) 🎨 */
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
         text-align: right;
