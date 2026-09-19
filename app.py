@@ -54,6 +54,9 @@ logo_src = find_and_load_image("Logo.png", "https://via.placeholder.com/220x220?
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
 
+# رابط صفحة الفيسبوك الخاص بكم
+FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
+
 # تطبيق التنسيقات (CSS)
 st.markdown("""
     <style>
@@ -309,7 +312,7 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-# أزرار التبويبات الرئيسية (شاملة زر صفحة الفيسبوك)
+# أزرار التبويبات الرئيسية
 cols = st.columns([1.1, 1, 1.1, 1.2, 1.2, 1.1, 1.4, 1.3])
 
 tabs_names = [
@@ -323,10 +326,10 @@ for idx, name in enumerate(tabs_names):
         if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
             st.session_state['current_tab'] = name
 
-# التبويب الأخير: زر فيسبوك مخصص يفتح صفحة الفيسبوك مباشرة في نافذة جديدة
+# زر فيسبوك مخصص يفتح رابط الصفحة المباشر
 with cols[7]:
-    st.markdown("""
-        <a href="https://www.facebook.com/patgiza" target="_blank" class="facebook-btn-tab">
+    st.markdown(f"""
+        <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
             📘 فيسبوك الفرع
         </a>
     """, unsafe_allow_html=True)
@@ -335,7 +338,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (بدون معرض صور - تحتوي على اللوجو وبرامج منصة الفرع مباشرة)
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
 
     st.markdown(f"""
