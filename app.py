@@ -202,7 +202,18 @@ st.markdown(
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* 🎨 تصميم كروت البرامج بالصور والتفاصيل 🎨 */
+    /* ✨ تنسيق مميز ببراقة للأسماء داخل النصوص ✨ */
+    .highlight-name {
+        color: #FFD700 !important;
+        font-weight: 800 !important;
+        font-size: 1.08em;
+        background-color: rgba(147, 123, 43, 0.25);
+        padding: 2px 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 215, 0, 0.4);
+        display: inline-block;
+    }
+
     .program-card-wrapper {
         background-color: #1b2631;
         border: 2px solid #937B2B;
@@ -701,7 +712,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-# 2️⃣ عن الفرع
+# 2️⃣ عن الفرع (مع تمييز الأسماء باللون العريض الذهبي والمظلل)
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
@@ -733,11 +744,11 @@ elif current_tab == "عن الفرع":
         <div style="direction: rtl; text-align: right; background: linear-gradient(135deg, #1b2631 0%, #0b1a3e 100%); padding: 25px; border-radius: 20px 0px 20px 0px; border: 2px solid #937B2B; box-shadow: 0 6px 15px rgba(0,0,0,0.25); margin-bottom: 20px;">
             <h3 style="color: #FFD700; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
             <p style="color: #e0e0e0; font-size: 1.05rem; line-height: 1.8;">
-                شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة <b>الأستاذة / أمل عبد المقصود</b> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
+                شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة <span class="highlight-name">الأستاذة / أمل عبد المقصود</span> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
             </p>
-            <ul style="color: #ffffff; font-size: 1rem; line-height: 1.9; padding-right: 20px;">
-                <li><b>أ . أحمد حسني الجنزوري</b> (عضو تكنولوجيا المعلومات IT)</li>
-                <li><b>أ . خالد عبد الحكيم هارون</b> (عضو تكنولوجيا المعلومات IT)</li>
+            <ul style="color: #ffffff; font-size: 1rem; line-height: 2.2; padding-right: 20px;">
+                <li><span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)</li>
+                <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)</li>
             </ul>
         </div>
     """,
@@ -750,11 +761,11 @@ elif current_tab == "عن الفرع":
         <div style="direction: rtl; text-align: right; background: linear-gradient(135deg, #1b2631 0%, #0b1a3e 100%); padding: 25px; border-radius: 20px 0px 20px 0px; border: 2px solid #937B2B; box-shadow: 0 6px 15px rgba(0,0,0,0.25); margin-bottom: 20px;">
             <h3 style="color: #FFD700; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed #937B2B;">🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
             <p style="color: #e0e0e0; font-size: 1.05rem; line-height: 1.8;">
-                مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة <b>الأستاذ / أحمد حسني الجنزوري</b> مديراً للفرع، وفريق عمل متميز يتكون من:
+                مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة <span class="highlight-name">الأستاذ / أحمد حسني الجنزوري</span> مديراً للفرع، وفريق عمل متميز يتكون من:
             </p>
-            <ul style="color: #ffffff; font-size: 1rem; line-height: 1.9; padding-right: 20px;">
-                <li><b>أ . خالد عبد الحكيم هارون</b> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
-                <li><b>أ . أحمد محمد عمر</b> (مسئول التنمية المهنية والاعتماد)</li>
+            <ul style="color: #ffffff; font-size: 1rem; line-height: 2.2; padding-right: 20px;">
+                <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
+                <li><span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)</li>
             </ul>
             <p style="color: #e0e0e0; font-size: 1rem; line-height: 1.8; margin-top: 10px; margin-bottom: 0;">
                 تتضافر الجهود حالياً لتسهيل حصول المعلمين على البرامج الرقمية للقيادات والترقي وتغيير المسمى الوظيفي والدعم الفني المباشر لجميع الإدارات التعليمية بمحافظة الجيزة.
@@ -796,8 +807,8 @@ elif current_tab == "ادارات الافراد":
                 <div class="avatar-frame">
                     <img src="{img_ahmed}" alt="أحمد حسني الجنزوري">
                 </div>
-                <div class="staff-name">أحمد حسني الجنزوري</div>
-                <div class="staff-role">👔 مدير الفرع</div>
+                <div class="staff-name"><span class="highlight-name">أحمد حسني الجنزوري</span></div>
+                <div class="staff-role" style="margin-top:10px;">👔 مدير الفرع</div>
                 <div class="staff-dept">Information Technology</div>
             </div>
         """,
@@ -811,8 +822,8 @@ elif current_tab == "ادارات الافراد":
                 <div class="avatar-frame">
                     <img src="{img_khaled}" alt="خالد عبدالحكيم هارون">
                 </div>
-                <div class="staff-name">خالد عبدالحكيم هارون</div>
-                <div class="staff-role">🤝 مسئول الموارد البشرية</div>
+                <div class="staff-name"><span class="highlight-name">خالد عبدالحكيم هارون</span></div>
+                <div class="staff-role" style="margin-top:10px;">🤝 مسئول الموارد البشرية</div>
                 <div class="staff-dept">Information Technology</div>
             </div>
         """,
@@ -826,8 +837,8 @@ elif current_tab == "ادارات الافراد":
                 <div class="avatar-frame">
                     <img src="{img_omar}" alt="أحمد محمد عمر">
                 </div>
-                <div class="staff-name">أحمد محمد عمر</div>
-                <div class="staff-role">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-name"><span class="highlight-name">أحمد محمد عمر</span></div>
+                <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
                 <div class="staff-dept">التنمية المهنية والاعتماد</div>
             </div>
         """,
