@@ -107,7 +107,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الكروت الفاخر مع تأثير الحركة (Marquee Animation) للجملة الترحيبية
+# 4️⃣ تصميم الكروت الفاخر مع منع انقسام العناوين (white-space: nowrap) وتوحيد الارتفاع
 st.markdown(
     """
     <style>
@@ -143,25 +143,33 @@ st.markdown(
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         margin-bottom: 26px;
         transition: all 0.3s ease;
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
 
     .info-card-box:hover {
         border-color: #FFD700;
         box-shadow: 0 14px 35px rgba(201, 162, 39, 0.3);
+        transform: translateY(-4px);
     }
 
     .info-card-box h3 {
         color: #FFD700 !important;
-        font-size: 1.55rem !important;
+        font-size: 1.35rem !important;
         font-weight: 800 !important;
         margin-top: 0;
         padding-bottom: 14px;
         border-bottom: 1.5px dashed rgba(201, 162, 39, 0.5);
+        white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .info-card-box p {
-        font-size: 1.18rem !important;
-        line-height: 2 !important;
+        font-size: 1.05rem !important;
+        line-height: 1.85 !important;
         color: #f1f5f9 !important;
         font-weight: 500 !important;
         margin-bottom: 15px;
@@ -172,9 +180,9 @@ st.markdown(
         border: 1px solid rgba(201, 162, 39, 0.4) !important;
         border-right: 5px solid #FFD700 !important;
         border-radius: 12px !important;
-        padding: 12px 18px !important;
+        padding: 10px 14px !important;
         margin-bottom: 10px !important;
-        font-size: 1.1rem !important;
+        font-size: 0.95rem !important;
         font-weight: 600 !important;
         color: #ffffff !important;
         display: flex !important;
@@ -182,6 +190,7 @@ st.markdown(
         gap: 10px !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
         transition: all 0.25s ease !important;
+        white-space: nowrap !important;
     }
 
     .staff-item-badge:hover {
@@ -1062,7 +1071,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-# 2️⃣ عن الفرع (مرتبة الآن من اليمين لليسار: التأسيس -> مرحلة البناء -> التطوير الرقمي)
+# 2️⃣ عن الفرع (عناوين متسقة على سطر واحد وارتفاعات متساوية)
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
@@ -1085,9 +1094,9 @@ elif current_tab == "عن الفرع":
   with c1:
     st.markdown(
         """
-            <div class="info-card-box" style="height: 100%;">
+            <div class="info-card-box">
                 <h3>🏛️ التأسيس والانطلاقة</h3>
-                <p style="font-size: 1.05rem !important;">
+                <p>
                     أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
                 </p>
             </div>
@@ -1098,15 +1107,15 @@ elif current_tab == "عن الفرع":
   with c2:
     st.markdown(
         """
-            <div class="info-card-box" style="height: 100%;">
+            <div class="info-card-box">
                 <h3>📜 مرحلة البناء (2017 - 2023)</h3>
-                <p style="font-size: 1.05rem !important;">
-                    شهدت إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span> (مدير الفرع)، بمعاونة فريق تكنولوجيا المعلومات المتميز:
+                <p>
+                    شهدت إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span> (مدير الفرع)، بمعاونة فريق تكنولوجيا المعلومات:
                 </p>
-                <div class="staff-item-badge" style="font-size: 0.95rem !important; padding: 8px 12px !important;">
+                <div class="staff-item-badge">
                     💻 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (IT)
                 </div>
-                <div class="staff-item-badge" style="font-size: 0.95rem !important; padding: 8px 12px !important;">
+                <div class="staff-item-badge">
                     💻 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (IT)
                 </div>
             </div>
@@ -1117,18 +1126,18 @@ elif current_tab == "عن الفرع":
   with c3:
     st.markdown(
         """
-            <div class="info-card-box" style="height: 100%;">
+            <div class="info-card-box">
                 <h3>🚀 التطوير الرقمي (2023 - الآن)</h3>
-                <p style="font-size: 1.05rem !important;">
-                    انطلاقة الكترونية جديدة برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع، لميكنة الخدمات وتيسير البرامج التدريبية للقيادات والترقي بالتعاون مع فريق العمل:
+                <p>
+                    انطلاقة الكترونية برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع، لميكنة الخدمات وتيسير البرامج بالتعاون مع فريق العمل:
                 </p>
-                <div class="staff-item-badge" style="font-size: 0.9rem !important; padding: 6px 10px !important;">
+                <div class="staff-item-badge">
                     🤝 <span class="highlight-name">أ . خالد عبد الحكيم</span> (موارد بشرية و IT)
                 </div>
-                <div class="staff-item-badge" style="font-size: 0.9rem !important; padding: 6px 10px !important;">
+                <div class="staff-item-badge">
                     🎯 <span class="highlight-name">أ . أحمد محمد عمر</span> (التنمية المهنية)
                 </div>
-                <div class="staff-item-badge" style="font-size: 0.9rem !important; padding: 6px 10px !important;">
+                <div class="staff-item-badge">
                     🎯 <span class="highlight-name">أ . أمينة فوزي</span> (التنمية المهنية)
                 </div>
             </div>
@@ -1444,8 +1453,8 @@ elif current_tab == "مجتمعات التعلم":
   with p1:
     st.markdown(
         """
-            <div class="info-card-box" style="height: 100%;">
-                <h4 style="color: #FFD700; margin-top:0;">🤝 تعزيز العمل الجماعي</h4>
+            <div class="info-card-box">
+                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">🤝 تعزيز العمل الجماعي</h4>
                 <p style="font-size: 1rem;">
                     بناء ثقافة العمل بروح الفريق الواحد بين المعلمين والموجهين داخل المدرسة وعلى مستوى الإدارة التعليمية.
                 </p>
@@ -1457,8 +1466,8 @@ elif current_tab == "مجتمعات التعلم":
   with p2:
     st.markdown(
         """
-            <div class="info-card-box" style="height: 100%;">
-                <h4 style="color: #FFD700; margin-top:0;">💡 الابتكار وتبادل الخبرات</h4>
+            <div class="info-card-box">
+                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">💡 الابتكار وتبادل الخبرات</h4>
                 <p style="font-size: 1rem;">
                     نقل وتطبيق أحدث استراتيجيات التدريس وتقنيات التحول الرقمي والتفكير النقدي في الفصول الدراسية.
                 </p>
@@ -1470,8 +1479,8 @@ elif current_tab == "مجتمعات التعلم":
   with p3:
     st.markdown(
         """
-            <div class="info-card-box" style="height: 100%;">
-                <h4 style="color: #FFD700; margin-top:0;">📈 النمو المهني المستمر</h4>
+            <div class="info-card-box">
+                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">📈 النمو المهني المستمر</h4>
                 <p style="font-size: 1rem;">
                     التطوير الذاتي والتنفيذي للكوادر التعليمية من خلال البحوث الإجرائية وتبادل الملاحظات والتغذية الراجعة.
                 </p>
@@ -1490,7 +1499,7 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0;">🔍 بحث الدرس (Lesson Study) وتدريب الأقران</h4>
+                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">🔍 بحث الدرس (Lesson Study) وتدريب الأقران</h4>
                 <p>
                     التخطيط المشترك للدروس وتجريب التنسيقات الحديثة في مواقف تعليمية واقعية، يليها جلسات تأمل وتبادل التغذية الراجعة البناءة بين المعلمين ورؤساء الأقسام.
                 </p>
@@ -1503,7 +1512,7 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0;">🖥️ الشبكات والورش الرقمية التفاعلية</h4>
+                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">🖥️ الشبكات والورش الرقمية التفاعلية</h4>
                 <p>
                     لقاءات دورية وندوات عبر الإنترنت للربط بين المعلمين والمشرفين عبر مختلف الإدارات التعليمية بالجيزة لعرض التجارب والحلول المبتكرة للتحديات الصفية.
                 </p>
@@ -1645,7 +1654,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
