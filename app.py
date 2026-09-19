@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الكروت الفاخر والتنسيق المخصص (إضافة اللون البرونزي/النحاسي المتدرج للتجميل)
+# 4️⃣ تصميم الكروت الفاخر مع تأثير الحركة (Marquee Animation) للجملة الترحيبية
 st.markdown(
     """
     <style>
@@ -278,7 +278,6 @@ st.markdown(
         color: #0b1a3e !important;
     }
 
-    /* 🌟 التعديل الجمالي: إضافة تدرج لوني برونزي/نحاسي فاخر في الهيدر */
     .top-navbar {
         background: linear-gradient(135deg, #0b1a3e 0%, #1e294b 50%, #4a3515 100%) !important;
         backdrop-filter: blur(12px);
@@ -318,6 +317,32 @@ st.markdown(
         background: rgba(255, 255, 255, 0.08);
         padding: 4px;
         border: 1px solid rgba(201, 162, 39, 0.5);
+    }
+
+    /* 🌟 تصميم شريط الترحيب المتحرك (من اليمين إلى اليسار) */
+    .welcome-marquee-container {
+        background: rgba(11, 26, 62, 0.7);
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        border-radius: 14px;
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .welcome-marquee-text {
+        display: inline-block;
+        color: #FFD700;
+        font-weight: 800;
+        font-size: 1.15rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        animation: marqueeAnim 22s linear infinite;
+    }
+
+    @keyframes marqueeAnim {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
     }
 
     .teacher-platform-btn {
@@ -644,7 +669,6 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(37, 211, 102, 0.55);
     }
 
-    /* 🌟 التعديل الجمالي: إضافة تدرج لوني برونزي/نحاسي متناسق في الفوتر */
     .app-footer {
         margin-top: 50px;
         padding: 24px 0;
@@ -713,6 +737,18 @@ st.markdown(
         <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
             منصة المٌعلم 🎓
         </a>
+    </div>
+""",
+    unsafe_allow_html=True,
+)
+
+# 🌟 شريط الترحيب المتحرك من اليمين إلى اليسار أسفل الهيدر مباشرة
+st.markdown(
+    """
+    <div class="welcome-marquee-container">
+        <div class="welcome-marquee-text">
+            ✨ أهلاً وسهلاً بكم بفرع الأكاديمية المهنية للمعلمين بالجيزة - بوابة الخدمات والاعتماد المهني للمعلمين ✨
+        </div>
     </div>
 """,
     unsafe_allow_html=True,
