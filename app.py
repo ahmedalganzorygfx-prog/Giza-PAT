@@ -108,28 +108,9 @@ FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 st.markdown(
     """
     <style>
-    /* 🎯 1. إخفاء الأيقونات الأربعة فقط (GitHub, Edit, Star, Share) والإبقاء على قائمة المظهر 🎯 */
-    div[data-testid="stToolbar"] > div:nth-child(1),
-    div[data-testid="stToolbar"] > a,
-    div[data-testid="stToolbar"] > button,
-    header button[title*="Edit"], 
-    header button[title*="Star"],
-    header button[title*="Share"],
-    header a[href*="github"] {
-        display: none !important;
-    }
-
-    /* إظهار قائمة الإعدادات والمظهر بشكل صريح */
-    #MainMenu, 
-    button[aria-label="Main menu"],
-    div[data-testid="stToolbar"] > div:has(#MainMenu) {
-        display: block !important;
-        visibility: visible !important;
-    }
-
+    /* 🎯 دعم التنسيقات والألوان المتكيفة ديناميكياً مع Dark & Light Mode 🎨 */
     footer { visibility: hidden; }
 
-    /* 🎨 2. ضبط اتجاه الواجهة والألوان المتكيفة مع المود (Dark & Light) 🎨 */
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
         text-align: right;
@@ -223,7 +204,6 @@ st.markdown(
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* ✨ تمييز الأسماء بلون متناسق ومميز ✨ */
     .highlight-name {
         color: #C9A227 !important;
         font-weight: bold !important;
