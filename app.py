@@ -745,7 +745,9 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# ⏱️ الشريط العلوي بدون ساعة أو تاريخ
+current_tab = st.session_state["current_tab"]
+
+# الشريط العلوي المشترك
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -765,54 +767,74 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# شريط الترحيب المتحرك
-st.markdown(
-    """
-    <div class="welcome-marquee-container">
-        <div class="welcome-marquee-text">
-            ✨ أهلاً وسهلاً بكم بفرع الأكاديمية المهنية للمعلمين بالجيزة ✨
-        </div>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
-
-# قائمة التبويبات العلوية
-cols = st.columns([1, 1, 1, 1, 1, 1.3, 1, 1.2, 1.2])
-
-tabs_names = [
-    "الرئيسية",
-    "عن الفرع",
-    "ادارات الافراد",
-    "الادارات التعليمية",
-    "خدمات الأكاديمية",
-    "أحدث التعليمات والقرارات",
-    "مجتمعات التعلم",
-    "التواصل مع الدعم",
-]
-
-for idx, name in enumerate(tabs_names):
-  with cols[idx]:
-    if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
-      st.session_state["current_tab"] = name
-
-with cols[8]:
+# إذا كانت الصفحة الحالية هي "الرئيسية": نعرض شريط الترحيب وأزرار التبويبات بالكامل
+if current_tab == "الرئيسية":
   st.markdown(
-      f"""
-        <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
-            📘 فيسبوك الفرع
-        </a>
+      """
+        <div class="welcome-marquee-container">
+            <div class="welcome-marquee-text">
+                ✨ أهلاً وسهلاً بكم بفرع الأكاديمية المهنية للمعلمين بالجيزة ✨
+            </div>
+        </div>
     """,
       unsafe_allow_html=True,
   )
 
-st.markdown(
-    "<hr style='margin-top: 8px; margin-bottom: 25px; border-color:"
-    " rgba(201, 162, 39, 0.2);'>",
-    unsafe_allow_html=True,
-)
+  cols = st.columns([1, 1, 1, 1, 1, 1.3, 1, 1.2, 1.2])
+  tabs_names = [
+      "الرئيسية",
+      "عن الفرع",
+      "ادارات الافراد",
+      "الادارات التعليمية",
+      "خدمات الأكاديمية",
+      "أحدث التعليمات والقرارات",
+      "مجتمعات التعلم",
+      "التواصل مع الدعم",
+  ]
 
-current_tab = st.session_state["current_tab"]
+  for idx, name in enumerate(tabs_names):
+    with cols[idx]:
+      if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
+        st.session_state["current_tab"] = name
+        st.rerun()
+
+  with cols[8]:
+    st.markdown(
+        f"""
+            <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
+                📘 فيسبوك الفرع
+            </a>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  st.markdown(
+      "<hr style='margin-top: 8px; margin-bottom: 25px; border-color:"
+      " rgba(201, 162, 39, 0.2);'>",
+      unsafe_allow_html=True,
+  )
+
+else:
+  # إذا تم الدخول لأي تبويب فرعي: نخفي باقي التبويبات ونعرض زر عودة للرئيسية فقط
+  col_back, col_fb = st.columns([4, 1])
+  with col_back:
+    if st.button("🏠 العودة إلى الصفحة الرئيسية", use_container_width=False):
+      st.session_state["current_tab"] = "الرئيسية"
+      st.rerun()
+  with col_fb:
+    st.markdown(
+        f"""
+            <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab" style="margin-top: 4px;">
+                📘 فيسبوك الفرع
+            </a>
+        """,
+        unsafe_allow_html=True,
+    )
+  st.markdown(
+      "<hr style='margin-top: 8px; margin-bottom: 25px; border-color:"
+      " rgba(201, 162, 39, 0.2);'>",
+      unsafe_allow_html=True,
+  )
 
 # تحميل صور البرامج المخصصة
 img_leader_school = find_and_load_image(
