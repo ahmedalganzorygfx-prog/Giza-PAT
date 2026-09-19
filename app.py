@@ -292,9 +292,9 @@ st.markdown(
     }
 
     .top-navbar {
-        background: linear-gradient(135deg, #0b1a3e 0%, #1e294b 50%, #4a3515 100%) !important;
+        background: linear-gradient(135deg, #0b1a3e 0%, #1e294b 50%, #040915 100%) !important;
         backdrop-filter: blur(12px);
-        padding: 14px 30px;
+        padding: 12px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -302,74 +302,81 @@ st.markdown(
         box-shadow: 0 6px 30px rgba(0,0,0,0.6);
         margin: 0 -1rem 20px -1rem;
         border-bottom: 2.5px solid #d4af37;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 15px;
     }
 
     .nav-right-container { 
         display: flex; 
         align-items: center; 
-        gap: 20px; 
+        gap: 12px; 
+        flex-shrink: 0;
     }
 
     .nav-logo-text {
         color: #ffffff !important;
         font-weight: 800;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         display: flex;
         align-items: center;
-        gap: 15px;
-        letter-spacing: 0.5px;
+        gap: 10px;
+        white-space: nowrap;
     }
 
     .navbar-logo-img {
-        height: 48px;
+        height: 45px;
         width: auto;
-        border-radius: 8px;
+        border-radius: 6px;
         object-fit: contain;
         background: rgba(255, 255, 255, 0.08);
-        padding: 4px;
+        padding: 3px;
         border: 1px solid rgba(201, 162, 39, 0.5);
+    }
+
+    .nav-center-tabs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-grow: 1;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav-tab-link {
+        color: #ffffff !important;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.92rem;
+        text-decoration: none;
+        white-space: nowrap;
+        border: 1px solid rgba(201, 162, 39, 0.3);
+        transition: all 0.25s ease;
+    }
+
+    .nav-tab-link:hover, .nav-tab-link.active {
+        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
+        color: #0b1a3e !important;
+        border-color: #ffffff !important;
+        transform: translateY(-2px);
     }
 
     .nav-left-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
-    }
-
-    .welcome-marquee-container {
-        background: rgba(11, 26, 62, 0.7);
-        border: 1px solid rgba(212, 175, 55, 0.4);
-        border-radius: 14px;
-        padding: 8px 15px;
-        margin-bottom: 20px;
-        overflow: hidden;
-        white-space: nowrap;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
-    }
-
-    .welcome-marquee-text {
-        display: inline-block;
-        color: #FFD700;
-        font-weight: 800;
-        font-size: 1.15rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        animation: marqueeAnim 22s linear infinite;
-    }
-
-    @keyframes marqueeAnim {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
+        gap: 10px;
+        flex-shrink: 0;
     }
 
     .teacher-platform-btn {
         background: linear-gradient(135deg, #d32f2f 0%, #9a0007 100%) !important;
         color: #ffffff !important;
-        padding: 10px 20px;
-        border-radius: 30px;
+        padding: 9px 18px;
+        border-radius: 25px;
         font-weight: bold;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         text-decoration: none;
         box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
         border: 1.5px solid #FFD700;
@@ -384,37 +391,15 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(211, 47, 47, 0.7);
     }
 
-    .stButton>button {
-        background: rgba(15, 32, 67, 0.8) !important;
-        color: #cbd5e1 !important;
-        font-weight: 700 !important;
-        font-size: 0.92rem !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(201, 162, 39, 0.3) !important;
-        padding: 10px 8px !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        width: 100%;
-        white-space: nowrap !important;
-    }
-
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
-        color: #0b1a3e !important;
-        border-color: #ffffff !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 18px rgba(201, 162, 39, 0.4) !important;
-    }
-
     .facebook-btn-tab {
         background: linear-gradient(135deg, #1877F2 0%, #0a52b2 100%) !important;
         color: white !important;
-        padding: 10px 12px;
-        border-radius: 12px;
+        padding: 9px 14px;
+        border-radius: 10px;
         font-weight: bold;
-        font-size: 0.92rem;
+        font-size: 0.9rem;
         text-decoration: none;
-        display: block;
+        display: inline-block;
         text-align: center;
         border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 4px 12px rgba(24, 119, 242, 0.35);
@@ -705,35 +690,19 @@ st.markdown(
     
     .app-footer span { color: #FFD700; }
 
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
         .top-navbar {
             flex-direction: column;
-            text-align: center;
-            justify-content: center;
-            padding: 15px 12px;
+            align-items: stretch;
+            gap: 12px;
         }
-        .nav-logo-text {
-            font-size: 1.05rem;
-            flex-direction: column;
-            gap: 8px;
+        .nav-center-tabs {
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding-bottom: 5px;
         }
-        .main-header-title {
-            font-size: 1.7rem;
-        }
-        .sub-header-title {
-            font-size: 1rem;
-        }
-        .section-title {
-            font-size: 1.4rem;
-        }
-        .center-main-logo {
-            height: 130px;
-        }
-        .map-frame {
-            height: 270px;
-        }
-        .support-form-container {
-            padding: 20px 14px;
+        .nav-left-actions {
+            justify-content: space-between;
         }
     }
     </style>
@@ -741,34 +710,73 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات الحالية
+# 5️⃣ إدارة حالة التبويبات الحالية ونظام استقبال النقرات عبر Query Parameters
+query_params = st.query_params
+if "tab" in query_params:
+  st.session_state["current_tab"] = query_params["tab"]
+
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
 current_tab = st.session_state["current_tab"]
 
-# الشريط العلوي المشترك
+tabs_list = [
+    "الرئيسية",
+    "عن الفرع",
+    "ادارات الافراد",
+    "الادارات التعليمية",
+    "خدمات الأكاديمية",
+    "أحدث التعليمات والقرارات",
+    "مجتمعات التعلم",
+    "التواصل مع الدعم",
+]
+
+# بناء روابط التبويبات الأفقية الموحدة في شريط علوي احترافي (مطابق للصورة)
+tabs_html_links = ""
+for t_name in tabs_list:
+  active_class = " active" if current_tab == t_name else ""
+  # نستخدم طريقة تحديث الـ query_params عبر إعادة تحميل الصفحة لتفعيل التبويب المختار فوراً
+  tabs_html_links += (
+      f'<a href="?tab={urllib.parse.quote(t_name)}" class="nav-tab-link'
+      f'{active_class}">{t_name}</a>'
+  )
+
+# شريط التنقل العلوي المتكامل
 st.markdown(
     f"""
     <div class="top-navbar">
         <div class="nav-right-container">
             <div class="nav-logo-text">
                 {logo_navbar_tag}
-                <span>الأكاديمية المهنية للمعلمين - فرع الجيزة</span>
+                <span>الأكاديمية المهنية للمعلمين</span>
             </div>
         </div>
+        <div class="nav-center-tabs">
+            {tabs_html_links}
+        </div>
         <div class="nav-left-actions">
-            <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
-                منصة المٌعلم 🎓
-            </a>
+            <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">📘 فيسبوك</a>
+            <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">منصة المٌعلم 🎓</a>
         </div>
     </div>
 """,
     unsafe_allow_html=True,
 )
 
-# إذا كانت الصفحة الحالية هي "الرئيسية": نعرض شريط الترحيب وأزرار التبويبات بالكامل
-if current_tab == "الرئيسية":
+# إذا لم تكن في الصفحة الرئيسية، نضيف زر علوي سريع للعودة
+if current_tab != "الرئيسية":
+  col_b1, col_b2 = st.columns([6, 1])
+  with col_b1:
+    if st.button("🏠 العودة إلى الصفحة الرئيسية", use_container_width=False):
+      st.query_params["tab"] = "الرئيسية"
+      st.session_state["current_tab"] = "الرئيسية"
+      st.rerun()
+  st.markdown(
+      "<hr style='margin-top: 5px; margin-bottom: 20px; border-color:"
+      " rgba(201, 162, 39, 0.2);'>",
+      unsafe_allow_html=True,
+  )
+else:
   st.markdown(
       """
         <div class="welcome-marquee-container">
@@ -777,62 +785,6 @@ if current_tab == "الرئيسية":
             </div>
         </div>
     """,
-      unsafe_allow_html=True,
-  )
-
-  cols = st.columns([1, 1, 1, 1, 1, 1.3, 1, 1.2, 1.2])
-  tabs_names = [
-      "الرئيسية",
-      "عن الفرع",
-      "ادارات الافراد",
-      "الادارات التعليمية",
-      "خدمات الأكاديمية",
-      "أحدث التعليمات والقرارات",
-      "مجتمعات التعلم",
-      "التواصل مع الدعم",
-  ]
-
-  for idx, name in enumerate(tabs_names):
-    with cols[idx]:
-      if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
-        st.session_state["current_tab"] = name
-        st.rerun()
-
-  with cols[8]:
-    st.markdown(
-        f"""
-            <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
-                📘 فيسبوك الفرع
-            </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  st.markdown(
-      "<hr style='margin-top: 8px; margin-bottom: 25px; border-color:"
-      " rgba(201, 162, 39, 0.2);'>",
-      unsafe_allow_html=True,
-  )
-
-else:
-  # إذا تم الدخول لأي تبويب فرعي: نخفي باقي التبويبات ونعرض زر عودة للرئيسية فقط
-  col_back, col_fb = st.columns([4, 1])
-  with col_back:
-    if st.button("🏠 العودة إلى الصفحة الرئيسية", use_container_width=False):
-      st.session_state["current_tab"] = "الرئيسية"
-      st.rerun()
-  with col_fb:
-    st.markdown(
-        f"""
-            <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab" style="margin-top: 4px;">
-                📘 فيسبوك الفرع
-            </a>
-        """,
-        unsafe_allow_html=True,
-    )
-  st.markdown(
-      "<hr style='margin-top: 8px; margin-bottom: 25px; border-color:"
-      " rgba(201, 162, 39, 0.2);'>",
       unsafe_allow_html=True,
   )
 
