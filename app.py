@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# تخزين مؤقت للصور لمنع إعادة تحميلها وقراءتها في كل مرة (يُسرّع الموقع جداً)
+# دالة للتخزين المؤقت للصور لضمان أقصى سرعة تحميل
 @st.cache_data(show_spinner=False)
 def get_image_base64_cached(file_name):
     try:
@@ -49,7 +49,7 @@ JOBS_LIST = [
     "معلم مساعد", "معلم", "معلم أول", "معلم أول أ", "معلم خبير", "كبير معلمين"
 ]
 
-# تحضير اللوجو مرة واحدة
+# تحضير اللوجو
 logo_src = find_and_load_image("Logo.png", "https://via.placeholder.com/220x220?text=PAT+Logo")
 logo_navbar_tag = f'<img src="{logo_src}" class="navbar-logo-img" alt="لوجو">' if logo_src else ""
 logo_header_tag = f'<img src="{logo_src}" class="center-main-logo" alt="لوجو الأكاديمية">' if logo_src else ""
@@ -176,36 +176,6 @@ st.markdown("""
         display: inline-block;
     }
 
-    .simple-slider-container {
-        position: relative;
-        width: 100%;
-        margin: 0 auto 15px auto;
-        border-radius: 16px;
-        overflow: hidden;
-        background-color: #0b1a3e !important;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-        border: 2px solid #937B2B;
-    }
-
-    .simple-slider-img {
-        width: 100%;
-        height: 480px;
-        object-fit: contain !important;
-        display: block;
-        background-color: #0b1a3e;
-        padding: 10px;
-    }
-
-    .simple-slider-caption {
-        background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%);
-        color: #FFD700 !important;
-        font-size: 1.25rem;
-        font-weight: bold;
-        padding: 16px;
-        text-align: center !important;
-        border-top: 2px solid #937B2B;
-    }
-
     .edara-card {
         background-color: var(--secondary-background-color);
         border: 1px solid rgba(147, 123, 43, 0.3);
@@ -278,6 +248,20 @@ st.markdown("""
         padding: 10px 20px !important;
     }
 
+    .facebook-btn-tab {
+        background: linear-gradient(135deg, #1877F2 0%, #0d5cb6 100%) !important;
+        color: white !important;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 1.05rem;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border: 1px solid #ffffff;
+        box-shadow: 0 3px 8px rgba(24, 119, 242, 0.3);
+    }
+
     .whatsapp-card {
         display: block;
         text-align: center !important;
@@ -325,24 +309,33 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-# أزرار التبويبات الرئيسية
-cols = st.columns([1, 1, 1.1, 1.2, 1.2, 1.1, 1.3, 1.4])
+# أزرار التبويبات الرئيسية (شاملة زر صفحة الفيسبوك)
+cols = st.columns([1.1, 1, 1.1, 1.2, 1.2, 1.1, 1.4, 1.3])
 
 tabs_names = [
     "الرئيسية", "عن الفرع", "ادارات الافراد", "الادارات التعليمية", 
-    "خدمات الأكاديمية", "مجتمعات التعلم", "منصة الفرع والبرامج", "التواصل مع الدعم"
+    "خدمات الأكاديمية", "مجتمعات التعلم", "التواصل مع الدعم"
 ]
 
+# عرض التبويبات العادية
 for idx, name in enumerate(tabs_names):
     with cols[idx]:
         if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
             st.session_state['current_tab'] = name
 
+# التبويب الأخير: زر فيسبوك مخصص يفتح صفحة الفيسبوك مباشرة في نافذة جديدة
+with cols[7]:
+    st.markdown("""
+        <a href="https://www.facebook.com/patgiza" target="_blank" class="facebook-btn-tab">
+            📘 فيسبوك الفرع
+        </a>
+    """, unsafe_allow_html=True)
+
 st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_html=True)
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية
+# 1️⃣ الصفحة الرئيسية (بدون معرض صور - تحتوي على اللوجو وبرامج منصة الفرع مباشرة)
 if current_tab == "الرئيسية":
 
     st.markdown(f"""
@@ -353,50 +346,98 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    program_slides = [
-        {
-            "title": "🎓 برنامج القيادات التربوية (مدير ووكيل إدارة مدرسية وتعليمية - التوجيه الفني)",
-            "file_name": "leaders.jpg",
-            "fallback": "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600&auto=format&fit=crop"
-        },
-        {
-            "title": "📜 برامج التسكين والترقي والتطبيقات التربوية للمعلم المساعد",
-            "file_name": "teachers.jpg",
-            "fallback": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1600&auto=format&fit=crop"
-        },
-        {
-            "title": "🔄 برنامج تغيير المسمى الوظيفي وتأهيل الكوادر التعليمية",
-            "file_name": "job_change.jpg",
-            "fallback": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
-        },
-        {
-            "title": "🌟 البرنامج الرقمي للاعتماد وتأهيل المدربين المحترفين (TOT)",
-            "file_name": "tot.jpg",
-            "fallback": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1600&auto=format&fit=crop"
-        }
-    ]
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    if 'slide_idx' not in st.session_state:
-        st.session_state['slide_idx'] = 0
+    # اختيار الفئة التدريبية مباشرة داخل الصفحة الرئيسية
+    sub_category = st.selectbox(
+        "اختر الفئة التدريبية المطلوب عرض برامجها:",
+        [
+            "برامج القيادات التربوية",
+            "برامج التسكين والترقي",
+            "برنامج تغيير المسمى الوظيفي",
+            "برامج الاعتماد"
+        ]
+    )
 
-    current = program_slides[st.session_state['slide_idx']]
-    img_src = find_and_load_image(current['file_name'], current['fallback'])
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown(f"""
-        <div class="simple-slider-container">
-            <img src="{img_src}" class="simple-slider-img" alt="صورة العرض">
-            <div class="simple-slider-caption">{current['title']}</div>
-        </div>
-    """, unsafe_allow_html=True)
+    if sub_category == "برامج القيادات التربوية":
+        st.markdown('<h3 style="text-align: center; color: #937B2B;">برامج القيادات التربوية</h3>', unsafe_allow_html=True)
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.markdown("""
+                <div class="program-card">
+                    <div class="program-title">برنامج مدير ووكيل إدارة مدرسية</div>
+                    <div class="program-desc">أحد البرامج الرقمية المعتمدة على منصة المعلم في الأكاديمية المهنية للمعلمين المتاحة للفئات المستهدفة.</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة مدرسية</div>', unsafe_allow_html=True)
 
-    col_prev, col_blank, col_next = st.columns([2, 8, 2])
-    with col_prev:
-        if st.button("❮ السابق", key="btn_prev_slide", use_container_width=True):
-            st.session_state['slide_idx'] = (st.session_state['slide_idx'] - 1) % len(program_slides)
+        with c2:
+            st.markdown("""
+                <div class="program-card">
+                    <div class="program-title">برنامج مدير ووكيل إدارة تعليمية</div>
+                    <div class="program-desc">إعداد وتأهيل القيادات للإدارات التعليمية لتطوير المهارات القيادية والإدارية.</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة تعليمية</div>', unsafe_allow_html=True)
 
-    with col_next:
-        if st.button("التالي ❯", key="btn_next_slide", use_container_width=True):
-            st.session_state['slide_idx'] = (st.session_state['slide_idx'] + 1) % len(program_slides)
+        with c3:
+            st.markdown("""
+                <div class="program-card">
+                    <div class="program-title">برنامج أساسيات التوجيه الفني</div>
+                    <div class="program-desc">تمكين الموجهين الفنيين من المهارات الأساسية للإشراف ومتابعة الأداء التعليمي.</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<div class="card-footer">برنامج أساسيات التوجيه الفني</div>', unsafe_allow_html=True)
+
+    elif sub_category == "برامج التسكين والترقي":
+        st.markdown('<h3 style="text-align: center; color: #937B2B;">برامج التسكين والترقي</h3>', unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("""
+                <div class="program-card">
+                    <div class="program-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
+                    <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<div class="card-footer">برنامج التطبيقات التربوية للمعلم المساعد</div>', unsafe_allow_html=True)
+
+        with c2:
+            st.markdown("""
+                <div class="program-card">
+                    <div class="program-title">برنامج مهارات عامة في التدريس</div>
+                    <div class="program-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
+            st.markdown('<div class="card-footer">برنامج مهارات عامة في التدريس</div>', unsafe_allow_html=True)
+
+    elif sub_category == "برنامج تغيير المسمى الوظيفي":
+        st.markdown('<h3 style="text-align: center; color: #937B2B;">برنامج تغيير المسمى الوظيفي</h3>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="program-card" style="max-width: 500px; margin: auto;">
+                <div class="program-title">برنامج تغيير المسمى الوظيفي</div>
+                <div class="program-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
+            </div>
+        """, unsafe_allow_html=True)
+        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
+
+    elif sub_category == "برامج الاعتماد":
+        st.markdown('<h3 style="text-align: center; color: #937B2B;">برامج الاعتماد</h3>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="program-card" style="max-width: 500px; margin: auto;">
+                <div class="program-title">البرنامج الرقمي للاعتماد (TOT)</div>
+                <div class="program-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
+            </div>
+        """, unsafe_allow_html=True)
+        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
@@ -480,104 +521,7 @@ elif current_tab == "الادارات التعليمية":
         with col_target:
             st.markdown(f'<div class="edara-card">📍 إدارة {edara}</div>', unsafe_allow_html=True)
 
-# 5️⃣ منصة الفرع والبرامج
-elif current_tab == "منصة الفرع والبرامج":
-    st.markdown(f"""
-        <div class="centered-header">
-            <div>{logo_header_tag}</div>
-            <div class="main-header-title">منصة فرع الجيزة - البرامج الرقمية</div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    sub_category = st.selectbox(
-        "اختر الفئة التدريبية المطلوب عرض برامجها:",
-        [
-            "برامج القيادات التربوية",
-            "برامج التسكين والترقي",
-            "برنامج تغيير المسمى الوظيفي",
-            "برامج الاعتماد"
-        ]
-    )
-
-    if sub_category == "برامج القيادات التربوية":
-        st.markdown('<h3 style="text-align: center; color: #937B2B;">برامج القيادات التربوية</h3>', unsafe_allow_html=True)
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown("""
-                <div class="program-card">
-                    <div class="program-title">برنامج مدير ووكيل إدارة مدرسية</div>
-                    <div class="program-desc">أحد البرامج الرقمية المعتمدة على منصة المعلم في الأكاديمية المهنية للمعلمين المتاحة للفئات المستهدفة.</div>
-                </div>
-            """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-            st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة مدرسية</div>', unsafe_allow_html=True)
-
-        with c2:
-            st.markdown("""
-                <div class="program-card">
-                    <div class="program-title">برنامج مدير ووكيل إدارة تعليمية</div>
-                    <div class="program-desc">إعداد وتأهيل القيادات للإدارات التعليمية لتطوير المهارات القيادية والإدارية.</div>
-                </div>
-            """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-            st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة تعليمية</div>', unsafe_allow_html=True)
-
-        with c3:
-            st.markdown("""
-                <div class="program-card">
-                    <div class="program-title">برنامج أساسيات التوجيه الفني</div>
-                    <div class="program-desc">تمكين الموجهين الفنيين من المهارات الأساسية للإشراف ومتابعة الأداء التعليمي.</div>
-                </div>
-            """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-            st.markdown('<div class="card-footer">برنامج أساسيات التوجيه الفني</div>', unsafe_allow_html=True)
-
-    elif sub_category == "برامج التسكين والترقي":
-        st.markdown('<h3 style="text-align: center; color: #937B2B;">برامج التسكين والترقي</h3>', unsafe_allow_html=True)
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown("""
-                <div class="program-card">
-                    <div class="program-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
-                    <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
-                </div>
-            """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-            st.markdown('<div class="card-footer">برنامج التطبيقات التربوية للمعلم المساعد</div>', unsafe_allow_html=True)
-
-        with c2:
-            st.markdown("""
-                <div class="program-card">
-                    <div class="program-title">برنامج مهارات عامة في التدريس</div>
-                    <div class="program-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
-                </div>
-            """, unsafe_allow_html=True)
-            st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-            st.markdown('<div class="card-footer">برنامج مهارات عامة في التدريس</div>', unsafe_allow_html=True)
-
-    elif sub_category == "برنامج تغيير المسمى الوظيفي":
-        st.markdown('<h3 style="text-align: center; color: #937B2B;">برنامج تغيير المسمى الوظيفي</h3>', unsafe_allow_html=True)
-        st.markdown("""
-            <div class="program-card" style="max-width: 500px; margin: auto;">
-                <div class="program-title">برنامج تغيير المسمى الوظيفي</div>
-                <div class="program-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
-
-    elif sub_category == "برامج الاعتماد":
-        st.markdown('<h3 style="text-align: center; color: #937B2B;">برامج الاعتماد</h3>', unsafe_allow_html=True)
-        st.markdown("""
-            <div class="program-card" style="max-width: 500px; margin: auto;">
-                <div class="program-title">البرنامج الرقمي للاعتماد (TOT)</div>
-                <div class="program-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.markdown('<div style="max-width: 500px; margin: auto;"><a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a></div>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer" style="max-width: 500px; margin: auto;">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
-
-# 6️⃣ نموذج التواصل مع فريق الدعم
+# 5️⃣ نموذج التواصل مع فريق الدعم
 elif current_tab == "التواصل مع الدعم":
     st.markdown(f"""
         <div class="centered-header">
