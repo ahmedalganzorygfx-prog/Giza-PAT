@@ -372,13 +372,14 @@ st.markdown(
         background: rgba(15, 32, 67, 0.8) !important;
         color: #cbd5e1 !important;
         font-weight: 700 !important;
-        font-size: 0.98rem !important;
+        font-size: 0.92rem !important;
         border-radius: 12px !important;
         border: 1px solid rgba(201, 162, 39, 0.3) !important;
-        padding: 10px 18px !important;
+        padding: 10px 8px !important;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         width: 100%;
+        white-space: nowrap !important;
     }
 
     .stButton>button:hover {
@@ -392,16 +393,17 @@ st.markdown(
     .facebook-btn-tab {
         background: linear-gradient(135deg, #1877F2 0%, #0a52b2 100%) !important;
         color: white !important;
-        padding: 10px 16px;
+        padding: 10px 12px;
         border-radius: 12px;
         font-weight: bold;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         text-decoration: none;
         display: block;
         text-align: center;
         border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 4px 12px rgba(24, 119, 242, 0.35);
         transition: all 0.3s ease;
+        white-space: nowrap !important;
     }
 
     .facebook-btn-tab:hover {
@@ -757,8 +759,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# قائمة التبويبات العلوية (تمت إضافة "أحدث التعليمات والقرارات")
-cols = st.columns([1, 1, 1, 1, 1, 1, 1, 1.2, 1.2])
+# قائمة التبويبات العلوية (تم ضبط توزيع الأعمدة وعرض النص بالكامل)
+cols = st.columns([1, 1, 1, 1, 1, 1.3, 1, 1.2, 1.2])
 
 tabs_names = [
     "الرئيسية",
@@ -766,7 +768,7 @@ tabs_names = [
     "ادارات الافراد",
     "الادارات التعليمية",
     "خدمات الأكاديمية",
-    "أحدث التعليمات",
+    "أحدث التعليمات والقرارات",
     "مجتمعات التعلم",
     "التواصل مع الدعم",
 ]
@@ -1333,7 +1335,7 @@ elif current_tab == "خدمات الأكاديمية":
   )
 
 # 6️⃣ أحدث التعليمات والقرارات
-elif current_tab == "أحدث التعليمات":
+elif current_tab == "أحدث التعليمات والقرارات":
   st.markdown(
       f"""
         <div class="hero-banner">
