@@ -11,16 +11,27 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# دالة التخزين المؤقت لقراءة الصور بسرعة فائقة
-@st.cache_data(show_spinner=False)
-def get_image_base64_cached(file_name):
+# دالة قراءة وتحميل الصور المباشرة (بدون كاش قديم لضمان ظهور الصور الجديدة فوراً)
+def get_image_base64_direct(file_name):
     try:
         script_dir = os.path.dirname(os.path.realpath(__file__))
         name_without_ext = os.path.splitext(file_name)[0]
-        extensions = ['', '.jpg', '.jpeg', '.png', '.webp', '.JPG', '.PNG', '.JPEG']
         
-        for ext in extensions:
-            fname = f"{name_without_ext}{ext}" if ext else file_name
+        # جميع الاحتمالات الممكنة لأسماء وامتدادات الملفات (مكافحة مشاكل الحروف الكبيرة والنقط المفقودة)
+        possible_names = [
+            file_name,
+            f"{name_without_ext}.jpg",
+            f"{name_without_ext}.JPG",
+            f"{name_without_ext}.jpeg",
+            f"{name_without_ext}.JPEG",
+            f"{name_without_ext}.png",
+            f"{name_without_ext}.PNG",
+            f"{name_without_ext}.webp",
+            f"{name_without_ext}JPG",
+            f"{name_without_ext}jpg"
+        ]
+        
+        for fname in possible_names:
             img_path = os.path.join(script_dir, fname)
             if os.path.exists(img_path) and os.path.isfile(img_path):
                 with open(img_path, "rb") as f:
@@ -33,8 +44,8 @@ def get_image_base64_cached(file_name):
     return None
 
 def find_and_load_image(base_file_name, fallback_url=""):
-    cached_img = get_image_base64_cached(base_file_name)
-    return cached_img if cached_img else fallback_url
+    img_data = get_image_base64_direct(base_file_name)
+    return img_data if img_data else fallback_url
 
 # قائمة الإدارات التعليمية لمحافظة الجيزة
 EDARAT_LIST = [
@@ -171,7 +182,7 @@ st.markdown("""
 
     .program-img-box {
         width: 100%;
-        height: 180px;
+        height: 190px;
         overflow: hidden;
         background-color: #0b1a3e;
     }
@@ -355,7 +366,7 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-# الـ 7 تبويبات الرئيسية
+# قائمة التبويبات
 cols = st.columns([1.1, 1, 1.1, 1.2, 1.2, 1.1, 1.4, 1.3])
 
 tabs_names = [
@@ -363,13 +374,13 @@ tabs_names = [
     "خدمات الأكاديمية", "مجتمعات التعلم", "التواصل مع الدعم"
 ]
 
-# عرض التبويبات الـ 6 الأولى
+# عرض التبويبات
 for idx, name in enumerate(tabs_names):
     with cols[idx]:
         if st.button(name, key=f"tab_btn_{idx}", use_container_width=True):
             st.session_state['current_tab'] = name
 
-# التبويب السابع: زر فيسبوك المخصص
+# زر الفيسبوك المخصص
 with cols[7]:
     st.markdown(f"""
         <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="facebook-btn-tab">
@@ -381,7 +392,7 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# تحميل صور البرامج الأربعة
+# تحميل صور البرامج بالأداة المباشرة
 img_leaders = find_and_load_image("leaders.jpg", "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=800&auto=format&fit=crop")
 img_teachers = find_and_load_image("teachers.jpg", "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop")
 img_job = find_and_load_image("job_change.jpg", "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop")
