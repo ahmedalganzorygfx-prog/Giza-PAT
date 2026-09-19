@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 
-# 2️⃣ دالة قراءة وتحميل الصور المباشرة (بدون كاش قديم لضمان ظهور الصور الجديدة فوراً)
+# 2️⃣ دالة قراءة وتحميل الصور المباشرة
 def get_image_base64_direct(file_name):
   try:
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -109,12 +109,23 @@ FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 st.markdown(
     """
     <style>
-    /* 🚫 إخفاء شريط الأدوات العلوي والقائمة الافتراضية لـ Streamlit بالكامل 🚫 */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
+    /* 🎯 إخفاء جميع أيقونات الشريط العلوي (GitHub, Edit, Star, Share) مع ترك قائمة التحكم في المظهر فقط 🎯 */
+    .stAppToolbar [data-testid="stToolbar"] a, 
+    .stAppToolbar [data-testid="stToolbar"] button:not(#MainMenu),
+    [data-testid="stHeader"] button[title*="GitHub"],
+    [data-testid="stHeader"] a[href*="github"],
+    button[title*="Edit"], 
+    button[title*="Star"],
+    .stAppToolbarActions > div:not(:has(#MainMenu)) {
+        display: none !important;
+    }
+
+    #MainMenu {
+        visibility: visible !important;
+        display: block !important;
+    }
+
     footer {visibility: hidden;}
-    [data-testid="stHeader"] {display: none !important;}
-    .stAppHeader {display: none !important;}
 
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
@@ -209,16 +220,10 @@ st.markdown(
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* ✨ تمييز الأسماء داخل النصوص ✨ */
+    /* ✨ تغيير لون الأسماء للون الذهبي بخط عريض فقط ✨ */
     .highlight-name {
         color: #FFD700 !important;
-        font-weight: 800 !important;
-        font-size: 1.08em;
-        background-color: rgba(147, 123, 43, 0.25);
-        padding: 2px 8px;
-        border-radius: 6px;
-        border: 1px solid rgba(255, 215, 0, 0.4);
-        display: inline-block;
+        font-weight: bold !important;
     }
 
     .program-card-wrapper {
