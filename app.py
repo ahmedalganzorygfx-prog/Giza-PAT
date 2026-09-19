@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الموقع الإلكتروني وتعديل ألوان النصوص والأزرار بالنظام المظلم (High-Contrast Dark CSS)
+# 4️⃣ تصميم الموقع الإلكتروني وتعديل ألوان أداة رفع الملفات (File Uploader CSS Fix)
 st.markdown(
     """
     <style>
@@ -144,7 +144,6 @@ st.markdown(
         background-color: #0f2043 !important;
     }
 
-    /* تغيير لون النص التوضيحي داخل الحقول (Placeholder Text Fix) */
     ::placeholder, ::-webkit-input-placeholder {
         color: #94a3b8 !important;
         opacity: 1 !important;
@@ -183,16 +182,44 @@ st.markdown(
         box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6) !important;
     }
 
-    /* 📑 تحسين مظهر أداة رفع الملفات (File Uploader Fix) 📑 */
+    /* 📑 الإصلاح الشامل والنهاية لمربع رفع الملفات (File Uploader High Contrast Fix) 📑 */
     div[data-testid="stFileUploader"] {
         background-color: #0f2043 !important;
         border-radius: 14px !important;
-        border: 1.5px dashed rgba(201, 162, 39, 0.5) !important;
-        padding: 10px !important;
+        border: 1.5px dashed #C9A227 !important;
+        padding: 12px !important;
     }
 
-    div[data-testid="stFileUploader"] section span, div[data-testid="stFileUploader"] label {
-        color: #e2e8f0 !important;
+    /* المربع الداخلي لرفع الملف */
+    div[data-testid="stFileUploaderDropzone"] {
+        background-color: #ffffff !important;
+        border-radius: 10px !important;
+        border: 1px solid #C9A227 !important;
+    }
+
+    /* نصوص الحجم ونوع الملف داخل مربع الرفع */
+    div[data-testid="stFileUploaderDropzone"] span, 
+    div[data-testid="stFileUploaderDropzone"] div,
+    div[data-testid="stFileUploaderDropzoneInstructions"] {
+        color: #0b1a3e !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* زر Upload الداخلي */
+    div[data-testid="stFileUploaderDropzone"] button {
+        background: linear-gradient(135deg, #0b1a3e 0%, #172a4d 100%) !important;
+        color: #ffffff !important;
+        font-weight: bold !important;
+        border: 1px solid #C9A227 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    div[data-testid="stFileUploaderDropzone"] button:hover {
+        background: #C9A227 !important;
+        color: #0b1a3e !important;
     }
 
     /* 📱 هيدر موقع إلكتروني مثبت أعلى الصفحة 📱 */
