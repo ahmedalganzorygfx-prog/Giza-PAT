@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الموقع الإلكتروني الفاخر (Modern Enterprise Web Design CSS)
+# 4️⃣ تصميم الموقع الإلكتروني الفاخر وتعديل عناوين الحقول (CSS Fix)
 st.markdown(
     """
     <style>
@@ -115,7 +115,6 @@ st.markdown(
     [data-testid="stActionButtonIcon"] { display: none !important; }
     [data-testid="stSidebar"] { display: none !important; }
 
-    /* إلغاء المسافات الحاشية العلوية الافتراضية لستريمليت */
     .block-container {
         padding-top: 0rem !important;
         padding-bottom: 2rem !important;
@@ -130,7 +129,28 @@ st.markdown(
         color: #e2e8f0 !important;
     }
 
-    /* 📱 هيدر موقع إلكتروني مثبت أعلى الصفحة (Sticky Web Navbar) 📱 */
+    /* 🎯 توضيح وتفتيح جميع عناوين النماذج والحقول (Labels Fix) 🎯 */
+    label[data-testid="stWidgetLabel"], .stWidgetLabel, label p {
+        color: #ffffff !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.3px !important;
+    }
+
+    /* تحسين ألوان حقول الإدخال والقوائم */
+    div[data-baseweb="input"] > div, div[data-baseweb="select"] > div, textarea {
+        background-color: #0f2043 !important;
+        color: #ffffff !important;
+        border-radius: 10px !important;
+        border: 1.5px solid rgba(201, 162, 39, 0.4) !important;
+    }
+
+    div[data-baseweb="input"] > div:focus-within, textarea:focus {
+        border-color: #FFD700 !important;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
+    }
+
+    /* 📱 هيدر موقع إلكتروني مثبت أعلى الصفحة 📱 */
     .top-navbar {
         background: linear-gradient(180deg, rgba(11, 26, 62, 0.98) 0%, rgba(6, 13, 31, 0.95) 100%) !important;
         backdrop-filter: blur(12px);
@@ -192,7 +212,7 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(211, 47, 47, 0.7);
     }
 
-    /* 🎨 شريط التنقل الإلكتروني (Navigation Bar Menu) 🎨 */
+    /* 🎨 شريط التنقل الإلكتروني 🎨 */
     .stButton>button {
         background: rgba(15, 32, 67, 0.8) !important;
         color: #cbd5e1 !important;
@@ -234,7 +254,7 @@ st.markdown(
         box-shadow: 0 6px 18px rgba(24, 119, 242, 0.55);
     }
 
-    /* 👑 هيدر الواجهة الرئيسية (Hero Banner) 👑 */
+    /* 👑 هيدر الواجهة الرئيسية 👑 */
     .hero-banner {
         background: linear-gradient(135deg, rgba(11, 26, 62, 0.9) 0%, rgba(15, 32, 67, 0.7) 100%), 
                     radial-gradient(circle at top right, rgba(201, 162, 39, 0.15), transparent);
@@ -446,7 +466,7 @@ st.markdown(
 
     /* 📋 حاوية نماذج الدعم 📋 */
     .support-form-container {
-        background: rgba(15, 32, 67, 0.8) !important;
+        background: rgba(15, 32, 67, 0.85) !important;
         backdrop-filter: blur(12px);
         padding: 32px 28px;
         border-radius: 24px;
@@ -590,7 +610,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# الشريط العلوي للهيدر المطور للموقع الإلكتروني
+# الشريط العلوي للهيدر
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -608,7 +628,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# قائمة التبويبات كمجموعات أزرار تنقل إلكترونية
+# قائمة التبويبات
 cols = st.columns([1.1, 1, 1.1, 1.2, 1.2, 1.1, 1.4, 1.3])
 
 tabs_names = [
@@ -1401,7 +1421,7 @@ elif current_tab == "التواصل مع الدعم":
                             <span style="font-size: 0.85rem; opacity: 0.95;">({num.replace('20', '0')})</span>
                         </a>""",
               unsafe_allow_html=True,
-          )
+  )
 
       st.info(
           "📌 **تنويه هام:** بعد فتح الواتساب، يرجى إعادة إرسال ملف صحيفة الأحوال"
