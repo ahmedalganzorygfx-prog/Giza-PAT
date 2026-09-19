@@ -761,7 +761,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# ⏱️ استخدام مكتبة JavaScript لتحديث الساعة والتاريخ بشكل حي وفوري في شريط الهيدر
+# ⏱️ تحديث الساعة والتاريخ بشكل حي وفوري ودقيق
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -773,7 +773,7 @@ st.markdown(
         </div>
         <div class="nav-left-actions">
             <div id="live-clock" class="live-clock-badge">
-                ⏳ جاري تحميل الوقت...
+                🕒 جاري التحديث...
             </div>
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
                 منصة المٌعلم 🎓
@@ -785,7 +785,7 @@ st.markdown(
     function updateClock() {{
         const now = new Date();
         
-        // تنسيق التاريخ والوقت باللغة العربية
+        // تنسيق التاريخ والوقت باللغة العربية مع فرض اتجاه النص LTR داخله لضمان عدم عكس الأرقام والرموز
         const optionsDate = {{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }};
         const dateStr = now.toLocaleDateString('ar-EG', optionsDate);
         
@@ -793,11 +793,13 @@ st.markdown(
         
         const clockElement = document.getElementById('live-clock');
         if (clockElement) {{
-            clockElement.innerHTML = `🕒 ${{timeStr}} &nbsp;|&nbsp; 📅 ${{dateStr}}`;
+            clockElement.style.direction = "ltr";
+            clockElement.style.textAlign = "left";
+            clockElement.innerHTML = `${{dateStr}} &nbsp;|&nbsp; 🕒 ${{timeStr}}`;
         }}
     }}
-    setInterval(updateClock, 1000);
     updateClock();
+    setInterval(updateClock, 1000);
     </script>
 """,
     unsafe_allow_html=True,
