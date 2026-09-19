@@ -108,7 +108,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) مع تعديل حركة النص من اليمين لليسار
+# 4️⃣ تصميم الأنماط (CSS) مع تصغير وتنسيق البانر العلوي
 st.markdown(
     """
     <style>
@@ -429,41 +429,41 @@ st.markdown(
         box-shadow: 0 6px 18px rgba(201, 162, 39, 0.4) !important;
     }
 
+    /* تصميم البانر العلوي المصغر والمطابق للصورة */
     .hero-banner {
-        background: linear-gradient(135deg, rgba(11, 26, 62, 0.9) 0%, rgba(15, 32, 67, 0.7) 100%), 
-                    radial-gradient(circle at top right, rgba(201, 162, 39, 0.15), transparent);
-        border-radius: 24px;
-        padding: 40px 20px;
+        background: linear-gradient(135deg, rgba(11, 26, 62, 0.95) 0%, rgba(15, 32, 67, 0.85) 100%);
+        border-radius: 18px;
+        padding: 22px 15px;
         text-align: center !important;
-        margin: 15px 0 35px 0;
+        margin: 10px 0 25px 0;
         border: 1.5px solid rgba(201, 162, 39, 0.4);
-        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .center-main-logo {
-        height: 160px;
+        height: 85px;
         width: auto;
         object-fit: contain;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
         display: inline-block;
-        filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.5));
+        filter: drop-shadow(0px 6px 15px rgba(0,0,0,0.4));
     }
 
     .main-header-title {
         color: #ffffff !important;
-        font-size: 2.4rem;
-        font-weight: 900;
+        font-size: 1.75rem;
+        font-weight: 800;
         display: inline-block;
-        padding-bottom: 12px;
-        border-bottom: 4px solid #C9A227;
+        padding-bottom: 8px;
+        border-bottom: 3px solid #C9A227;
         text-align: center !important;
-        text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        margin-bottom: 8px;
     }
 
     .sub-header-title {
         color: #94a3b8 !important;
-        font-size: 1.2rem;
-        margin-top: 15px;
+        font-size: 0.98rem;
         font-weight: 500;
         text-align: center !important;
     }
