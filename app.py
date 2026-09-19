@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الموقع الإلكتروني الفاخر وتعديل عناوين الحقول (CSS Fix)
+# 4️⃣ تصميم الموقع الإلكتروني وتعديل ألوان النصوص والأزرار بالنظام المظلم (High-Contrast Dark CSS)
 st.markdown(
     """
     <style>
@@ -137,17 +137,62 @@ st.markdown(
         letter-spacing: 0.3px !important;
     }
 
-    /* تحسين ألوان حقول الإدخال والقوائم */
+    /* 🎯 تحسين ألوان حقول الإدخال، مربع النص (Textarea) والـ Placeholder 🎯 */
+    div[data-baseweb="input"] input, textarea {
+        color: #ffffff !important;
+        font-size: 1rem !important;
+        background-color: #0f2043 !important;
+    }
+
+    /* تغيير لون النص التوضيحي داخل الحقول (Placeholder Text Fix) */
+    ::placeholder, ::-webkit-input-placeholder {
+        color: #94a3b8 !important;
+        opacity: 1 !important;
+    }
+
     div[data-baseweb="input"] > div, div[data-baseweb="select"] > div, textarea {
         background-color: #0f2043 !important;
         color: #ffffff !important;
-        border-radius: 10px !important;
-        border: 1.5px solid rgba(201, 162, 39, 0.4) !important;
+        border-radius: 12px !important;
+        border: 1.5px solid rgba(201, 162, 39, 0.45) !important;
     }
 
     div[data-baseweb="input"] > div:focus-within, textarea:focus {
         border-color: #FFD700 !important;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.35) !important;
+    }
+
+    /* 🚀 تحسين زر إرسال النماذج (Submit Button Fix) 🚀 */
+    div[data-testid="stFormSubmitButton"] > button {
+        background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
+        color: #0b1a3e !important;
+        font-weight: 800 !important;
+        font-size: 1.15rem !important;
+        border-radius: 12px !important;
+        border: 1px solid #ffffff !important;
+        padding: 12px 20px !important;
+        box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4) !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+    }
+
+    div[data-testid="stFormSubmitButton"] > button:hover {
+        background: linear-gradient(135deg, #FFD700 0%, #C9A227 100%) !important;
+        color: #000000 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6) !important;
+    }
+
+    /* 📑 تحسين مظهر أداة رفع الملفات (File Uploader Fix) 📑 */
+    div[data-testid="stFileUploader"] {
+        background-color: #0f2043 !important;
+        border-radius: 14px !important;
+        border: 1.5px dashed rgba(201, 162, 39, 0.5) !important;
+        padding: 10px !important;
+    }
+
+    div[data-testid="stFileUploader"] section span, div[data-testid="stFileUploader"] label {
+        color: #e2e8f0 !important;
     }
 
     /* 📱 هيدر موقع إلكتروني مثبت أعلى الصفحة 📱 */
@@ -1421,7 +1466,7 @@ elif current_tab == "التواصل مع الدعم":
                             <span style="font-size: 0.85rem; opacity: 0.95;">({num.replace('20', '0')})</span>
                         </a>""",
               unsafe_allow_html=True,
-  )
+          )
 
       st.info(
           "📌 **تنويه هام:** بعد فتح الواتساب، يرجى إعادة إرسال ملف صحيفة الأحوال"
