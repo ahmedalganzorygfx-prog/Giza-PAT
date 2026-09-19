@@ -1004,7 +1004,6 @@ elif current_tab == "خدمات الأكاديمية":
       unsafe_allow_html=True,
   )
 
-  # قسم 1: البرامج الاعتمادية والتدريبية
   st.markdown(
       '<div class="section-title">🎓 البرامج الاعتمادية والتأهيلية</div>',
       unsafe_allow_html=True,
@@ -1035,7 +1034,6 @@ elif current_tab == "خدمات الأكاديمية":
         unsafe_allow_html=True,
     )
 
-  # قسم 2: الاعتماد وتعديل المسار الوظيفي
   st.markdown(
       '<div class="section-title">📜 الاعتماد وتغيير المسمى الوظيفي</div>',
       unsafe_allow_html=True,
@@ -1066,7 +1064,6 @@ elif current_tab == "خدمات الأكاديمية":
         unsafe_allow_html=True,
     )
 
-  # قسم 3: التقدم للبرامج مدفوعة الأجر
   st.markdown(
       '<div class="section-title">📝 التقدم للبرامج مدفوعة الأجر</div>',
       unsafe_allow_html=True,
@@ -1086,7 +1083,112 @@ elif current_tab == "خدمات الأكاديمية":
       unsafe_allow_html=True,
   )
 
-# 6️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع مع الـ Pin المباشر
+# 6️⃣ مجتمعات التعلم
+elif current_tab == "مجتمعات التعلم":
+  st.markdown(
+      f"""
+        <div class="centered-header">
+            <div>{logo_header_tag}</div>
+            <div class="main-header-title">مجتمعات التعلم المهنية (PLCs)</div>
+            <div class="sub-header-title">منصة التعاون المهني وتبادل الخبرات بين المعلمين والقيادات التربوية بفرع الجيزة</div>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # التعريف بالرؤية
+  st.markdown(
+      """
+        <div class="info-card-box">
+            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 8px; border-bottom: 1px dashed #937B2B;">🌐 ما هي مجتمعات التعلم المهنية؟</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
+                هي بيئة تربوية تفاعلية تجمع المعلمين والموجهين والقيادات في فرق عمل تعاونية منظمة، تهدف إلى **تطوير مهارات التدريس**، و**تبادل الممارسات المتميزة**، و**حل المشكلات التعليمية** للارتقاء بنواتج تعلم الطلاب والتحول نحو مجتمع المعرفة.
+            </p>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # أهداف مجتمعات التعلم
+  st.markdown(
+      '<div class="section-title">🎯 الأهداف الرائدة لمجتمعات التعلم</div>',
+      unsafe_allow_html=True,
+  )
+  p1, p2, p3 = st.columns([1, 1, 1])
+
+  with p1:
+    st.markdown(
+        """
+            <div class="info-card-box" style="height: 100%;">
+                <h4 style="color: #C9A227; margin-top:0;">🤝 تعزيز العمل الجماعي</h4>
+                <p style="font-size: 0.95rem; line-height: 1.7;">
+                    بناء ثقافة العمل بروح الفريق الواحد بين المعلمين والموجهين داخل المدرسة وعلى مستوى الإدارة التعليمية.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with p2:
+    st.markdown(
+        """
+            <div class="info-card-box" style="height: 100%;">
+                <h4 style="color: #C9A227; margin-top:0;">💡 الابتكار وتبادل الخبرات</h4>
+                <p style="font-size: 0.95rem; line-height: 1.7;">
+                    نقل وتطبيق أحدث استراتيجيات التدريس وتقنيات التحول الرقمي والتفكير النقدي في الفصول الدراسية.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with p3:
+    st.markdown(
+        """
+            <div class="info-card-box" style="height: 100%;">
+                <h4 style="color: #C9A227; margin-top:0;">📈 النمو المهني المستمر</h4>
+                <p style="font-size: 0.95rem; line-height: 1.7;">
+                    التطوير الذاتي والتنفيذي للكوادر التعليمية من خلال البحوث الإجرائية وتبادل الملاحظات والتغذية الراجعة.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  # مجالات وأنشطة مجتمعات التعلم
+  st.markdown(
+      '<div class="section-title">📚 أوعية وأنشطة مجتمعات التعلم بفرع الجيزة</div>',
+      unsafe_allow_html=True,
+  )
+  a1, a2 = st.columns([1, 1])
+
+  with a1:
+    st.markdown(
+        """
+            <div class="info-card-box">
+                <h4 style="color: #C9A227; margin-top:0;">🔍 بحث الدرس (Lesson Study) وتدريب الأقران</h4>
+                <p style="line-height: 1.8;">
+                    التخطيط المشترك للدروس وتجريب التنسيقات الحديثة في مواقف تعليمية واقعية، يليها جلسات تأمل وتبادل التغذية الراجعة البناءة بين المعلمين ورؤساء الأقسام.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with a2:
+    st.markdown(
+        """
+            <div class="info-card-box">
+                <h4 style="color: #C9A227; margin-top:0;">🖥️ الشبكات والورش الرقمية التفاعلية</h4>
+                <p style="line-height: 1.8;">
+                    لقاءات دورية وندوات عبر الإنترنت للربط بين المعلمين والمشرفين عبر مختلف الإدارات التعليمية بالجيزة لعرض التجارب والحلول المبتكرة للتحديات الصفية.
+                </p>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+# 7️⃣ نموذج التواصل مع فريق الدعم + موقع الفرع مع الـ Pin المباشر
 elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
