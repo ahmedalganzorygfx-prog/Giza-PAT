@@ -108,7 +108,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) مع إصلاح ألوان أزرار التبويبات
+# 4️⃣ تصميم الأنماط (CSS) مع تعديل حركة النص من اليمين لليسار
 st.markdown(
     """
     <style>
@@ -382,7 +382,31 @@ st.markdown(
         box-shadow: 0 6px 18px rgba(24, 119, 242, 0.55);
     }
 
-    /* تخصيص أزرار التبويبات العلوية لتعود بالشكل الداكن والمنسق المتناسق مع الهوية */
+    .welcome-marquee-container {
+        background: rgba(11, 26, 62, 0.7);
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        border-radius: 14px;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .welcome-marquee-text {
+        display: inline-block;
+        color: #FFD700;
+        font-weight: 800;
+        font-size: 1.15rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        animation: marqueeAnim 22s linear infinite;
+    }
+
+    @keyframes marqueeAnim {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
     .stButton>button {
         background: linear-gradient(135deg, rgba(15, 32, 67, 0.9) 0%, rgba(11, 22, 48, 0.95) 100%) !important;
         color: #ffffff !important;
@@ -720,7 +744,7 @@ if "current_tab" not in st.session_state:
 
 current_tab = st.session_state["current_tab"]
 
-# شريط التنقل العلوي: اللوجو وأزرار السوشيال ميديا ومنصة المعلم
+# شريط التنقل العلوي
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -739,7 +763,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# عرض أزرار التبويبات المتناسقة أفقياً داخل نفس الصفحة دون نوافذ مستقلة
+# عرض أزرار التبويبات المتناسقة أفقياً داخل نفس الصفحة
 cols_tabs = st.columns(len(tabs_list))
 for idx, t_name in enumerate(tabs_list):
   with cols_tabs[idx]:
