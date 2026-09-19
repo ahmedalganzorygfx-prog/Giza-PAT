@@ -1062,7 +1062,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-# 2️⃣ عن الفرع
+# 2️⃣ عن الفرع (تم تحديثه بكروت فخمة مثل الصفحة الرئيسية)
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
@@ -1076,58 +1076,65 @@ elif current_tab == "عن الفرع":
   )
 
   st.markdown(
-      """
-        <div class="info-card-box">
-            <h3>🏛️ التأسيس والانطلاقة (2017)</h3>
-            <p>
-                أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
-            </p>
-        </div>
-    """,
+      '<div class="section-title">🏛️ المحطات التاريخية والتأسيسية للفرع</div>',
       unsafe_allow_html=True,
   )
 
-  st.markdown(
-      """
-        <div class="info-card-box">
-            <h3>📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
-            <p>
-                شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
-            </p>
-            <div class="staff-item-badge">
-                💻 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)
-            </div>
-            <div class="staff-item-badge">
-                💻 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)
-            </div>
-        </div>
-    """,
-      unsafe_allow_html=True,
-  )
+  c1, c2, c3 = st.columns([1, 1, 1])
 
-  st.markdown(
-      """
-        <div class="info-card-box">
-            <h3>🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
-            <p>
-                مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع، وفريق عمل متميز يتكون من:
-            </p>
-            <div class="staff-item-badge">
-                🤝 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)
+  with c1:
+    st.markdown(
+        """
+            <div class="info-card-box" style="height: 100%;">
+                <h3>🏛️ التأسيس والانطلاقة</h3>
+                <p style="font-size: 1.05rem !important;">
+                    أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
+                </p>
             </div>
-            <div class="staff-item-badge">
-                🎯 <span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with c2:
+    st.markdown(
+        """
+            <div class="info-card-box" style="height: 100%;">
+                <h3>📜 مرحلة البناء (2017 - 2023)</h3>
+                <p style="font-size: 1.05rem !important;">
+                    شهدت إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span> (مدير الفرع)، بمعاونة فريق تكنولوجيا المعلومات المتميز:
+                </p>
+                <div class="staff-item-badge" style="font-size: 0.95rem !important; padding: 8px 12px !important;">
+                    💻 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (IT)
+                </div>
+                <div class="staff-item-badge" style="font-size: 0.95rem !important; padding: 8px 12px !important;">
+                    💻 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (IT)
+                </div>
             </div>
-            <div class="staff-item-badge">
-                🎯 <span class="highlight-name">أ . أمينة فوزي عبد الرحمن</span> (مسئول التنمية المهنية والاعتماد)
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with c3:
+    st.markdown(
+        """
+            <div class="info-card-box" style="height: 100%;">
+                <h3>🚀 التطوير الرقمي (2023 - الآن)</h3>
+                <p style="font-size: 1.05rem !important;">
+                    انطلاقة الكترونية جديدة برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع، لميكنة الخدمات وتيسير البرامج التدريبية للقيادات والترقي بالتعاون مع فريق العمل:
+                </p>
+                <div class="staff-item-badge" style="font-size: 0.9rem !important; padding: 6px 10px !important;">
+                    🤝 <span class="highlight-name">أ . خالد عبد الحكيم</span> (موارد بشرية و IT)
+                </div>
+                <div class="staff-item-badge" style="font-size: 0.9rem !important; padding: 6px 10px !important;">
+                    🎯 <span class="highlight-name">أ . أحمد محمد عمر</span> (التنمية المهنية)
+                </div>
+                <div class="staff-item-badge" style="font-size: 0.9rem !important; padding: 6px 10px !important;">
+                    🎯 <span class="highlight-name">أ . أمينة فوزي</span> (التنمية المهنية)
+                </div>
             </div>
-            <p style="margin-top: 18px;">
-                تتضافر الجهود حالياً لتسهيل حصول المعلمين على البرامج الرقمية للقيادات والترقي وتغيير المسمى الوظيفي والدعم الفني المباشر لجميع الإدارات التعليمية بمحافظة الجيزة.
-            </p>
-        </div>
-    """,
-      unsafe_allow_html=True,
-  )
+        """,
+        unsafe_allow_html=True,
+    )
 
 # 3️⃣ إدارات الأفراد
 elif current_tab == "ادارات الافراد":
