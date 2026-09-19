@@ -148,9 +148,61 @@ st.markdown("""
         font-size: 1.8rem;
         font-weight: bold;
         margin-top: 35px;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         padding-bottom: 8px;
         border-bottom: 2px dashed #937B2B;
+    }
+
+    /* 🎨 تصميم كروت البرامج بناءً على الصورة المرفقة 🎨 */
+    .custom-program-card-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .custom-program-card {
+        width: 100%;
+        height: 250px;
+        border-radius: 60px 0px 60px 0px;
+        border: 3px solid #b38e2e;
+        overflow: hidden;
+        position: relative;
+        background-color: #0b1a3e;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    }
+
+    .custom-program-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.85);
+        transition: transform 0.3s ease;
+    }
+
+    .custom-program-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .custom-program-label {
+        width: 85%;
+        margin-top: -18px;
+        z-index: 10;
+        background-color: #ffffff;
+        border: 2px solid #b38e2e;
+        border-radius: 0px 0px 20px 20px;
+        padding: 8px 15px;
+        text-align: center !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .custom-program-label-text {
+        color: #a37d26 !important;
+        font-weight: 800;
+        font-size: 1.05rem;
+        border-bottom: 2px solid #a37d26;
+        padding-bottom: 3px;
+        display: inline-block;
     }
 
     .staff-card {
@@ -201,34 +253,6 @@ st.markdown("""
         color: var(--text-color);
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         margin-bottom: 15px;
-    }
-
-    .program-card {
-        background-color: #1b2631 !important;
-        border: 2px solid #937B2B;
-        border-radius: 30px 0px 30px 0px;
-        padding: 25px 20px;
-        color: white !important;
-        text-align: center !important;
-        direction: rtl;
-        min-height: 220px;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-        margin-bottom: 12px;
-    }
-
-    .program-title { color: #FFD700 !important; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; text-align: center !important; }
-    .program-desc { font-size: 0.95rem; line-height: 1.7; color: #e0e0e0 !important; text-align: center !important; }
-
-    .card-footer {
-        background-color: var(--secondary-background-color);
-        color: #937B2B;
-        text-align: center !important;
-        padding: 8px;
-        font-weight: bold;
-        border: 1.5px solid #937B2B;
-        border-radius: 0 0 12px 12px;
-        margin-top: 5px;
-        margin-bottom: 25px;
     }
 
     .support-form-container {
@@ -350,7 +374,13 @@ st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_h
 
 current_tab = st.session_state['current_tab']
 
-# 1️⃣ الصفحة الرئيسية (عرض كافة البرامج متتالية بدون قائمة منسدلة)
+# تحضير الصور للبرامج المختلفة
+img_leaders = find_and_load_image("leaders.jpg", "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=800&auto=format&fit=crop")
+img_teachers = find_and_load_image("teachers.jpg", "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop")
+img_job = find_and_load_image("job_change.jpg", "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop")
+img_tot = find_and_load_image("tot.jpg", "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop")
+
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
 
     st.markdown(f"""
@@ -361,84 +391,106 @@ if current_tab == "الرئيسية":
         </div>
     """, unsafe_allow_html=True)
 
-    # 1. قسم برامج القيادات التربوية
+    # 1. قسم برامج القيادات التربوية بالتصميم الجديد
     st.markdown('<div class="section-title">👑 برامج القيادات التربوية</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
+    
     with c1:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">برنامج مدير ووكيل إدارة مدرسية</div>
-                <div class="program-desc">أحد البرامج الرقمية المعتمدة على منصة المعلم في الأكاديمية المهنية للمعلمين المتاحة للفئات المستهدفة.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_leaders}" alt="برنامج مدير ووكيل إدارة مدرسية">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">برنامج مدير ووكيل إدارة مدرسية</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة مدرسية</div>', unsafe_allow_html=True)
 
     with c2:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">برنامج مدير ووكيل إدارة تعليمية</div>
-                <div class="program-desc">إعداد وتأهيل القيادات للإدارات التعليمية لتطوير المهارات القيادية والإدارية.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_leaders}" alt="برنامج مدير ووكيل إدارة تعليمية">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">برنامج مدير ووكيل إدارة تعليمية</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">برنامج مدير ووكيل إدارة تعليمية</div>', unsafe_allow_html=True)
 
     with c3:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">برنامج أساسيات التوجيه الفني</div>
-                <div class="program-desc">تمكين الموجهين الفنيين من المهارات الأساسية للإشراف ومتابعة الأداء التعليمي.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_leaders}" alt="برنامج أساسيات التوجيه الفني">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">برنامج أساسيات التوجيه الفني</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">برنامج أساسيات التوجيه الفني</div>', unsafe_allow_html=True)
 
     # 2. قسم برامج التسكين والترقي
     st.markdown('<div class="section-title">📜 برامج التسكين والترقي</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
-                <div class="program-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_teachers}" alt="برنامج التطبيقات التربوية للمعلم المساعد">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">برنامج التطبيقات التربوية للمعلم المساعد</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">برنامج التطبيقات التربوية للمعلم المساعد</div>', unsafe_allow_html=True)
 
     with c2:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">برنامج مهارات عامة في التدريس</div>
-                <div class="program-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_teachers}" alt="برنامج مهارات عامة في التدريس">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">برنامج مهارات عامة في التدريس</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">برنامج مهارات عامة في التدريس</div>', unsafe_allow_html=True)
 
     # 3. قسم تغيير المسمى الوظيفي وبرامج الاعتماد
     st.markdown('<div class="section-title">🔄 برامج تغيير المسمى الوظيفي والاعتماد</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">برنامج تغيير المسمى الوظيفي</div>
-                <div class="program-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_job}" alt="برنامج تغيير المسمى الوظيفي">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">برنامج تغيير المسمى الوظيفي</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">برنامج تغيير المسمى الوظيفي</div>', unsafe_allow_html=True)
 
     with c2:
-        st.markdown("""
-            <div class="program-card">
-                <div class="program-title">البرنامج الرقمي للاعتماد (TOT)</div>
-                <div class="program-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
+        st.markdown(f"""
+            <div class="custom-program-card-container">
+                <div class="custom-program-card">
+                    <img src="{img_tot}" alt="البرنامج الرقمي للاعتماد TOT">
+                </div>
+                <div class="custom-program-label">
+                    <span class="custom-program-label-text">البرنامج الرقمي للاعتماد (TOT)</span>
+                </div>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('<a href="https://www.pat.edu.eg/platform-programs" target="_blank"><button style="width:100%; border-radius:8px; background-color:#b22222; color:white; font-weight:bold; border:none; padding:8px; cursor:pointer;">التسجيل بالبرنامج</button></a>', unsafe_allow_html=True)
-        st.markdown('<div class="card-footer">البرنامج الرقمي للاعتماد TOT</div>', unsafe_allow_html=True)
 
 # 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
