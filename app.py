@@ -105,11 +105,10 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تطبيق التنسيقات المتكيفة (CSS)
+# 4️⃣ تطبيق التنسيقات المتكيفة والمتجاوبة المحدثة (Responsive CSS)
 st.markdown(
     """
     <style>
-    /* 🎯 دعم التنسيقات والألوان المتكيفة ديناميكياً مع Dark & Light Mode 🎨 */
     footer { visibility: hidden; }
 
     html, body, [data-testid="stAppViewContainer"] {
@@ -120,9 +119,10 @@ st.markdown(
 
     [data-testid="stSidebar"] { display: none; }
 
+    /* 📱 الهيدر الأساسي - متجاوب 📱 */
     .top-navbar {
         background-color: #0b1a3e !important;
-        padding: 12px 30px;
+        padding: 12px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -130,21 +130,27 @@ st.markdown(
         box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         margin-bottom: 20px;
         border-bottom: 3px solid #937B2B;
+        flex-wrap: wrap;
+        gap: 12px;
     }
 
-    .nav-right-container { display: flex; align-items: center; gap: 15px; }
+    .nav-right-container { 
+        display: flex; 
+        align-items: center; 
+        gap: 12px; 
+    }
 
     .nav-logo-text {
         color: #ffffff !important;
         font-weight: bold;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
     }
 
     .navbar-logo-img {
-        height: 45px;
+        height: 42px;
         width: auto;
         border-radius: 6px;
         object-fit: contain;
@@ -155,30 +161,31 @@ st.markdown(
     .teacher-platform-btn {
         background: linear-gradient(135deg, #c02425 0%, #b21f1f 100%) !important;
         color: white !important;
-        padding: 8px 24px;
+        padding: 8px 18px;
         border-radius: 20px 8px 20px 8px;
         font-weight: bold;
-        font-size: 1.05rem;
+        font-size: 0.95rem;
         text-decoration: none;
         box-shadow: 0 3px 8px rgba(178, 31, 31, 0.4);
         border: 1px solid #ffd700;
         display: inline-block;
+        text-align: center;
     }
 
     .centered-header { text-align: center !important; margin: 10px 0 25px 0; }
 
     .center-main-logo {
-        height: 180px;
+        height: 150px;
         width: auto;
         object-fit: contain;
-        margin-bottom: 18px;
+        margin-bottom: 15px;
         display: inline-block;
-        filter: drop-shadow(0px 6px 12px rgba(0,0,0,0.4));
+        filter: drop-shadow(0px 6px 12px rgba(0,0,0,0.3));
     }
 
     .main-header-title {
         color: var(--text-color) !important;
-        font-size: 2.4rem;
+        font-size: 2rem;
         font-weight: 800;
         display: inline-block;
         padding-bottom: 8px;
@@ -189,18 +196,18 @@ st.markdown(
     .sub-header-title {
         color: var(--text-color) !important;
         opacity: 0.85;
-        font-size: 1.2rem;
-        margin-top: 14px;
+        font-size: 1.1rem;
+        margin-top: 12px;
         text-align: center !important;
     }
 
     .section-title {
         text-align: center !important;
         color: #C9A227 !important;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: bold;
-        margin-top: 35px;
-        margin-bottom: 25px;
+        margin-top: 30px;
+        margin-bottom: 20px;
         padding-bottom: 8px;
         border-bottom: 2px dashed #937B2B;
     }
@@ -214,21 +221,21 @@ st.markdown(
     .program-card-wrapper {
         background-color: var(--secondary-background-color) !important;
         border: 2px solid #937B2B;
-        border-radius: 60px 0px 60px 0px;
+        border-radius: 40px 0px 40px 0px;
         overflow: hidden;
         margin-bottom: 15px;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         transition: transform 0.3s ease;
     }
 
     .program-card-wrapper:hover {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
         border-color: #C9A227;
     }
 
     .program-img-box {
         width: 100%;
-        height: 190px;
+        height: 180px;
         overflow: hidden;
         background-color: #0b1a3e;
     }
@@ -240,21 +247,21 @@ st.markdown(
     }
 
     .program-content-box {
-        padding: 20px 15px;
+        padding: 18px 12px;
         text-align: center !important;
     }
 
     .program-card-title {
         color: #C9A227 !important;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         font-weight: bold;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     .program-card-desc {
         color: var(--text-color) !important;
-        font-size: 0.95rem;
-        line-height: 1.6;
+        font-size: 0.92rem;
+        line-height: 1.5;
     }
 
     .card-footer-badge {
@@ -267,6 +274,7 @@ st.markdown(
         border-radius: 0 0 12px 12px;
         margin-top: 5px;
         margin-bottom: 25px;
+        font-size: 0.9rem;
     }
 
     /* 👤 كروت فريق العمل المتكيفة 👤 */
@@ -274,19 +282,19 @@ st.markdown(
         background-color: var(--secondary-background-color) !important;
         border: 2px solid #937B2B;
         border-radius: 20px;
-        padding: 30px 20px;
+        padding: 25px 15px;
         text-align: center !important;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         margin-bottom: 20px;
     }
 
     .avatar-frame {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto 18px auto;
+        width: 130px;
+        height: 130px;
+        margin: 0 auto 15px auto;
         border-radius: 50%;
-        border: 4px solid #C9A227;
-        box-shadow: 0 0 15px rgba(201, 162, 39, 0.3);
+        border: 3px solid #C9A227;
+        box-shadow: 0 0 12px rgba(201, 162, 39, 0.3);
         overflow: hidden;
         background-color: #0b1a3e;
         display: flex;
@@ -295,14 +303,14 @@ st.markdown(
     }
 
     .avatar-frame img { width: 100%; height: 100%; object-fit: cover !important; }
-    .staff-name { color: #C9A227 !important; font-size: 1.35rem; font-weight: bold; margin-bottom: 8px; }
-    .staff-role { color: var(--text-color) !important; font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+    .staff-name { color: #C9A227 !important; font-size: 1.25rem; font-weight: bold; margin-bottom: 6px; }
+    .staff-role { color: var(--text-color) !important; font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
     .staff-dept {
         color: #937B2B !important;
-        font-size: 0.95rem;
+        font-size: 0.90rem;
         font-weight: bold;
         background-color: rgba(147, 123, 43, 0.15);
-        padding: 4px 12px;
+        padding: 4px 10px;
         border-radius: 12px;
         display: inline-block;
     }
@@ -312,11 +320,11 @@ st.markdown(
         text-align: right;
         background-color: var(--secondary-background-color) !important;
         color: var(--text-color) !important;
-        padding: 25px;
-        border-radius: 20px 0px 20px 0px;
+        padding: 20px;
+        border-radius: 16px 0px 16px 0px;
         border: 2px solid #937B2B;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 18px;
     }
 
     .edara-card {
@@ -324,20 +332,21 @@ st.markdown(
         border: 1px solid rgba(147, 123, 43, 0.3);
         border-right: 4px solid #0b1a3e;
         border-radius: 8px;
-        padding: 15px;
+        padding: 12px;
         text-align: center !important;
         font-weight: bold;
         color: var(--text-color) !important;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 15px;
+        margin-bottom: 12px;
+        font-size: 0.95rem;
     }
 
     .support-form-container {
         background-color: var(--secondary-background-color) !important;
-        padding: 35px;
-        border-radius: 20px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-        border-top: 6px solid #937B2B;
+        padding: 25px 20px;
+        border-radius: 18px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+        border-top: 5px solid #937B2B;
         border-right: 1px solid rgba(147, 123, 43, 0.2);
         border-left: 1px solid rgba(147, 123, 43, 0.2);
         max-width: 850px;
@@ -347,48 +356,43 @@ st.markdown(
     .support-form-title {
         color: var(--text-color) !important;
         text-align: center !important;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: bold;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
+        margin-bottom: 18px;
+        padding-bottom: 8px;
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* 📍 تنسيق كارت خريطة الموقع 📍 */
+    /* 📍 خريطة الموقع المتكيفة 📍 */
     .location-card-container {
         background-color: var(--secondary-background-color) !important;
         border: 2px solid #937B2B;
-        border-radius: 20px;
-        padding: 25px;
+        border-radius: 18px;
+        padding: 20px 15px;
         max-width: 850px;
-        margin: 30px auto 0 auto;
+        margin: 25px auto 0 auto;
         text-align: center !important;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        box-shadow: 0 8px 22px rgba(0,0,0,0.1);
     }
 
     .location-btn {
         background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%) !important;
         color: #FFD700 !important;
-        padding: 12px 28px;
-        border-radius: 12px;
+        padding: 10px 20px;
+        border-radius: 10px;
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1rem;
         text-decoration: none;
         display: inline-block;
         border: 1.5px solid #937B2B;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        margin-bottom: 20px;
-    }
-
-    .location-btn:hover {
-        border-color: #FFD700;
-        color: #ffffff !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        margin-bottom: 15px;
     }
 
     .map-frame {
         width: 100%;
-        height: 380px;
-        border-radius: 15px;
+        height: 320px;
+        border-radius: 12px;
         border: 2px solid #937B2B;
     }
 
@@ -396,19 +400,19 @@ st.markdown(
         background: linear-gradient(135deg, #0b1a3e 0%, #1b2631 100%) !important;
         color: #ffffff !important;
         font-weight: bold !important;
-        font-size: 1.1rem !important;
-        border-radius: 10px !important;
+        font-size: 1rem !important;
+        border-radius: 8px !important;
         border: 1px solid #937B2B !important;
-        padding: 10px 20px !important;
+        padding: 8px 15px !important;
     }
 
     .facebook-btn-tab {
         background: linear-gradient(135deg, #1877F2 0%, #0d5cb6 100%) !important;
         color: white !important;
-        padding: 10px 15px;
-        border-radius: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
         font-weight: bold;
-        font-size: 1.05rem;
+        font-size: 0.95rem;
         text-decoration: none;
         display: block;
         text-align: center;
@@ -422,25 +426,66 @@ st.markdown(
         background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
         color: white !important;
         font-weight: bold;
-        padding: 15px 10px;
-        border-radius: 12px;
+        padding: 12px 8px;
+        border-radius: 10px;
         text-decoration: none;
         border: 1px solid #ffffff;
+        margin-bottom: 10px;
     }
 
     .app-footer {
-        margin-top: 50px;
-        padding: 20px 0;
+        margin-top: 40px;
+        padding: 18px 0;
         background-color: #0b1a3e !important;
         color: #ffffff !important;
         text-align: center !important;
-        font-size: 1.05rem;
+        font-size: 0.95rem;
         font-weight: bold;
         border-top: 3px solid #937B2B;
         border-radius: 12px 12px 0 0;
     }
     
     .app-footer span { color: #FFD700; }
+
+    /* 📱 Media Queries للشاشات الصغيرة والموبايل 📱 */
+    @media (max-width: 768px) {
+        .top-navbar {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            padding: 15px 10px;
+        }
+
+        .nav-logo-text {
+            font-size: 1rem;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .main-header-title {
+            font-size: 1.6rem;
+        }
+
+        .sub-header-title {
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+        }
+
+        .center-main-logo {
+            height: 120px;
+        }
+
+        .map-frame {
+            height: 250px;
+        }
+
+        .support-form-container {
+            padding: 20px 12px;
+        }
+    }
     </style>
 """,
     unsafe_allow_html=True,
@@ -570,7 +615,7 @@ if current_tab == "الرئيسية":
       '<div class="section-title">👑 برامج القيادات التربوية</div>',
       unsafe_allow_html=True,
   )
-  c1, c2, c3 = st.columns(3)
+  c1, c2, c3 = st.columns([1, 1, 1])
 
   with c1:
     st.markdown(
@@ -652,7 +697,7 @@ if current_tab == "الرئيسية":
       '<div class="section-title">📜 برامج التسكين والترقي</div>',
       unsafe_allow_html=True,
   )
-  c1, c2 = st.columns(2)
+  c1, c2 = st.columns([1, 1])
   with c1:
     st.markdown(
         f"""
@@ -709,7 +754,7 @@ if current_tab == "الرئيسية":
       '<div class="section-title">🔄 برامج تغيير المسمى الوظيفي والاعتماد</div>',
       unsafe_allow_html=True,
   )
-  c1, c2 = st.columns(2)
+  c1, c2 = st.columns([1, 1])
   with c1:
     st.markdown(
         f"""
@@ -846,7 +891,7 @@ elif current_tab == "ادارات الافراد":
       "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
   )
 
-  c1, c2, c3 = st.columns(3)
+  c1, c2, c3 = st.columns([1, 1, 1])
 
   with c1:
     st.markdown(
@@ -906,7 +951,7 @@ elif current_tab == "الادارات التعليمية":
       unsafe_allow_html=True,
   )
 
-  col_e1, col_e2, col_e3, col_e4 = st.columns(4)
+  col_e1, col_e2, col_e3, col_e4 = st.columns([1, 1, 1, 1])
   for index, edara in enumerate(EDARAT_LIST):
     col_target = [col_e1, col_e2, col_e3, col_e4][index % 4]
     with col_target:
@@ -943,7 +988,7 @@ elif current_tab == "التواصل مع الدعم":
           placeholder="أدخل اسمك بالكامل كما هو بالصحيفة",
       )
 
-      col_f1, col_f2 = st.columns(2)
+      col_f1, col_f2 = st.columns([1, 1])
       with col_f1:
         edara = st.selectbox("📍 الإدارة التعليمية *", EDARAT_LIST)
       with col_f2:
@@ -1016,14 +1061,14 @@ elif current_tab == "التواصل مع الدعم":
           ("مسؤول الدعم (3)", "201201109892"),
       ]
 
-      cols_wa = st.columns(3)
+      cols_wa = st.columns([1, 1, 1])
       for idx, (label, num) in enumerate(whatsapp_numbers):
         wa_url = f"https://wa.me/{num}?text={encoded_msg}"
         with cols_wa[idx]:
           st.markdown(
               f"""<a href="{wa_url}" target="_blank" class="whatsapp-card">
                             💬 {label}<br>
-                            <span style="font-size: 0.9rem; opacity: 0.9;">({num.replace('20', '0')})</span>
+                            <span style="font-size: 0.85rem; opacity: 0.9;">({num.replace('20', '0')})</span>
                         </a>""",
               unsafe_allow_html=True,
           )
@@ -1039,8 +1084,8 @@ elif current_tab == "التواصل مع الدعم":
   st.markdown(
       f"""
         <div class="location-card-container">
-            <h3 style="color: #C9A227; margin-top: 0; font-size: 1.5rem; margin-bottom: 15px;">📍 موقع فرع الأكاديمية المهنية للمعلمين بالجيزة</h3>
-            <p style="color: var(--text-color); font-size: 1.05rem; margin-bottom: 20px;">
+            <h3 style="color: #C9A227; margin-top: 0; font-size: 1.4rem; margin-bottom: 12px;">📍 موقع فرع الأكاديمية المهنية للمعلمين بالجيزة</h3>
+            <p style="color: var(--text-color); font-size: 1rem; margin-bottom: 18px;">
                 يمكنكم زيارة مقر الفرع مباشرة أو فتح الخريطة عبر تطبيق خرائط جوجل من خلال الرابط أدناه:
             </p>
             <a href="{LOCATION_MAP_URL}" target="_blank" class="location-btn">
@@ -1049,7 +1094,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%86%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
