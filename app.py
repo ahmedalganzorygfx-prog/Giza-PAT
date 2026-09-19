@@ -109,7 +109,14 @@ FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 st.markdown(
     """
     <style>
-    html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+    /* 🚫 إخفاء شريط الأدوات العلوي والقائمة الافتراضية لـ Streamlit بالكامل 🚫 */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    [data-testid="stHeader"] {display: none !important;}
+    .stAppHeader {display: none !important;}
+
+    html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
         text-align: right;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -202,7 +209,7 @@ st.markdown(
         border-bottom: 2px dashed #937B2B;
     }
 
-    /* ✨ تنسيق مميز ببراقة للأسماء داخل النصوص ✨ */
+    /* ✨ تمييز الأسماء داخل النصوص ✨ */
     .highlight-name {
         color: #FFD700 !important;
         font-weight: 800 !important;
@@ -712,7 +719,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-# 2️⃣ عن الفرع (مع تمييز الأسماء باللون العريض الذهبي والمظلل)
+# 2️⃣ عن الفرع
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
