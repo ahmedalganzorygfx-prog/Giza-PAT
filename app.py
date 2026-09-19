@@ -3,16 +3,8 @@ import os
 import urllib.parse
 import streamlit as st
 
-# 1️⃣ ضبط إعدادات الصفحة
-st.set_page_config(
-    page_title="الأكاديمية المهنية للمعلمين - فرع الجيزة",
-    page_icon="🎓",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
 
-
-# 2️⃣ دالة قراءة وتحميل الصور المباشرة
+# 2️⃣ دالة قراءة وتحميل الصور المباشرة (تم نقلها للأعلى لتجهيز أيقونة المتصفح)
 def get_image_base64_direct(file_name):
   try:
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -52,6 +44,17 @@ def find_and_load_image(base_file_name, fallback_url=""):
   img_data = get_image_base64_direct(base_file_name)
   return img_data if img_data else fallback_url
 
+
+# جلب اللوجو لتعيينه كأيقونة للمتصفح
+browser_logo_icon = find_and_load_image("Logo.png", "🎓")
+
+# 1️⃣ ضبط إعدادات الصفحة (تعيين لوجو الفرع كأيقونة للتبويب)
+st.set_page_config(
+    page_title="الأكاديمية المهنية للمعلمين - فرع الجيزة",
+    page_icon=browser_logo_icon,
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 
 # 3️⃣ قوائم البيانات الأساسية ورابط الخريطة
 EDARAT_LIST = [
@@ -742,7 +745,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 🌟 شريط الترحيب المتحرك (بدون جملة البوابة)
+# شريط الترحيب المتحرك
 st.markdown(
     """
     <div class="welcome-marquee-container">
@@ -1563,7 +1566,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
