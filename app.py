@@ -762,7 +762,7 @@ st.markdown(
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# ⏱️ شريط العلوي مع ساعة دقيقة ومحدثة تماماً
+# ⏱️ الشريط العلوي مع الساعة والتاريخ المحلي لجهاز المستخدم (Client-side JavaScript)
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -773,8 +773,8 @@ st.markdown(
             </div>
         </div>
         <div class="nav-left-actions">
-            <div id="live-clock" class="live-clock-badge">
-                🕒 جاري التحميل...
+            <div id="live-client-clock" class="live-clock-badge">
+                🕒 جاري تحميل الوقت المحلي...
             </div>
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">
                 منصة المٌعلم 🎓
@@ -783,17 +783,26 @@ st.markdown(
     </div>
 
     <script>
-    function updateLiveClock() {{
+    function updateClientClock() {{
         const now = new Date();
-        const options = {{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }};
+        const options = {{ 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
+        }};
+        // جلب التاريخ والوقت المحلي بناءً على جهاز الزائر وتنسيق اللغة العربية (مصر)
         const formattedString = now.toLocaleDateString('ar-EG', options);
-        const clockEl = document.getElementById('live-clock');
+        const clockEl = document.getElementById('live-client-clock');
         if (clockEl) {{
             clockEl.innerHTML = '🕒 ' + formattedString;
         }}
     }}
-    updateLiveClock();
-    setInterval(updateLiveClock, 1000);
+    updateClientClock();
+    setInterval(updateClientClock, 1000);
     </script>
 """,
     unsafe_allow_html=True,
