@@ -104,7 +104,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الموقع الإلكتروني وتعديل ألوان أداة رفع الملفات (File Uploader CSS Fix)
+# 4️⃣ تصميم الموقع الإلكتروني المطور وإصلاح تباين وحجم خطوط الكروت (Info Card High Visibility CSS)
 st.markdown(
     """
     <style>
@@ -126,7 +126,67 @@ st.markdown(
         text-align: right;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #060d1f !important;
-        color: #e2e8f0 !important;
+        color: #ffffff !important;
+    }
+
+    /* 🏛️ إصلاح وتوضيح كروت قسم "عن الفرع" والمحتوى النصي 🏛️ */
+    .info-card-box {
+        direction: rtl;
+        text-align: right;
+        background: rgba(15, 32, 67, 0.9) !important;
+        backdrop-filter: blur(10px);
+        color: #ffffff !important;
+        padding: 28px 26px;
+        border-radius: 20px;
+        border: 1.5px solid rgba(201, 162, 39, 0.45);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+        margin-bottom: 24px;
+        transition: all 0.3s ease;
+    }
+
+    .info-card-box:hover {
+        border-color: #FFD700;
+        box-shadow: 0 12px 30px rgba(201, 162, 39, 0.25);
+    }
+
+    .info-card-box h3 {
+        color: #FFD700 !important;
+        font-size: 1.5rem !important;
+        font-weight: 800 !important;
+        margin-top: 0;
+        padding-bottom: 12px;
+        border-bottom: 1.5px dashed rgba(201, 162, 39, 0.5);
+    }
+
+    .info-card-box p {
+        font-size: 1.15rem !important;
+        line-height: 1.95 !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        margin-bottom: 12px;
+    }
+
+    .info-card-box ul {
+        list-style-type: none !important;
+        padding-right: 0 !important;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .info-card-box li {
+        font-size: 1.1rem !important;
+        line-height: 2 !important;
+        color: #f8fafc !important;
+        background: rgba(11, 26, 62, 0.6);
+        padding: 8px 16px;
+        border-radius: 10px;
+        margin-bottom: 8px;
+        border-right: 4px solid #C9A227;
+    }
+
+    .highlight-name {
+        color: #FFD700 !important;
+        font-weight: 800 !important;
     }
 
     /* 🎯 توضيح وتفتيح جميع عناوين النماذج والحقول (Labels Fix) 🎯 */
@@ -182,7 +242,7 @@ st.markdown(
         box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6) !important;
     }
 
-    /* 📑 الإصلاح الشامل والنهاية لمربع رفع الملفات (File Uploader High Contrast Fix) 📑 */
+    /* 📑 مربع رفع الملفات (File Uploader Fix) 📑 */
     div[data-testid="stFileUploader"] {
         background-color: #0f2043 !important;
         border-radius: 14px !important;
@@ -190,14 +250,12 @@ st.markdown(
         padding: 12px !important;
     }
 
-    /* المربع الداخلي لرفع الملف */
     div[data-testid="stFileUploaderDropzone"] {
         background-color: #ffffff !important;
         border-radius: 10px !important;
         border: 1px solid #C9A227 !important;
     }
 
-    /* نصوص الحجم ونوع الملف داخل مربع الرفع */
     div[data-testid="stFileUploaderDropzone"] span, 
     div[data-testid="stFileUploaderDropzone"] div,
     div[data-testid="stFileUploaderDropzoneInstructions"] {
@@ -206,7 +264,6 @@ st.markdown(
         font-size: 0.95rem !important;
     }
 
-    /* زر Upload الداخلي */
     div[data-testid="stFileUploaderDropzone"] button {
         background: linear-gradient(135deg, #0b1a3e 0%, #172a4d 100%) !important;
         color: #ffffff !important;
@@ -377,11 +434,6 @@ st.markdown(
         border-bottom: 2px dashed rgba(201, 162, 39, 0.4);
     }
 
-    .highlight-name {
-        color: #FFD700 !important;
-        font-weight: bold !important;
-    }
-
     /* 🎴 كروت البرامج والخدمات العصرية 🎴 */
     .program-card-wrapper {
         background: rgba(15, 32, 67, 0.6) !important;
@@ -493,25 +545,6 @@ st.markdown(
         border-radius: 20px;
         display: inline-block;
         border: 1px solid rgba(201, 162, 39, 0.4);
-    }
-
-    /* 🏛️ بطاقات المعلومات العصرية 🏛️ */
-    .info-card-box {
-        direction: rtl;
-        text-align: right;
-        background: rgba(15, 32, 67, 0.6) !important;
-        backdrop-filter: blur(10px);
-        color: #e2e8f0 !important;
-        padding: 24px 22px;
-        border-radius: 20px;
-        border: 1.5px solid rgba(201, 162, 39, 0.35);
-        box-shadow: 0 8px 22px rgba(0,0,0,0.2);
-        margin-bottom: 22px;
-        transition: all 0.3s ease;
-    }
-
-    .info-card-box:hover {
-        border-color: #C9A227;
     }
 
     /* 📍 كروت الإدارات التعليمية 📍 */
@@ -1025,8 +1058,8 @@ elif current_tab == "عن الفرع":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">🏛️ التأسيس والانطلاقة (2017)</h3>
-            <p style="font-size: 1.05rem; line-height: 1.85; margin-bottom: 0;">
+            <h3>🏛️ التأسيس والانطلاقة (2017)</h3>
+            <p>
                 أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
             </p>
         </div>
@@ -1038,13 +1071,13 @@ elif current_tab == "عن الفرع":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
-            <p style="font-size: 1.05rem; line-height: 1.85;">
+            <h3>📜 مرحلة البناء والتأسيس (2017 – 2023)</h3>
+            <p>
                 شهدت الفترة من <b>2017 حتى 2023</b> إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة <span class="highlight-name">الأستاذة / أمل عبد المقصود</span> (مدير الفرع)، وبمعاونة فريق عمل متميز في قسم تكنولوجيا المعلومات (IT) ضم كلاً من:
             </p>
-            <ul style="font-size: 1rem; line-height: 2.2; padding-right: 20px;">
-                <li><span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)</li>
-                <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)</li>
+            <ul>
+                <li>🔹 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (عضو تكنولوجيا المعلومات IT)</li>
+                <li>🔹 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (عضو تكنولوجيا المعلومات IT)</li>
             </ul>
         </div>
     """,
@@ -1055,16 +1088,16 @@ elif current_tab == "عن الفرع":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 10px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
-            <p style="font-size: 1.05rem; line-height: 1.85;">
+            <h3>🚀 مرحلة التطوير والتحول الرقمي (2023 – حتى الآن)</h3>
+            <p>
                 مع بداية عام <b>2023</b>، انطلقت مرحلة جديدة ترتكز على <b>الميكنة والتحول الرقمي للخدمات</b>، برئاسة <span class="highlight-name">الأستاذ / أحمد حسني الجنزوري</span> مديراً للفرع، وفريق عمل متميز يتكون من:
             </p>
-            <ul style="font-size: 1rem; line-height: 2.2; padding-right: 20px;">
-                <li><span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
-                <li><span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)</li>
-                <li><span class="highlight-name">أ . أمينة فوزي عبد الرحمن</span> (مسئول التنمية المهنية والاعتماد)</li>
+            <ul>
+                <li>🔹 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (مسئول الموارد البشرية وتكنولوجيا المعلومات IT)</li>
+                <li>🔹 <span class="highlight-name">أ . أحمد محمد عمر</span> (مسئول التنمية المهنية والاعتماد)</li>
+                <li>🔹 <span class="highlight-name">أ . أمينة فوزي عبد الرحمن</span> (مسئول التنمية المهنية والاعتماد)</li>
             </ul>
-            <p style="font-size: 1rem; line-height: 1.85; margin-top: 10px; margin-bottom: 0;">
+            <p style="margin-top: 15px;">
                 تتضافر الجهود حالياً لتسهيل حصول المعلمين على البرامج الرقمية للقيادات والترقي وتغيير المسمى الوظيفي والدعم الفني المباشر لجميع الإدارات التعليمية بمحافظة الجيزة.
             </p>
         </div>
@@ -1207,8 +1240,8 @@ elif current_tab == "خدمات الأكاديمية":
     st.markdown(
         """
             <div class="info-card-box">
-                <h3 style="color: #C9A227; margin-top:0;">🌟 برامج الترقي للكادر الوظيفي</h3>
-                <p style="line-height: 1.85;">
+                <h3>🌟 برامج الترقي للكادر الوظيفي</h3>
+                <p>
                     تقديم التدريبات الرقمية المعتمدة لاستكمال متطلبات الترقي للمعلمين المستحقين بالنظام الإلكتروني الحديث، ومتابعة رفع واستيفاء ملفات الترقي بالتعاون مع الإدارات التعليمية.
                 </p>
             </div>
@@ -1219,8 +1252,8 @@ elif current_tab == "خدمات الأكاديمية":
     st.markdown(
         """
             <div class="info-card-box">
-                <h3 style="color: #C9A227; margin-top:0;">👑 برامج القيادات التربوية</h3>
-                <p style="line-height: 1.85;">
+                <h3>👑 برامج القيادات التربوية</h3>
+                <p>
                     تأهيل الكوادر التربوية لشغل وظائف (مدير ووكيل إدارة مدرسية، مدير ووكيل إدارة تعليمية، أساسيات التوجيه الفني) والحصول على شهادات التنمية المهنية المعتمدة.
                 </p>
             </div>
@@ -1237,8 +1270,8 @@ elif current_tab == "خدمات الأكاديمية":
     st.markdown(
         """
             <div class="info-card-box">
-                <h3 style="color: #C9A227; margin-top:0;">🔄 تغيير المسمى الوظيفي</h3>
-                <p style="line-height: 1.85;">
+                <h3>🔄 تغيير المسمى الوظيفي</h3>
+                <p>
                     استقبال وتدقيق أوراق المعلمين الراغبين في تغيير المسمى الوظيفي، وتوفير برامج إعادة التأهيل التربوي والتخصصي المعتمدة لمطابقة المؤهلات والتسكين الصحيح.
                 </p>
             </div>
@@ -1249,8 +1282,8 @@ elif current_tab == "خدمات الأكاديمية":
     st.markdown(
         """
             <div class="info-card-box">
-                <h3 style="color: #C9A227; margin-top:0;">💼 اعتماد المدربين والمراكز (TOT)</h3>
-                <p style="line-height: 1.85;">
+                <h3>💼 اعتماد المدربين والمراكز (TOT)</h3>
+                <p>
                     منح شهادات الاعتماد الرقمية للمدربين المعتمدين (TOT)، واعتماد برامج التنمية المهنية المستمرة والمؤسسات التدريبية وفق معايير الجودة الشاملة.
                 </p>
             </div>
@@ -1265,7 +1298,7 @@ elif current_tab == "خدمات الأكاديمية":
   st.markdown(
       """
         <div class="support-form-container" style="text-align: center;">
-            <p style="font-size: 1.1rem; line-height: 1.85; color: #e2e8f0;">
+            <p style="font-size: 1.15rem; line-height: 1.9; color: #ffffff;">
                 تتيح الأكاديمية المهنية للمعلمين بفرع الجيزة إمكانية التقدم والتسجيل الإلكتروني المباشر للبرامج التدريبية مدفوعة الأجر والخاصة بالترقي والاعتماد وتطوير المهارات.
             </p>
             <br>
@@ -1294,8 +1327,8 @@ elif current_tab == "مجتمعات التعلم":
   st.markdown(
       """
         <div class="info-card-box">
-            <h3 style="color: #C9A227; margin-top: 0; padding-bottom: 8px; border-bottom: 1px dashed rgba(201, 162, 39, 0.4);">🌐 ما هي مجتمعات التعلم المهنية؟</h3>
-            <p style="font-size: 1.05rem; line-height: 1.85; margin-bottom: 0;">
+            <h3>🌐 ما هي مجتمعات التعلم المهنية؟</h3>
+            <p>
                 هي بيئة تربوية تفاعلية تجمع المعلمين والموجهين والقيادات في فرق عمل تعاونية منظمة، تهدف إلى <b>تطوير مهارات التدريس</b>، و<b>تبادل الممارسات المتميزة</b>، و<b>حل المشكلات التعليمية</b> للارتقاء بنواتج تعلم الطلاب والتحول نحو مجتمع المعرفة.
             </p>
         </div>
@@ -1314,8 +1347,8 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box" style="height: 100%;">
-                <h4 style="color: #C9A227; margin-top:0;">🤝 تعزيز العمل الجماعي</h4>
-                <p style="font-size: 0.95rem; line-height: 1.75;">
+                <h4 style="color: #FFD700; margin-top:0;">🤝 تعزيز العمل الجماعي</h4>
+                <p style="font-size: 1rem;">
                     بناء ثقافة العمل بروح الفريق الواحد بين المعلمين والموجهين داخل المدرسة وعلى مستوى الإدارة التعليمية.
                 </p>
             </div>
@@ -1327,8 +1360,8 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box" style="height: 100%;">
-                <h4 style="color: #C9A227; margin-top:0;">💡 الابتكار وتبادل الخبرات</h4>
-                <p style="font-size: 0.95rem; line-height: 1.75;">
+                <h4 style="color: #FFD700; margin-top:0;">💡 الابتكار وتبادل الخبرات</h4>
+                <p style="font-size: 1rem;">
                     نقل وتطبيق أحدث استراتيجيات التدريس وتقنيات التحول الرقمي والتفكير النقدي في الفصول الدراسية.
                 </p>
             </div>
@@ -1340,8 +1373,8 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box" style="height: 100%;">
-                <h4 style="color: #C9A227; margin-top:0;">📈 النمو المهني المستمر</h4>
-                <p style="font-size: 0.95rem; line-height: 1.75;">
+                <h4 style="color: #FFD700; margin-top:0;">📈 النمو المهني المستمر</h4>
+                <p style="font-size: 1rem;">
                     التطوير الذاتي والتنفيذي للكوادر التعليمية من خلال البحوث الإجرائية وتبادل الملاحظات والتغذية الراجعة.
                 </p>
             </div>
@@ -1360,8 +1393,8 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box">
-                <h4 style="color: #C9A227; margin-top:0;">🔍 بحث الدرس (Lesson Study) وتدريب الأقران</h4>
-                <p style="line-height: 1.85;">
+                <h4 style="color: #FFD700; margin-top:0;">🔍 بحث الدرس (Lesson Study) وتدريب الأقران</h4>
+                <p>
                     التخطيط المشترك للدروس وتجريب التنسيقات الحديثة في مواقف تعليمية واقعية، يليها جلسات تأمل وتبادل التغذية الراجعة البناءة بين المعلمين ورؤساء الأقسام.
                 </p>
             </div>
@@ -1373,8 +1406,8 @@ elif current_tab == "مجتمعات التعلم":
     st.markdown(
         """
             <div class="info-card-box">
-                <h4 style="color: #C9A227; margin-top:0;">🖥️ الشبكات والورش الرقمية التفاعلية</h4>
-                <p style="line-height: 1.85;">
+                <h4 style="color: #FFD700; margin-top:0;">🖥️ الشبكات والورش الرقمية التفاعلية</h4>
+                <p>
                     لقاءات دورية وندوات عبر الإنترنت للربط بين المعلمين والمشرفين عبر مختلف الإدارات التعليمية بالجيزة لعرض التجارب والحلول المبتكرة للتحديات الصفية.
                 </p>
             </div>
