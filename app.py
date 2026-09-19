@@ -109,7 +109,12 @@ LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 st.markdown(
     """
     <style>
-    footer { visibility: hidden; }
+    /* 🛑 إخفاء أزرار GitHub و Fork والعناصر الافتراضية لمنصة Streamlit 🛑 */
+    header[data-testid="stHeader"] { display: none !important; }
+    [data-testid="stToolbar"] { display: none !important; }
+    [data-testid="stActionButtonIcon"] { display: none !important; }
+    #MainMenu { visibility: hidden !important; }
+    footer { visibility: hidden !important; }
 
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
