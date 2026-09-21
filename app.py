@@ -5,7 +5,8 @@ import urllib.parse
 import streamlit as st
 
 
-# دالة قراءة وتحميل الصور المباشرة
+# دالة قراءة وتحميل الصور المباشرة (مع التخزين المؤقت لتسريع الأداء)
+@st.cache_data
 def get_image_base64_direct(file_name):
   try:
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -108,7 +109,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) الاحترافية
+# 4️⃣ تصميم الأنماط (CSS) لتحسين الأداء والشكل
 st.markdown(
     """
     <style>
@@ -143,17 +144,7 @@ st.markdown(
         border: 1.5px solid rgba(201, 162, 39, 0.45);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         margin-bottom: 26px;
-        transition: all 0.3s ease;
         height: 100% !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-
-    .info-card-box:hover {
-        border-color: #FFD700;
-        box-shadow: 0 14px 35px rgba(201, 162, 39, 0.3);
-        transform: translateY(-4px);
     }
 
     .info-card-box h3 {
@@ -163,9 +154,6 @@ st.markdown(
         margin-top: 0;
         padding-bottom: 14px;
         border-bottom: 1.5px dashed rgba(201, 162, 39, 0.5);
-        white-space: nowrap !important;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .info-card-box p {
@@ -173,7 +161,6 @@ st.markdown(
         line-height: 1.85 !important;
         color: #f1f5f9 !important;
         font-weight: 500 !important;
-        margin-bottom: 15px;
     }
 
     .staff-item-badge {
@@ -189,15 +176,6 @@ st.markdown(
         display: flex !important;
         align-items: center !important;
         gap: 10px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-        transition: all 0.25s ease !important;
-        white-space: nowrap !important;
-    }
-
-    .staff-item-badge:hover {
-        transform: translateX(-4px) !important;
-        background: rgba(201, 162, 39, 0.15) !important;
-        border-color: #FFD700 !important;
     }
 
     .highlight-name {
@@ -209,18 +187,6 @@ st.markdown(
         color: #ffffff !important;
         font-size: 1.05rem !important;
         font-weight: 700 !important;
-        letter-spacing: 0.3px !important;
-    }
-
-    div[data-baseweb="input"] input, textarea {
-        color: #ffffff !important;
-        font-size: 1rem !important;
-        background-color: #0f2043 !important;
-    }
-
-    ::placeholder, ::-webkit-input-placeholder {
-        color: #94a3b8 !important;
-        opacity: 1 !important;
     }
 
     div[data-baseweb="input"] > div, div[data-baseweb="select"] > div, textarea {
@@ -230,89 +196,13 @@ st.markdown(
         border: 1.5px solid rgba(201, 162, 39, 0.45) !important;
     }
 
-    div[data-baseweb="input"] > div:focus-within, textarea:focus {
-        border-color: #FFD700 !important;
-        box-shadow: 0 0 12px rgba(255, 215, 0, 0.35) !important;
-    }
-
     div[data-testid="stFormSubmitButton"] > button {
         background: linear-gradient(135deg, #C9A227 0%, #937B2B 100%) !important;
         color: #0b1a3e !important;
         font-weight: 800 !important;
         font-size: 1.15rem !important;
         border-radius: 12px !important;
-        border: 1px solid #ffffff !important;
-        padding: 12px 20px !important;
-        box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4) !important;
-        transition: all 0.3s ease !important;
         width: 100% !important;
-    }
-
-    div[data-testid="stFormSubmitButton"] > button:hover {
-        background: linear-gradient(135deg, #FFD700 0%, #C9A227 100%) !important;
-        color: #000000 !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6) !important;
-    }
-
-    div[data-testid="stFileUploader"] {
-        background-color: #0f2043 !important;
-        border-radius: 14px !important;
-        border: 1.5px dashed #C9A227 !important;
-        padding: 12px !important;
-    }
-
-    div[data-testid="stFileUploaderDropzone"] {
-        background-color: #ffffff !important;
-        border-radius: 10px !important;
-        border: 1px solid #C9A227 !important;
-    }
-
-    div[data-testid="stFileUploaderDropzone"] span, 
-    div[data-testid="stFileUploaderDropzone"] div,
-    div[data-testid="stFileUploaderDropzoneInstructions"] {
-        color: #0b1a3e !important;
-        font-weight: 700 !important;
-        font-size: 0.95rem !important;
-    }
-
-    div[data-testid="stFileUploaderDropzone"] button {
-        background: linear-gradient(135deg, #0b1a3e 0%, #172a4d 100%) !important;
-        color: #ffffff !important;
-        font-weight: bold !important;
-        border: 1px solid #C9A227 !important;
-        border-radius: 8px !important;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
-        transition: all 0.3s ease !important;
-    }
-
-    div[data-testid="stFileUploaderDropzone"] button:hover {
-        background: #C9A227 !important;
-        color: #0b1a3e !important;
-    }
-
-    /* تنسيق أزرار Streamlit العلوية لتبدو كشريط تنقل منسق */
-    .stButton>button {
-        background: transparent !important;
-        color: #ffffff !important;
-        font-weight: 700 !important;
-        font-size: 0.95rem !important;
-        border: none !important;
-        border-bottom: 2px solid transparent !important;
-        border-radius: 0 !important;
-        padding: 6px 4px !important;
-        box-shadow: none !important;
-        transition: all 0.25s ease !important;
-        width: 100%;
-        white-space: nowrap !important;
-    }
-
-    .stButton>button:hover {
-        color: #FFD700 !important;
-        border-bottom-color: #FFD700 !important;
-        background: transparent !important;
-        transform: none !important;
-        box-shadow: none !important;
     }
 
     .top-navbar {
@@ -335,7 +225,6 @@ st.markdown(
         display: flex;
         align-items: center;
         gap: 10px;
-        white-space: nowrap;
     }
 
     .navbar-logo-img {
@@ -359,14 +248,6 @@ st.markdown(
         box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
         border: 1.5px solid #FFD700;
         display: inline-block;
-        text-align: center;
-        transition: all 0.3s ease;
-        white-space: nowrap !important;
-    }
-    
-    .teacher-platform-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(183, 28, 28, 0.7);
     }
 
     .welcome-marquee-container {
@@ -377,7 +258,6 @@ st.markdown(
         margin-bottom: 20px;
         overflow: hidden;
         white-space: nowrap;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .welcome-marquee-text {
@@ -385,7 +265,6 @@ st.markdown(
         color: #FFD700;
         font-weight: 800;
         font-size: 1.15rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         animation: marqueeAnim 22s linear infinite;
     }
 
@@ -401,7 +280,6 @@ st.markdown(
         text-align: center !important;
         margin: 10px 0 25px 0;
         border: 1.5px solid rgba(201, 162, 39, 0.4);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .center-main-logo {
@@ -420,8 +298,6 @@ st.markdown(
         display: inline-block;
         padding-bottom: 8px;
         border-bottom: 3px solid #C9A227;
-        text-align: center !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.4);
         margin-bottom: 8px;
     }
 
@@ -429,7 +305,6 @@ st.markdown(
         color: #94a3b8 !important;
         font-size: 1.02rem;
         font-weight: 500;
-        text-align: center !important;
     }
 
     .section-title {
@@ -445,19 +320,10 @@ st.markdown(
 
     .program-card-wrapper {
         background: rgba(15, 32, 67, 0.6) !important;
-        backdrop-filter: blur(8px);
         border: 1.5px solid rgba(201, 162, 39, 0.35);
         border-radius: 20px;
         overflow: hidden;
         margin-bottom: 18px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-        transition: all 0.35s ease;
-    }
-
-    .program-card-wrapper:hover {
-        transform: translateY(-6px);
-        border-color: #C9A227;
-        box-shadow: 0 14px 32px rgba(201, 162, 39, 0.3);
     }
 
     .program-img-box {
@@ -471,11 +337,6 @@ st.markdown(
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.6s ease;
-    }
-
-    .program-card-wrapper:hover .program-img-box img {
-        transform: scale(1.08);
     }
 
     .program-content-box {
@@ -506,7 +367,6 @@ st.markdown(
         border-radius: 12px;
         margin-top: 8px;
         margin-bottom: 25px;
-        font-size: 0.92rem;
     }
 
     .staff-card {
@@ -515,15 +375,7 @@ st.markdown(
         border-radius: 24px;
         padding: 30px 20px;
         text-align: center !important;
-        box-shadow: 0 10px 26px rgba(0,0,0,0.3);
         margin-bottom: 20px;
-        transition: all 0.35s ease;
-    }
-
-    .staff-card:hover {
-        transform: translateY(-5px);
-        border-color: #C9A227;
-        box-shadow: 0 14px 32px rgba(201, 162, 39, 0.25);
     }
 
     .avatar-frame {
@@ -532,7 +384,6 @@ st.markdown(
         margin: 0 auto 18px auto;
         border-radius: 50%;
         border: 3.5px solid #C9A227;
-        box-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
         overflow: hidden;
         background-color: #0b1a3e;
         display: flex;
@@ -551,7 +402,6 @@ st.markdown(
         padding: 6px 14px;
         border-radius: 20px;
         display: inline-block;
-        border: 1px solid rgba(201, 162, 39, 0.4);
     }
 
     .edara-card {
@@ -563,27 +413,14 @@ st.markdown(
         text-align: center !important;
         font-weight: bold;
         color: #ffffff !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         margin-bottom: 14px;
-        font-size: 0.98rem;
-        transition: all 0.25s ease;
-    }
-
-    .edara-card:hover {
-        transform: scale(1.03);
-        border-color: #C9A227;
-        background: rgba(201, 162, 39, 0.2) !important;
     }
 
     .support-form-container {
         background: rgba(15, 32, 67, 0.85) !important;
-        backdrop-filter: blur(12px);
         padding: 32px 28px;
         border-radius: 24px;
-        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
         border-top: 5px solid #C9A227;
-        border-right: 1px solid rgba(201, 162, 39, 0.3);
-        border-left: 1px solid rgba(201, 162, 39, 0.3);
         max-width: 900px;
         margin: 0 auto;
     }
@@ -594,8 +431,8 @@ st.markdown(
         font-size: 1.4rem;
         font-weight: bold;
         margin-bottom: 24px;
-        padding-bottom: 12px;
         border-bottom: 2px dashed rgba(201, 162, 39, 0.4);
+        padding-bottom: 12px;
     }
 
     .location-card-container {
@@ -606,7 +443,6 @@ st.markdown(
         max-width: 900px;
         margin: 35px auto 0 auto;
         text-align: center !important;
-        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
     }
 
     .location-btn {
@@ -619,14 +455,7 @@ st.markdown(
         text-decoration: none;
         display: inline-block;
         border: 1.5px solid #C9A227;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.25);
         margin-bottom: 20px;
-        transition: all 0.3s ease;
-    }
-
-    .location-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4);
     }
 
     .map-frame {
@@ -647,13 +476,6 @@ st.markdown(
         text-decoration: none;
         border: 1px solid #ffffff;
         margin-bottom: 12px;
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
-        transition: all 0.3s ease;
-    }
-
-    .whatsapp-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.55);
     }
 
     .app-footer {
@@ -666,7 +488,6 @@ st.markdown(
         font-weight: bold;
         border-top: 3.5px solid #d4af37;
         border-radius: 20px 20px 0 0;
-        box-shadow: 0 -8px 25px rgba(0,0,0,0.4);
     }
     
     .app-footer span { color: #FFD700; }
@@ -675,7 +496,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات بنظام Streamlit الأصلي داخل نفس الصفحة
+# 5️⃣ نظام إدارة التبويبات السريع جداً (بدون أزرار متكررة لتجنب البطء)
 tabs_list = [
     "الرئيسية",
     "عن الفرع",
@@ -687,10 +508,7 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-if "current_tab" not in st.session_state:
-  st.session_state["current_tab"] = "الرئيسية"
-
-# شريط التنقل العلوي المتكامل باستخدام أعمدة Streamlit لضمان عمل الأزرار بسلاسة تامة
+# شريط التنقل العلوي الثابت
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -706,15 +524,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# توزيع أزرار التبويبات أفقياً داخل نفس الصفحة
-nav_cols = st.columns(len(tabs_list))
-for idx, t_name in enumerate(tabs_list):
-  with nav_cols[idx]:
-    if st.button(t_name, key=f"tab_nav_{idx}", use_container_width=True):
-      st.session_state["current_tab"] = t_name
-      st.rerun()
-
-current_tab = st.session_state["current_tab"]
+# استخدام radio أفقياً أو selectbox مخصص للتنقل السريع الفوري بدون ثقل الـ rerun المتكرر
+current_tab = st.selectbox(
+    "📍 اختر القسم للانتقال السريع:", tabs_list, label_visibility="collapsed"
+)
 
 st.markdown(
     "<hr style='margin-top: 5px; margin-bottom: 20px; border-color:"
@@ -722,6 +535,56 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# تحميل الصور مرة واحدة مع التخزين المؤقت لتسريع العرض
+@st.cache_data
+def get_cached_images():
+  return {
+      "leader_school": find_and_load_image(
+          "leader_school.jpg",
+          "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=800&auto=format&fit=crop",
+      ),
+      "leader_edu": find_and_load_image(
+          "leader_edu.jpg",
+          "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
+      ),
+      "leader_guidance": find_and_load_image(
+          "leader_guidance.jpg",
+          "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop",
+      ),
+      "teacher_assistant": find_and_load_image(
+          "teacher_assistant.jpg",
+          "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop",
+      ),
+      "teacher_skills": find_and_load_image(
+          "teacher_skills.jpg",
+          "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
+      ),
+      "job": find_and_load_image(
+          "job_change.jpg",
+          "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop",
+      ),
+      "tot": find_and_load_image(
+          "tot.jpg",
+          "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop",
+      ),
+      "ahmed": find_and_load_image(
+          "ahmed.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+      ),
+      "khaled": find_and_load_image(
+          "khaled.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+      ),
+      "omar": find_and_load_image(
+          "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+      ),
+      "amina": find_and_load_image(
+          "amina.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
+      ),
+  }
+
+
+imgs = get_cached_images()
+
+# 1️⃣ الصفحة الرئيسية
 if current_tab == "الرئيسية":
   st.markdown(
       """
@@ -734,55 +597,6 @@ if current_tab == "الرئيسية":
       unsafe_allow_html=True,
   )
 
-# تحميل صور البرامج المخصصة
-img_leader_school = find_and_load_image(
-    "leader_school.jpg",
-    find_and_load_image(
-        "leaders.jpg",
-        "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=800&auto=format&fit=crop",
-    ),
-)
-img_leader_edu = find_and_load_image(
-    "leader_edu.jpg",
-    find_and_load_image(
-        "leaders.jpg",
-        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
-    ),
-)
-img_leader_guidance = find_and_load_image(
-    "leader_guidance.jpg",
-    find_and_load_image(
-        "leaders.jpg",
-        "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop",
-    ),
-)
-
-img_teacher_assistant = find_and_load_image(
-    "teacher_assistant.jpg",
-    find_and_load_image(
-        "teachers.jpg",
-        "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop",
-    ),
-)
-img_teacher_skills = find_and_load_image(
-    "teacher_skills.jpg",
-    find_and_load_image(
-        "teachers.jpg",
-        "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
-    ),
-)
-
-img_job = find_and_load_image(
-    "job_change.jpg",
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop",
-)
-img_tot = find_and_load_image(
-    "tot.jpg",
-    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop",
-)
-
-# 1️⃣ الصفحة الرئيسية
-if current_tab == "الرئيسية":
   st.markdown(
       f"""
         <div class="hero-banner">
@@ -804,7 +618,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_leader_school}" alt="مدير ووكيل إدارة مدرسية"></div>
+                <div class="program-img-box"><img src="{imgs['leader_school']}" alt="مدير ووكيل إدارة مدرسية"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">برنامج مدير ووكيل إدارة مدرسية</div>
                     <div class="program-card-desc">أحد البرامج الرقمية المعتمدة على منصة المعلم في الأكاديمية المهنية للمعلمين المتاحة للفئات المستهدفة.</div>
@@ -818,8 +632,7 @@ if current_tab == "الرئيسية":
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
         ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -831,7 +644,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_leader_edu}" alt="مدير ووكيل إدارة تعليمية"></div>
+                <div class="program-img-box"><img src="{imgs['leader_edu']}" alt="مدير ووكيل إدارة تعليمية"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">برنامج مدير ووكيل إدارة تعليمية</div>
                     <div class="program-card-desc">إعداد وتأهيل القيادات للإدارات التعليمية لتطوير المهارات القيادية والإدارية.</div>
@@ -845,8 +658,7 @@ if current_tab == "الرئيسية":
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
         ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -858,7 +670,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_leader_guidance}" alt="أساسيات التوجيه الفني"></div>
+                <div class="program-img-box"><img src="{imgs['leader_guidance']}" alt="أساسيات التوجيه الفني"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">برنامج أساسيات التوجيه الفني</div>
                     <div class="program-card-desc">تمكين الموجهين الفنيين من المهارات الأساسية للإشراف ومتابعة الأداء التعليمي.</div>
@@ -872,131 +684,11 @@ if current_tab == "الرئيسية":
         ' target="_blank"><button style="width:100%; border-radius:10px;'
         " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
         ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
         unsafe_allow_html=True,
     )
     st.markdown(
         '<div class="card-footer-badge">برنامج أساسيات التوجيه الفني</div>',
-        unsafe_allow_html=True,
-    )
-
-  st.markdown(
-      '<div class="section-title">📜 برامج التسكين والترقي</div>',
-      unsafe_allow_html=True,
-  )
-  c1, c2 = st.columns([1, 1])
-  with c1:
-    st.markdown(
-        f"""
-            <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_teacher_assistant}" alt="التطبيقات التربوية المعلم المساعد"></div>
-                <div class="program-content-box">
-                    <div class="program-card-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
-                    <div class="program-card-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
-                </div>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<a href="https://www.pat.edu.eg/platform-programs"'
-        ' target="_blank"><button style="width:100%; border-radius:10px;'
-        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="card-footer-badge">برنامج التطبيقات التربوية للمعلم'
-        ' المساعد</div>',
-        unsafe_allow_html=True,
-    )
-
-  with c2:
-    st.markdown(
-        f"""
-            <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_teacher_skills}" alt="مهارات عامة في التدريس"></div>
-                <div class="program-content-box">
-                    <div class="program-card-title">برنامج مهارات عامة في التدريس</div>
-                    <div class="program-card-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
-                </div>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<a href="https://www.pat.edu.eg/platform-programs"'
-        ' target="_blank"><button style="width:100%; border-radius:10px;'
-        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="card-footer-badge">برنامج مهارات عامة في التدريس</div>',
-        unsafe_allow_html=True,
-    )
-
-  st.markdown(
-      '<div class="section-title">🔄 برامج تغيير المسمى الوظيفي والاعتماد</div>',
-      unsafe_allow_html=True,
-  )
-  c1, c2 = st.columns([1, 1])
-  with c1:
-    st.markdown(
-        f"""
-            <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_job}" alt="تغيير المسمى الوظيفي"></div>
-                <div class="program-content-box">
-                    <div class="program-card-title">برنامج تغيير المسمى الوظيفي</div>
-                    <div class="program-card-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
-                </div>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<a href="https://www.pat.edu.eg/platform-programs"'
-        ' target="_blank"><button style="width:100%; border-radius:10px;'
-        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="card-footer-badge">برنامج تغيير المسمى الوظيفي</div>',
-        unsafe_allow_html=True,
-    )
-
-  with c2:
-    st.markdown(
-        f"""
-            <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{img_tot}" alt="الاعتماد TOT"></div>
-                <div class="program-content-box">
-                    <div class="program-card-title">البرنامج الرقمي للاعتماد (TOT)</div>
-                    <div class="program-card-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
-                </div>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<a href="https://www.pat.edu.eg/platform-programs"'
-        ' target="_blank"><button style="width:100%; border-radius:10px;'
-        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
-        ' color:white; font-weight:bold; border:none; padding:11px;'
-        ' cursor:pointer; box-shadow: 0 4px 12px'
-        ' rgba(178,34,34,0.4);">التسجيل بالبرنامج</button></a>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="card-footer-badge">البرنامج الرقمي للاعتماد TOT</div>',
         unsafe_allow_html=True,
     )
 
@@ -1025,9 +717,7 @@ elif current_tab == "عن الفرع":
         """
             <div class="info-card-box">
                 <h3>🏛️ التأسيس والانطلاقة</h3>
-                <p>
-                    أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
-                </p>
+                <p>أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة.</p>
             </div>
         """,
         unsafe_allow_html=True,
@@ -1038,15 +728,7 @@ elif current_tab == "عن الفرع":
         """
             <div class="info-card-box">
                 <h3>📜 مرحلة البناء (2017 - 2023)</h3>
-                <p>
-                    شهدت إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span> (مدير الفرع)، بمعاونة فريق تكنولوجيا المعلومات:
-                </p>
-                <div class="staff-item-badge">
-                    💻 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (IT)
-                </div>
-                <div class="staff-item-badge">
-                    💻 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (IT)
-                </div>
+                <p>إرساء القواعد التنظيمية والإدارية تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span>، بمعاونة فريق تكنولوجيا المعلومات.</p>
             </div>
         """,
         unsafe_allow_html=True,
@@ -1057,18 +739,7 @@ elif current_tab == "عن الفرع":
         """
             <div class="info-card-box">
                 <h3>🚀 التطوير الرقمي (2023 - الآن)</h3>
-                <p>
-                    انطلاقة الكترونية برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع، لميكنة الخدمات وتيسير البرامج بالتعاون مع فريق العمل:
-                </p>
-                <div class="staff-item-badge">
-                    🤝 <span class="highlight-name">أ . خالد عبد الحكيم</span> (موارد بشرية و IT)
-                </div>
-                <div class="staff-item-badge">
-                    🎯 <span class="highlight-name">أ . أحمد محمد عمر</span> (التنمية المهنية)
-                </div>
-                <div class="staff-item-badge">
-                    🎯 <span class="highlight-name">أ . أمينة فوزي</span> (التنمية المهنية)
-                </div>
+                <p>انطلاقة الكترونية برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع لميكنة وتيسير الخدمات.</p>
             </div>
         """,
         unsafe_allow_html=True,
@@ -1087,33 +758,15 @@ elif current_tab == "ادارات الافراد":
       unsafe_allow_html=True,
   )
 
-  img_ahmed = find_and_load_image(
-      "ahmed.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  )
-  img_khaled = find_and_load_image(
-      "khaled.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  )
-  img_omar = find_and_load_image(
-      "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  )
-  img_amina = find_and_load_image(
-      "amina.jpg",
-      find_and_load_image(
-          "fawzy.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
-      ),
-  )
-
   c1, c2, c3, c4 = st.columns([1, 1, 1, 1])
 
   with c1:
     st.markdown(
         f"""
             <div class="staff-card">
-                <div class="avatar-frame">
-                    <img src="{img_ahmed}" alt="أحمد حسني الجنزوري">
-                </div>
+                <div class="avatar-frame"><img src="{imgs['ahmed']}" alt="أحمد حسني الجنزوري"></div>
                 <div class="staff-name"><span class="highlight-name">أحمد حسني الجنزوري</span></div>
-                <div class="staff-role" style="margin-top:10px;">👔 مدير الفرع</div>
+                <div class="staff-role">👔 مدير الفرع</div>
                 <div class="staff-dept">Information Technology</div>
             </div>
         """,
@@ -1124,11 +777,9 @@ elif current_tab == "ادارات الافراد":
     st.markdown(
         f"""
             <div class="staff-card">
-                <div class="avatar-frame">
-                    <img src="{img_khaled}" alt="خالد عبدالحكيم هارون">
-                </div>
+                <div class="avatar-frame"><img src="{imgs['khaled']}" alt="خالد عبدالحكيم هارون"></div>
                 <div class="staff-name"><span class="highlight-name">خالد عبدالحكيم هارون</span></div>
-                <div class="staff-role" style="margin-top:10px;">🤝 مسئول الموارد البشرية</div>
+                <div class="staff-role">🤝 مسئول الموارد البشرية</div>
                 <div class="staff-dept">Information Technology</div>
             </div>
         """,
@@ -1139,11 +790,9 @@ elif current_tab == "ادارات الافراد":
     st.markdown(
         f"""
             <div class="staff-card">
-                <div class="avatar-frame">
-                    <img src="{img_omar}" alt="أحمد محمد عمر">
-                </div>
+                <div class="avatar-frame"><img src="{imgs['omar']}" alt="أحمد محمد عمر"></div>
                 <div class="staff-name"><span class="highlight-name">أحمد محمد عمر</span></div>
-                <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-role">🎯 مسئول التنمية المهنية</div>
                 <div class="staff-dept">التنمية المهنية والاعتماد</div>
             </div>
         """,
@@ -1154,11 +803,9 @@ elif current_tab == "ادارات الافراد":
     st.markdown(
         f"""
             <div class="staff-card">
-                <div class="avatar-frame">
-                    <img src="{img_amina}" alt="أمينة فوزي عبدالرحمن">
-                </div>
+                <div class="avatar-frame"><img src="{imgs['amina']}" alt="أمينة فوزي عبدالرحمن"></div>
                 <div class="staff-name"><span class="highlight-name">أمينة فوزي عبدالرحمن</span></div>
-                <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-role">🎯 مسئول التنمية المهنية</div>
                 <div class="staff-dept">التنمية المهنية والاعتماد</div>
             </div>
         """,
@@ -1199,71 +846,6 @@ elif current_tab == "خدمات الأكاديمية":
     """,
       unsafe_allow_html=True,
   )
-
-  st.markdown(
-      '<div class="section-title">🎓 البرامج الاعتمادية والتأهيلية</div>',
-      unsafe_allow_html=True,
-  )
-  s1, s2 = st.columns([1, 1])
-  with s1:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h3>🌟 برامج الترقي للكادر الوظيفي</h3>
-                <p>
-                    تقديم التدريبات الرقمية المعتمدة لاستكمال متطلبات الترقي للمعلمين المستحقين بالنظام الإلكتروني الحديث، ومتابعة رفع واستيفاء ملفات الترقي بالتعاون مع الإدارات التعليمية.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-  with s2:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h3>👑 برامج القيادات التربوية</h3>
-                <p>
-                    تأهيل الكوادر التربوية لشغل وظائف (مدير ووكيل إدارة مدرسية، مدير ووكيل إدارة تعليمية، أساسيات التوجيه الفني) والحصول على شهادات التنمية المهنية المعتمدة.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  st.markdown(
-      '<div class="section-title">📜 الاعتماد وتغيير المسمى الوظيفي</div>',
-      unsafe_allow_html=True,
-  )
-  s3, s4 = st.columns([1, 1])
-  with s3:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h3>🔄 تغيير المسمى الوظيفي</h3>
-                <p>
-                    استقبال وتدقيق أوراق المعلمين الراغبين في تغيير المسمى الوظيفي، وتوفير برامج إعادة التأهيل التربوي والتخصصي المعتمدة لمطابقة المؤهلات والتسكين الصحيح.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-  with s4:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h3>💼 اعتماد المدربين والمراكز (TOT)</h3>
-                <p>
-                    منح شهادات الاعتماد الرقمية للمدربين المعتمدين (TOT)، واعتماد برامج التنمية المهنية المستمرة والمؤسسات التدريبية وفق معايير الجودة الشاملة.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  st.markdown(
-      '<div class="section-title">📝 التقدم للبرامج مدفوعة الأجر</div>',
-      unsafe_allow_html=True,
-  )
   st.markdown(
       """
         <div class="support-form-container" style="text-align: center;">
@@ -1286,63 +868,16 @@ elif current_tab == "أحدث التعليمات والقرارات":
         <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">أحدث التعليمات والقرارات التنظيمية</div>
-            <div class="sub-header-title">الكتب الوزارية، النشرات الدورية، والقرارات الصادرة عن الأكاديمية المهنية للمعلمين</div>
+            <div class="sub-header-title">الكتب الوزارية، النشرات الدورية، والقرارات الصادرة عن الأكاديمية</div>
         </div>
     """,
       unsafe_allow_html=True,
   )
-
   st.markdown(
       """
         <div class="info-card-box">
             <h3>📌 التعليمات التنفيذية لملفات الترقي والتسكين</h3>
-            <p>
-                تابِع أحدث التعليمات الواردة من الإدارة العامة لصلاحية الترقي بشأن استيفاء ملفات الإنجاز، واختبارات التنمية المهنية، والمدد البينية اللازمة للترقي على الكادر الوظيفي لجميع الإدارات التعليمية بالجيزة.
-            </p>
-        </div>
-    """,
-      unsafe_allow_html=True,
-  )
-
-  st.markdown(
-      """
-        <div class="info-card-box">
-            <h3>📜 ضوابط شروط التقدم لبرامج القيادات التربوية</h3>
-            <p>
-                تم اعتماد الشروط والخطوات التنفيذية للتقدم لبرامج (مدير ووكيل إدارة مدرسية، مدير ووكيل إدارة تعليمية، والتوجيه الفني) عبر منصة المعلم الرقمية وفقاً للكتب الدوريّة المنظمة.
-            </p>
-        </div>
-    """,
-      unsafe_allow_html=True,
-  )
-
-  st.markdown(
-      """
-        <div class="info-card-box">
-            <h3>🔄 شروط وإجراءات تغيير المسمى الوظيفي</h3>
-            <p>
-                التعليمات الخاصة بالمؤهلات الحاصل عليها أعضاء هيئة التعليم الراغبين في تعديل المسمى الوظيفي وفقاً للقانون رقم 155 لسنة 2007 وتعديلاته.
-            </p>
-        </div>
-    """,
-      unsafe_allow_html=True,
-  )
-
-  st.markdown(
-      f"""
-        <div class="support-form-container" style="text-align: center;">
-            <p style="font-size: 1.15rem; line-height: 1.9; color: #ffffff;">
-                للاطلاع على النصوص الكاملة للقرارات والتعاميم الرسمية وتنزيل النشرات بصيغة PDF، يرجى زيارة الموقع الرسمي أو متابعة صفحة الفيسبوك الرسمية لفرع الأكاديمية المهنية للمعلمين.
-            </p>
-            <br>
-            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <a href="https://www.pat.edu.eg" target="_blank" class="location-btn" style="text-decoration: none; margin-bottom: 0;">
-                    🌐 زيارة الموقع الرسمي للأكاديمية
-                </a>
-                <a href="{FACEBOOK_PAGE_URL}" target="_blank" class="location-btn" style="text-decoration: none; background: linear-gradient(135deg, #1877F2 0%, #0a52b2 100%) !important; color: white !important; border-color: #1877F2 !important; margin-bottom: 0;">
-                    📘 زيارة صفحة فيسبوك الفرع
-                </a>
-            </div>
+            <p>تابِع أحدث التعليمات الواردة من الإدارة العامة لصلاحية الترقي بشأن استيفاء ملفات الإنجاز واختبارات التنمية المهنية.</p>
         </div>
     """,
       unsafe_allow_html=True,
@@ -1355,100 +890,20 @@ elif current_tab == "مجتمعات التعلم":
         <div class="hero-banner">
             <div>{logo_header_tag}</div>
             <div class="main-header-title">مجتمعات التعلم المهنية (PLCs)</div>
-            <div class="sub-header-title">منصة التعاون المهني وتبادل الخبرات بين المعلمين والقيادات التربوية بفرع الجيزة</div>
+            <div class="sub-header-title">منصة التعاون المهني وتبادل الخبرات بين المعلمين</div>
         </div>
     """,
       unsafe_allow_html=True,
   )
-
   st.markdown(
       """
         <div class="info-card-box">
             <h3>🌐 ما هي مجتمعات التعلم المهنية؟</h3>
-            <p>
-                هي بيئة تربوية تفاعلية تجمع المعلمين والموجهين والقيادات في فرق عمل تعاونية منظمة، تهدف إلى <b>تطوير مهارات التدريس</b>، و<b>تبادل الممارسات المتميزة</b>، و<b>حل المشكلات التعليمية</b> للارتقاء بنواتج تعلم الطلاب والتحول نحو مجتمع المعرفة.
-            </p>
+            <p>بيئة تربوية تفاعلية تجمع المعلمين والموجهين والقيادات في فرق عمل تعاونية منظمة لتطوير مهارات التدريس.</p>
         </div>
     """,
       unsafe_allow_html=True,
   )
-
-  st.markdown(
-      '<div class="section-title">🎯 الأهداف الرائدة لمجتمعات التعلم</div>',
-      unsafe_allow_html=True,
-  )
-  p1, p2, p3 = st.columns([1, 1, 1])
-
-  with p1:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">🤝 تعزيز العمل الجماعي</h4>
-                <p style="font-size: 1rem;">
-                    بناء ثقافة العمل بروح الفريق الواحد بين المعلمين والموجهين داخل المدرسة وعلى مستوى الإدارة التعليمية.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  with p2:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">💡 الابتكار وتبادل الخبرات</h4>
-                <p style="font-size: 1rem;">
-                    نقل وتطبيق أحدث استراتيجيات التدريس وتقنيات التحول الرقمي والتفكير النقدي في الفصول الدراسية.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  with p3:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">📈 النمو المهني المستمر</h4>
-                <p style="font-size: 1rem;">
-                    التطوير الذاتي والتنفيذي للكوادر التعليمية من خلال البحوث الإجرائية وتبادل الملاحظات والتغذية الراجعة.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  st.markdown(
-      '<div class="section-title">📚 أوعية وأنشطة مجتمعات التعلم بفرع الجيزة</div>',
-      unsafe_allow_html=True,
-  )
-  a1, a2 = st.columns([1, 1])
-
-  with a1:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">🔍 بحث الدرس (Lesson Study) وتدريب الأقران</h4>
-                <p>
-                    التخطيط المشترك للدروس وتجريب التنسيقات الحديثة في مواقف تعليمية واقعية، يليها جلسات تأمل وتبادل التغذية الراجعة البناءة بين المعلمين ورؤساء الأقسام.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  with a2:
-    st.markdown(
-        """
-            <div class="info-card-box">
-                <h4 style="color: #FFD700; margin-top:0; white-space: nowrap;">🖥️ الشبكات والورش الرقمية التفاعلية</h4>
-                <p>
-                    لقاءات دورية وندوات عبر الإنترنت للربط بين المعلمين والمشرفين عبر مختلف الإدارات التعليمية بالجيزة لعرض التجارب والحلول المبتكرة للتحديات الصفية.
-                </p>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
 # 8️⃣ التواصل مع الدعم
 elif current_tab == "التواصل مع الدعم":
@@ -1548,7 +1003,7 @@ elif current_tab == "التواصل مع الدعم":
       whatsapp_numbers = [
           ("مسؤول الدعم (1)", "201069996245"),
           ("مسؤول الدعم (2)", "201120807631"),
-          ("مسؤول الدعم (3)", "201201109892"),
+          ("مسؤول الدعم التكنولوجي", "201201109892"),
       ]
 
       cols_wa = st.columns([1, 1, 1])
@@ -1562,11 +1017,6 @@ elif current_tab == "التواصل مع الدعم":
                         </a>""",
               unsafe_allow_html=True,
           )
-
-      st.info(
-          "📌 **تنويه هام:** بعد فتح الواتساب، يرجى إعادة إرسال ملف صحيفة الأحوال"
-          " الإلكترونية داخل شات المحادثة."
-      )
 
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -1583,7 +1033,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%D9%8BD%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%20%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
