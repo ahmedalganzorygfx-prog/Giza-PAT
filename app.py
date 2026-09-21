@@ -108,7 +108,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) مع تخصيص شريط التبويبات العلوي وتكامل الصفحة بالكامل
+# 4️⃣ تصميم الأنماط (CSS) الاحترافية
 st.markdown(
     """
     <style>
@@ -291,32 +291,41 @@ st.markdown(
         color: #0b1a3e !important;
     }
 
-    /* إخفاء أزرار Streamlit العادية تماماً لاستخدام شريط التنقل الاحترافي المخصص */
-    div.row-widget.stButton {
-        display: none !important;
+    /* تنسيق أزرار Streamlit العلوية لتبدو كشريط تنقل منسق */
+    .stButton>button {
+        background: transparent !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        border: none !important;
+        border-bottom: 2px solid transparent !important;
+        border-radius: 0 !important;
+        padding: 6px 4px !important;
+        box-shadow: none !important;
+        transition: all 0.25s ease !important;
+        width: 100%;
+        white-space: nowrap !important;
     }
 
-    /* تصميم شريط التنقل العلوي الاحترافي */
+    .stButton>button:hover {
+        color: #FFD700 !important;
+        border-bottom-color: #FFD700 !important;
+        background: transparent !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
     .top-navbar {
         background: linear-gradient(135deg, #0b1a3e 0%, #101c38 100%) !important;
         backdrop-filter: blur(12px);
-        padding: 14px 22px;
+        padding: 12px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         direction: rtl;
         box-shadow: 0 6px 25px rgba(0,0,0,0.6);
-        margin: 0 -1rem 20px -1rem;
+        margin: 0 -1rem 15px -1rem;
         border-bottom: 3px solid #d4af37;
-        flex-wrap: nowrap;
-        gap: 15px;
-    }
-
-    .nav-right-container { 
-        display: flex; 
-        align-items: center; 
-        gap: 12px; 
-        flex-shrink: 0;
     }
 
     .nav-logo-text {
@@ -337,43 +346,6 @@ st.markdown(
         background: rgba(255, 255, 255, 0.08);
         padding: 3px;
         border: 1px solid rgba(201, 162, 39, 0.5);
-    }
-
-    .nav-center-tabs {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        flex-grow: 1;
-        justify-content: center;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
-
-    /* تنسيق أزرار التنقل لتعمل داخل نفس الصفحة تماماً بدون نوافذ مستقلة */
-    .nav-tab-btn {
-        color: #ffffff !important;
-        background: transparent !important;
-        border: none !important;
-        padding: 6px 10px;
-        font-weight: 700;
-        font-size: 0.98rem;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: all 0.25s ease;
-        border-bottom: 2px solid transparent;
-        font-family: inherit;
-    }
-
-    .nav-tab-btn:hover, .nav-tab-btn.active {
-        color: #FFD700 !important;
-        border-bottom-color: #FFD700 !important;
-    }
-
-    .nav-left-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-shrink: 0;
     }
 
     .teacher-platform-btn {
@@ -698,22 +670,6 @@ st.markdown(
     }
     
     .app-footer span { color: #FFD700; }
-
-    @media (max-width: 992px) {
-        .top-navbar {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 12px;
-        }
-        .nav-center-tabs {
-            justify-content: flex-start;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-        .nav-left-actions {
-            justify-content: space-between;
-        }
-    }
     </style>
 """,
     unsafe_allow_html=True,
@@ -734,48 +690,31 @@ tabs_list = [
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-# التقاط أي ضغطة زر من شريط التنقل العلوي وتحديث الحالة فوراً داخل نفس الصفحة
-cols_nav_buttons = st.columns(len(tabs_list))
-for idx, t_name in enumerate(tabs_list):
-  with cols_nav_buttons[idx]:
-    # زر Streamlit مخفي يتم التحكم به برمجياً عبر الـ HTML فوقه، أو استخدام أزرار شفافة
-    if st.button(t_name, key=f"sys_tab_{idx}", use_container_width=True):
-      st.session_state["current_tab"] = t_name
-      st.rerun()
-
-current_tab = st.session_state["current_tab"]
-
-# بناء أزرار شريط التنقل العلوي المخصص
-tabs_html_buttons = ""
-for idx, t_name in enumerate(tabs_list):
-  active_class = " active" if current_tab == t_name else ""
-  # نقوم بربط كل زر في شريط الـ HTML بضغط زر Streamlit المقابل له خلفياً لضمان التحديث السلس داخل نفس الصفحة
-  tabs_html_buttons += f"""
-        <button onclick="document.querySelectorAll('button[kind=secondary]')[{idx}].click();" class="nav-tab-btn{active_class}">
-            {t_name}
-        </button>
-    """
-
-# شريط التنقل العلوي المتكامل
+# شريط التنقل العلوي المتكامل باستخدام أعمدة Streamlit لضمان عمل الأزرار بسلاسة تامة
 st.markdown(
     f"""
     <div class="top-navbar">
-        <div class="nav-right-container">
-            <div class="nav-logo-text">
-                {logo_navbar_tag}
-                <span>الأكاديمية المهنية للمعلمين</span>
-            </div>
+        <div class="nav-logo-text">
+            {logo_navbar_tag}
+            <span>الأكاديمية المهنية للمعلمين</span>
         </div>
-        <div class="nav-center-tabs">
-            {tabs_html_buttons}
-        </div>
-        <div class="nav-left-actions">
+        <div>
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">منصة المٌعلم 🎓</a>
         </div>
     </div>
 """,
     unsafe_allow_html=True,
 )
+
+# توزيع أزرار التبويبات أفقياً داخل نفس الصفحة
+nav_cols = st.columns(len(tabs_list))
+for idx, t_name in enumerate(tabs_list):
+  with nav_cols[idx]:
+    if st.button(t_name, key=f"tab_nav_{idx}", use_container_width=True):
+      st.session_state["current_tab"] = t_name
+      st.rerun()
+
+current_tab = st.session_state["current_tab"]
 
 st.markdown(
     "<hr style='margin-top: 5px; margin-bottom: 20px; border-color:"
