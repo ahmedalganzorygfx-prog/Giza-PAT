@@ -5,7 +5,7 @@ import urllib.parse
 import streamlit as st
 
 
-# دالة قراءة وتحميل الصور المباشرة (مع التخزين المؤقت لتسريع الأداء)
+# دالة قراءة وتحميل الصور المباشرة مع التخزين المؤقت لتسريع الأداء
 @st.cache_data
 def get_image_base64_direct(file_name):
   try:
@@ -109,7 +109,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) لتحسين الأداء والشكل
+# 4️⃣ تصميم الأنماط (CSS) لشريط التنقل العلوي المطابق للصورة تماماً
 st.markdown(
     """
     <style>
@@ -205,10 +205,11 @@ st.markdown(
         width: 100% !important;
     }
 
+    /* تصميم شريط التنقل العلوي الاحترافي */
     .top-navbar {
         background: linear-gradient(135deg, #0b1a3e 0%, #101c38 100%) !important;
         backdrop-filter: blur(12px);
-        padding: 12px 20px;
+        padding: 12px 22px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -216,6 +217,15 @@ st.markdown(
         box-shadow: 0 6px 25px rgba(0,0,0,0.6);
         margin: 0 -1rem 15px -1rem;
         border-bottom: 3px solid #d4af37;
+        flex-wrap: nowrap;
+        gap: 15px;
+    }
+
+    .nav-right-container { 
+        display: flex; 
+        align-items: center; 
+        gap: 12px; 
+        flex-shrink: 0;
     }
 
     .nav-logo-text {
@@ -225,6 +235,7 @@ st.markdown(
         display: flex;
         align-items: center;
         gap: 10px;
+        white-space: nowrap;
     }
 
     .navbar-logo-img {
@@ -235,6 +246,41 @@ st.markdown(
         background: rgba(255, 255, 255, 0.08);
         padding: 3px;
         border: 1px solid rgba(201, 162, 39, 0.5);
+    }
+
+    .nav-center-tabs {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-grow: 1;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav-tab-link {
+        color: #ffffff !important;
+        background: transparent;
+        padding: 6px 4px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: all 0.25s ease;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+    }
+
+    .nav-tab-link:hover, .nav-tab-link.active {
+        color: #FFD700 !important;
+        border-bottom-color: #FFD700 !important;
+    }
+
+    .nav-left-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
     }
 
     .teacher-platform-btn {
@@ -248,6 +294,8 @@ st.markdown(
         box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
         border: 1.5px solid #FFD700;
         display: inline-block;
+        text-align: center;
+        white-space: nowrap !important;
     }
 
     .welcome-marquee-container {
@@ -496,7 +544,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ نظام إدارة التبويبات السريع جداً (بدون أزرار متكررة لتجنب البطء)
+# 5️⃣ إدارة حالة التبويبات عبر الـ Query Params لتنقل فوري وسلس للغاية داخل نفس الصفحة
+query_params = st.query_params
+if "tab" in query_params:
+  st.session_state["current_tab"] = query_params["tab"]
+
+if "current_tab" not in st.session_state:
+  st.session_state["current_tab"] = "الرئيسية"
+
+current_tab = st.session_state["current_tab"]
+
 tabs_list = [
     "الرئيسية",
     "عن الفرع",
@@ -508,25 +565,34 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# شريط التنقل العلوي الثابت
+# بناء روابط شريط التنقل العلوي الأفقية المماثلة للصورة
+tabs_html_links = ""
+for t_name in tabs_list:
+  active_class = " active" if current_tab == t_name else ""
+  tabs_html_links += (
+      f'<a href="?tab={urllib.parse.quote(t_name)}" class="nav-tab-link'
+      f'{active_class}">{t_name}</a>'
+  )
+
+# شريط التنقل العلوي المتكامل
 st.markdown(
     f"""
     <div class="top-navbar">
-        <div class="nav-logo-text">
-            {logo_navbar_tag}
-            <span>الأكاديمية المهنية للمعلمين</span>
+        <div class="nav-right-container">
+            <div class="nav-logo-text">
+                {logo_navbar_tag}
+                <span>الأكاديمية المهنية للمعلمين</span>
+            </div>
         </div>
-        <div>
+        <div class="nav-center-tabs">
+            {tabs_html_links}
+        </div>
+        <div class="nav-left-actions">
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">منصة المٌعلم 🎓</a>
         </div>
     </div>
 """,
     unsafe_allow_html=True,
-)
-
-# استخدام radio أفقياً أو selectbox مخصص للتنقل السريع الفوري بدون ثقل الـ rerun المتكرر
-current_tab = st.selectbox(
-    "📍 اختر القسم للانتقال السريع:", tabs_list, label_visibility="collapsed"
 )
 
 st.markdown(
@@ -535,7 +601,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# تحميل الصور مرة واحدة مع التخزين المؤقت لتسريع العرض
+# تحميل الصور مرة واحدة مع التخزين المؤقت لتسريع الأداء
 @st.cache_data
 def get_cached_images():
   return {
