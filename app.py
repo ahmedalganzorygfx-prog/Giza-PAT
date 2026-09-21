@@ -109,7 +109,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) لشريط التنقل السريع والأزرار
+# 4️⃣ تصميم الأنماط (CSS) المتناسقة
 st.markdown(
     """
     <style>
@@ -137,10 +137,10 @@ st.markdown(
         background: transparent !important;
         color: #ffffff !important;
         font-weight: 700 !important;
-        font-size: 0.95rem !important;
+        font-size: 0.92rem !important;
         border: none !important;
         border-radius: 6px !important;
-        padding: 6px 10px !important;
+        padding: 6px 4px !important;
         box-shadow: none !important;
         transition: all 0.2s ease !important;
         width: 100% !important;
@@ -518,7 +518,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات الفورية داخل الذاكرة المؤقتة (Session State) لسرعة فائقة
+# 5️⃣ إدارة حالة التبويبات الفورية السريعة
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
@@ -550,7 +550,7 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# عرض أزرار التبويبات بشكل فوري وسريع جداً بدون أي تأخير
+# عرض أزرار التبويبات بشكل فوري وسريع
 cols_nav = st.columns(len(tabs_list))
 for idx, t_name in enumerate(tabs_list):
   with cols_nav[idx]:
@@ -565,7 +565,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# تحميل الصور مرة واحدة فقط مع التخزين المؤقت الكامل لمنع بطء التصفح
+
 @st.cache_data
 def get_cached_images():
   return {
@@ -607,7 +607,8 @@ def get_cached_images():
           "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
       ),
       "amina": find_and_load_image(
-          "amina.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
+          "amina.jpg",
+          "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
       ),
   }
 
@@ -638,7 +639,7 @@ if current_tab == "الرئيسية":
       unsafe_allow_html=True,
   )
 
-  # قسم 1: برامج القيادات التربوية
+  # برامج القيادات التربوية
   st.markdown(
       '<div class="section-title">👑 برامج القيادات التربوية</div>',
       unsafe_allow_html=True,
@@ -723,7 +724,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-  # قسم 2: برامج التسكين والترقي
+  # برامج التسكين والترقي
   st.markdown(
       '<div class="section-title">📜 برامج التسكين والترقي</div>',
       unsafe_allow_html=True,
@@ -734,7 +735,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{imgs['teacher_assistant']}" alt="برنامج التطبيقات التربوية للمعلم المساعد"></div>
+                <div class="program-img-box"><img src="{imgs['teacher_assistant']}" alt="التطبيقات التربوية للمعلم المساعد"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
                     <div class="program-card-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
@@ -761,7 +762,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{imgs['teacher_skills']}" alt="برنامج مهارات عامة في التدريس"></div>
+                <div class="program-img-box"><img src="{imgs['teacher_skills']}" alt="مهارات عامة في التدريس"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">برنامج مهارات عامة في التدريس</div>
                     <div class="program-card-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
@@ -783,7 +784,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-  # قسم 3: برامج تغيير المسمى الوظيفي والاعتماد
+  # برامج تغيير المسمى الوظيفي والاعتماد
   st.markdown(
       '<div class="section-title">🔄 برامج تغيير المسمى الوظيفي والاعتماد</div>',
       unsafe_allow_html=True,
@@ -794,7 +795,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{imgs['job']}" alt="برنامج تغيير المسمى الوظيفي"></div>
+                <div class="program-img-box"><img src="{imgs['job']}" alt="تغيير المسمى الوظيفي"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">برنامج تغيير المسمى الوظيفي</div>
                     <div class="program-card-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
@@ -820,7 +821,7 @@ if current_tab == "الرئيسية":
     st.markdown(
         f"""
             <div class="program-card-wrapper">
-                <div class="program-img-box"><img src="{imgs['tot']}" alt="البرنامج الرقمي للاعتماد TOT"></div>
+                <div class="program-img-box"><img src="{imgs['tot']}" alt="الاعتماد TOT"></div>
                 <div class="program-content-box">
                     <div class="program-card-title">البرنامج الرقمي للاعتماد (TOT)</div>
                     <div class="program-card-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
@@ -842,7 +843,7 @@ if current_tab == "الرئيسية":
         unsafe_allow_html=True,
     )
 
-# 2️⃣ عن الفرع
+# 2️⃣ عن الفرع (محدث بالكامل بالتفاصيل التاريخية والإدارية)
 elif current_tab == "عن الفرع":
   st.markdown(
       f"""
@@ -867,7 +868,9 @@ elif current_tab == "عن الفرع":
         """
             <div class="info-card-box">
                 <h3>🏛️ التأسيس والانطلاقة</h3>
-                <p>أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة.</p>
+                <p>
+                    أُنشئ فرع الأكاديمية المهنية للمعلمين بمحافظة الجيزة في عام <b>2017</b> ليكون الحاضنة الرئيسية لتطوير وتمكين الكوادر التعليمية والتربوية بالمحافظة، وتقديم الخدمات الاعتمادية والتدريبية وفق أعلى معايير الجودة.
+                </p>
             </div>
         """,
         unsafe_allow_html=True,
@@ -878,7 +881,15 @@ elif current_tab == "عن الفرع":
         """
             <div class="info-card-box">
                 <h3>📜 مرحلة البناء (2017 - 2023)</h3>
-                <p>إرساء القواعد التنظيمية والإدارية تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span>، بمعاونة فريق تكنولوجيا المعلومات.</p>
+                <p>
+                    شهدت إرساء القواعد التنظيمية والإدارية للفرع تحت قيادة الأستاذة / <span class="highlight-name">أمل عبد المقصود</span> (مدير الفرع)، بمعاونة فريق تكنولوجيا المعلومات:
+                </p>
+                <div class="staff-item-badge">
+                    💻 <span class="highlight-name">أ . أحمد حسني الجنزوري</span> (IT)
+                </div>
+                <div class="staff-item-badge">
+                    💻 <span class="highlight-name">أ . خالد عبد الحكيم هارون</span> (IT)
+                </div>
             </div>
         """,
         unsafe_allow_html=True,
@@ -889,7 +900,18 @@ elif current_tab == "عن الفرع":
         """
             <div class="info-card-box">
                 <h3>🚀 التطوير الرقمي (2023 - الآن)</h3>
-                <p>انطلاقة الكترونية برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع لميكنة وتيسير الخدمات.</p>
+                <p>
+                    انطلاقة الكترونية برئاسة الأستاذ / <span class="highlight-name">أحمد حسني الجنزوري</span> مديراً للفرع، لميكنة الخدمات وتيسير البرامج بالتعاون مع فريق العمل:
+                </p>
+                <div class="staff-item-badge">
+                    🤝 <span class="highlight-name">أ . خالد عبد الحكيم</span> (موارد بشرية و IT)
+                </div>
+                <div class="staff-item-badge">
+                    🎯 <span class="highlight-name">أ . أحمد محمد عمر</span> (التنمية المهنية)
+                </div>
+                <div class="staff-item-badge">
+                    🎯 <span class="highlight-name">أ . أمينة فوزي</span> (التنمية المهنية)
+                </div>
             </div>
         """,
         unsafe_allow_html=True,
@@ -916,7 +938,7 @@ elif current_tab == "ادارات الافراد":
             <div class="staff-card">
                 <div class="avatar-frame"><img src="{imgs['ahmed']}" alt="أحمد حسني الجنزوري"></div>
                 <div class="staff-name"><span class="highlight-name">أحمد حسني الجنزوري</span></div>
-                <div class="staff-role">👔 مدير الفرع</div>
+                <div class="staff-role" style="margin-top:10px;">👔 مدير الفرع</div>
                 <div class="staff-dept">Information Technology</div>
             </div>
         """,
@@ -929,7 +951,7 @@ elif current_tab == "ادارات الافراد":
             <div class="staff-card">
                 <div class="avatar-frame"><img src="{imgs['khaled']}" alt="خالد عبدالحكيم هارون"></div>
                 <div class="staff-name"><span class="highlight-name">خالد عبدالحكيم هارون</span></div>
-                <div class="staff-role">🤝 مسئول الموارد البشرية</div>
+                <div class="staff-role" style="margin-top:10px;">🤝 مسئول الموارد البشرية</div>
                 <div class="staff-dept">Information Technology</div>
             </div>
         """,
@@ -942,7 +964,7 @@ elif current_tab == "ادارات الافراد":
             <div class="staff-card">
                 <div class="avatar-frame"><img src="{imgs['omar']}" alt="أحمد محمد عمر"></div>
                 <div class="staff-name"><span class="highlight-name">أحمد محمد عمر</span></div>
-                <div class="staff-role">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
                 <div class="staff-dept">التنمية المهنية والاعتماد</div>
             </div>
         """,
@@ -955,7 +977,7 @@ elif current_tab == "ادارات الافراد":
             <div class="staff-card">
                 <div class="avatar-frame"><img src="{imgs['amina']}" alt="أمينة فوزي عبدالرحمن"></div>
                 <div class="staff-name"><span class="highlight-name">أمينة فوزي عبدالرحمن</span></div>
-                <div class="staff-role">🎯 مسئول التنمية المهنية</div>
+                <div class="staff-role" style="margin-top:10px;">🎯 مسئول التنمية المهنية</div>
                 <div class="staff-dept">التنمية المهنية والاعتماد</div>
             </div>
         """,
