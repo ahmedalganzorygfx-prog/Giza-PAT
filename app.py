@@ -108,7 +108,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) مع تحديث شكل الشريط العلوي والتبويبات المطابقة للصورة
+# 4️⃣ تصميم الأنماط (CSS) مع تخصيص شريط التبويبات العلوي وتكامل الصفحة بالكامل
 st.markdown(
     """
     <style>
@@ -291,7 +291,12 @@ st.markdown(
         color: #0b1a3e !important;
     }
 
-    /* تصميم شريط التنقل العلوي المطابق للصورة */
+    /* إخفاء أزرار Streamlit العادية تماماً لاستخدام شريط التنقل الاحترافي المخصص */
+    div.row-widget.stButton {
+        display: none !important;
+    }
+
+    /* تصميم شريط التنقل العلوي الاحترافي */
     .top-navbar {
         background: linear-gradient(135deg, #0b1a3e 0%, #101c38 100%) !important;
         backdrop-filter: blur(12px);
@@ -337,27 +342,29 @@ st.markdown(
     .nav-center-tabs {
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 16px;
         flex-grow: 1;
         justify-content: center;
         flex-wrap: nowrap;
         overflow-x: auto;
     }
 
-    .nav-tab-link {
+    /* تنسيق أزرار التنقل لتعمل داخل نفس الصفحة تماماً بدون نوافذ مستقلة */
+    .nav-tab-btn {
         color: #ffffff !important;
-        background: transparent;
-        padding: 6px 4px;
+        background: transparent !important;
+        border: none !important;
+        padding: 6px 10px;
         font-weight: 700;
-        font-size: 1rem;
-        text-decoration: none;
+        font-size: 0.98rem;
+        cursor: pointer;
         white-space: nowrap;
         transition: all 0.25s ease;
-        cursor: pointer;
         border-bottom: 2px solid transparent;
+        font-family: inherit;
     }
 
-    .nav-tab-link:hover, .nav-tab-link.active {
+    .nav-tab-btn:hover, .nav-tab-btn.active {
         color: #FFD700 !important;
         border-bottom-color: #FFD700 !important;
     }
@@ -712,16 +719,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات ونظام استقبال التغيير عبر Query Parameters لتعمل بسلاسة داخل نفس الصفحة
-query_params = st.query_params
-if "tab" in query_params:
-  st.session_state["current_tab"] = query_params["tab"]
-
-if "current_tab" not in st.session_state:
-  st.session_state["current_tab"] = "الرئيسية"
-
-current_tab = st.session_state["current_tab"]
-
+# 5️⃣ إدارة حالة التبويبات بنظام Streamlit الأصلي داخل نفس الصفحة
 tabs_list = [
     "الرئيسية",
     "عن الفرع",
@@ -733,16 +731,32 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# بناء روابط التبويبات الأفقية المطابقة للصورة تماماً
-tabs_html_links = ""
-for t_name in tabs_list:
-  active_class = " active" if current_tab == t_name else ""
-  tabs_html_links += (
-      f'<a href="?tab={urllib.parse.quote(t_name)}" class="nav-tab-link'
-      f'{active_class}">{t_name}</a>'
-  )
+if "current_tab" not in st.session_state:
+  st.session_state["current_tab"] = "الرئيسية"
 
-# شريط التنقل العلوي المتكامل (اللوجو يميناً، الروابط في المنتصف، زر منصة المعلم يساراً)
+# التقاط أي ضغطة زر من شريط التنقل العلوي وتحديث الحالة فوراً داخل نفس الصفحة
+cols_nav_buttons = st.columns(len(tabs_list))
+for idx, t_name in enumerate(tabs_list):
+  with cols_nav_buttons[idx]:
+    # زر Streamlit مخفي يتم التحكم به برمجياً عبر الـ HTML فوقه، أو استخدام أزرار شفافة
+    if st.button(t_name, key=f"sys_tab_{idx}", use_container_width=True):
+      st.session_state["current_tab"] = t_name
+      st.rerun()
+
+current_tab = st.session_state["current_tab"]
+
+# بناء أزرار شريط التنقل العلوي المخصص
+tabs_html_buttons = ""
+for idx, t_name in enumerate(tabs_list):
+  active_class = " active" if current_tab == t_name else ""
+  # نقوم بربط كل زر في شريط الـ HTML بضغط زر Streamlit المقابل له خلفياً لضمان التحديث السلس داخل نفس الصفحة
+  tabs_html_buttons += f"""
+        <button onclick="document.querySelectorAll('button[kind=secondary]')[{idx}].click();" class="nav-tab-btn{active_class}">
+            {t_name}
+        </button>
+    """
+
+# شريط التنقل العلوي المتكامل
 st.markdown(
     f"""
     <div class="top-navbar">
@@ -753,7 +767,7 @@ st.markdown(
             </div>
         </div>
         <div class="nav-center-tabs">
-            {tabs_html_links}
+            {tabs_html_buttons}
         </div>
         <div class="nav-left-actions">
             <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">منصة المٌعلم 🎓</a>
