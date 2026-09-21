@@ -109,7 +109,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) لتحويل أزرار Streamlit لشريط تنقل علوي أنيق بدون خطوط وبدون بطء
+# 4️⃣ تصميم الأنماط (CSS) لشريط التنقل السريع والأزرار
 st.markdown(
     """
     <style>
@@ -133,7 +133,6 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* تحويل أعمدة الأزرار العلوية إلى شريط تنقل متناسق */
     div.stButton > button {
         background: transparent !important;
         color: #ffffff !important;
@@ -551,7 +550,7 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# عرض أزرار التبويبات بشكل فوري وسريع جداً بدون أي تأخير أو إعادة تحميل خارجية
+# عرض أزرار التبويبات بشكل فوري وسريع جداً بدون أي تأخير
 cols_nav = st.columns(len(tabs_list))
 for idx, t_name in enumerate(tabs_list):
   with cols_nav[idx]:
@@ -639,6 +638,7 @@ if current_tab == "الرئيسية":
       unsafe_allow_html=True,
   )
 
+  # قسم 1: برامج القيادات التربوية
   st.markdown(
       '<div class="section-title">👑 برامج القيادات التربوية</div>',
       unsafe_allow_html=True,
@@ -720,6 +720,125 @@ if current_tab == "الرئيسية":
     )
     st.markdown(
         '<div class="card-footer-badge">برنامج أساسيات التوجيه الفني</div>',
+        unsafe_allow_html=True,
+    )
+
+  # قسم 2: برامج التسكين والترقي
+  st.markdown(
+      '<div class="section-title">📜 برامج التسكين والترقي</div>',
+      unsafe_allow_html=True,
+  )
+  tc1, tc2 = st.columns([1, 1])
+
+  with tc1:
+    st.markdown(
+        f"""
+            <div class="program-card-wrapper">
+                <div class="program-img-box"><img src="{imgs['teacher_assistant']}" alt="برنامج التطبيقات التربوية للمعلم المساعد"></div>
+                <div class="program-content-box">
+                    <div class="program-card-title">برنامج التطبيقات التربوية للمعلم المساعد</div>
+                    <div class="program-card-desc">تأهيل المعلمين المساعدين لاستكمال متطلبات التسكين على الكادر الوظيفي.</div>
+                </div>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<a href="https://www.pat.edu.eg/platform-programs"'
+        ' target="_blank"><button style="width:100%; border-radius:10px;'
+        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="card-footer-badge">برنامج التطبيقات التربوية للمعلم'
+        ' المساعد</div>',
+        unsafe_allow_html=True,
+    )
+
+  with tc2:
+    st.markdown(
+        f"""
+            <div class="program-card-wrapper">
+                <div class="program-img-box"><img src="{imgs['teacher_skills']}" alt="برنامج مهارات عامة في التدريس"></div>
+                <div class="program-content-box">
+                    <div class="program-card-title">برنامج مهارات عامة في التدريس</div>
+                    <div class="program-card-desc">تطوير مهارات واستراتيجيات التدريس الحديثة للمعلمين المستحقين للترقية.</div>
+                </div>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<a href="https://www.pat.edu.eg/platform-programs"'
+        ' target="_blank"><button style="width:100%; border-radius:10px;'
+        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="card-footer-badge">برنامج مهارات عامة في التدريس</div>',
+        unsafe_allow_html=True,
+    )
+
+  # قسم 3: برامج تغيير المسمى الوظيفي والاعتماد
+  st.markdown(
+      '<div class="section-title">🔄 برامج تغيير المسمى الوظيفي والاعتماد</div>',
+      unsafe_allow_html=True,
+  )
+  pc1, pc2 = st.columns([1, 1])
+
+  with pc1:
+    st.markdown(
+        f"""
+            <div class="program-card-wrapper">
+                <div class="program-img-box"><img src="{imgs['job']}" alt="برنامج تغيير المسمى الوظيفي"></div>
+                <div class="program-content-box">
+                    <div class="program-card-title">برنامج تغيير المسمى الوظيفي</div>
+                    <div class="program-card-desc">برنامج معتمد لإعادة التأهيل التربوي والتخصصي لمطابقة التخصصات والتسكين الوظيفي.</div>
+                </div>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<a href="https://www.pat.edu.eg/platform-programs"'
+        ' target="_blank"><button style="width:100%; border-radius:10px;'
+        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="card-footer-badge">برنامج تغيير المسمى الوظيفي</div>',
+        unsafe_allow_html=True,
+    )
+
+  with pc2:
+    st.markdown(
+        f"""
+            <div class="program-card-wrapper">
+                <div class="program-img-box"><img src="{imgs['tot']}" alt="البرنامج الرقمي للاعتماد TOT"></div>
+                <div class="program-content-box">
+                    <div class="program-card-title">البرنامج الرقمي للاعتماد (TOT)</div>
+                    <div class="program-card-desc">دورة تدريب المدربين الرقمية لتأهيل وإعداد مدربين معتمدين وفق معايير الجودة.</div>
+                </div>
+            </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<a href="https://www.pat.edu.eg/platform-programs"'
+        ' target="_blank"><button style="width:100%; border-radius:10px;'
+        " background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);"
+        ' color:white; font-weight:bold; border:none; padding:11px;'
+        ' cursor:pointer;">التسجيل بالبرنامج</button></a>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="card-footer-badge">البرنامج الرقمي للاعتماد TOT</div>',
         unsafe_allow_html=True,
     )
 
