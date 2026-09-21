@@ -109,7 +109,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) مع إزالة الخط السفلي للتبويبات
+# 4️⃣ تصميم الأنماط (CSS) لتحويل أزرار Streamlit لشريط تنقل علوي أنيق بدون خطوط وبدون بطء
 st.markdown(
     """
     <style>
@@ -131,6 +131,26 @@ st.markdown(
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #060d1f !important;
         color: #ffffff !important;
+    }
+
+    /* تحويل أعمدة الأزرار العلوية إلى شريط تنقل متناسق */
+    div.stButton > button {
+        background: transparent !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        border: none !important;
+        border-radius: 6px !important;
+        padding: 6px 10px !important;
+        box-shadow: none !important;
+        transition: all 0.2s ease !important;
+        width: 100% !important;
+        white-space: nowrap !important;
+    }
+
+    div.stButton > button:hover {
+        color: #FFD700 !important;
+        background: rgba(255, 215, 0, 0.1) !important;
     }
 
     .info-card-box {
@@ -203,9 +223,9 @@ st.markdown(
         font-size: 1.15rem !important;
         border-radius: 12px !important;
         width: 100% !important;
+        border: none !important;
     }
 
-    /* تصميم شريط التنقل العلوي الاحترافي بدون خط سفلي للتبويبات */
     .top-navbar {
         background: linear-gradient(135deg, #0b1a3e 0%, #101c38 100%) !important;
         backdrop-filter: blur(12px);
@@ -217,15 +237,6 @@ st.markdown(
         box-shadow: 0 6px 25px rgba(0,0,0,0.6);
         margin: 0 -1rem 15px -1rem;
         border-bottom: 3px solid #d4af37;
-        flex-wrap: nowrap;
-        gap: 15px;
-    }
-
-    .nav-right-container { 
-        display: flex; 
-        align-items: center; 
-        gap: 12px; 
-        flex-shrink: 0;
     }
 
     .nav-logo-text {
@@ -248,42 +259,6 @@ st.markdown(
         border: 1px solid rgba(201, 162, 39, 0.5);
     }
 
-    .nav-center-tabs {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        flex-grow: 1;
-        justify-content: center;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
-
-    .nav-tab-link {
-        color: #ffffff !important;
-        background: transparent;
-        padding: 6px 4px;
-        font-weight: 700;
-        font-size: 1rem;
-        text-decoration: none !important;
-        white-space: nowrap;
-        transition: all 0.25s ease;
-        cursor: pointer;
-        border-bottom: none !important;
-    }
-
-    .nav-tab-link:hover, .nav-tab-link.active {
-        color: #FFD700 !important;
-        border-bottom: none !important;
-        text-decoration: none !important;
-    }
-
-    .nav-left-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-shrink: 0;
-    }
-
     .teacher-platform-btn {
         background: linear-gradient(135deg, #b71c1c 0%, #7f0000 100%) !important;
         color: #ffffff !important;
@@ -295,7 +270,6 @@ st.markdown(
         box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
         border: 1.5px solid #FFD700;
         display: inline-block;
-        text-align: center;
         white-space: nowrap !important;
     }
 
@@ -545,16 +519,27 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات الفورية داخل نفس الصفحة بدون فتح نوافذ منفصلة
-query_params = st.query_params
-if "tab" in query_params:
-  st.session_state["current_tab"] = query_params["tab"]
-
+# 5️⃣ إدارة حالة التبويبات الفورية داخل الذاكرة المؤقتة (Session State) لسرعة فائقة
 if "current_tab" not in st.session_state:
   st.session_state["current_tab"] = "الرئيسية"
 
-current_tab = st.session_state["current_tab"]
+# شريط التنقل العلوي المتكامل
+st.markdown(
+    f"""
+    <div class="top-navbar">
+        <div class="nav-logo-text">
+            {logo_navbar_tag}
+            <span>الأكاديمية المهنية للمعلمين</span>
+        </div>
+        <div>
+            <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">منصة المٌعلم 🎓</a>
+        </div>
+    </div>
+""",
+    unsafe_allow_html=True,
+)
 
+# قائمة التبويبات
 tabs_list = [
     "الرئيسية",
     "عن الفرع",
@@ -566,35 +551,14 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# بناء روابط التبويبات بدون أي فتح في نوافذ جديدة وبدون خط سفلي
-tabs_html_links = ""
-for t_name in tabs_list:
-  active_class = " active" if current_tab == t_name else ""
-  tabs_html_links += (
-      f'<a href="?tab={urllib.parse.quote(t_name)}" target="_self"'
-      f' class="nav-tab-link{active_class}">{t_name}</a>'
-  )
+# عرض أزرار التبويبات بشكل فوري وسريع جداً بدون أي تأخير أو إعادة تحميل خارجية
+cols_nav = st.columns(len(tabs_list))
+for idx, t_name in enumerate(tabs_list):
+  with cols_nav[idx]:
+    if st.button(t_name, key=f"fast_tab_{idx}", use_container_width=True):
+      st.session_state["current_tab"] = t_name
 
-# شريط التنقل العلوي المتكامل
-st.markdown(
-    f"""
-    <div class="top-navbar">
-        <div class="nav-right-container">
-            <div class="nav-logo-text">
-                {logo_navbar_tag}
-                <span>الأكاديمية المهنية للمعلمين</span>
-            </div>
-        </div>
-        <div class="nav-center-tabs">
-            {tabs_html_links}
-        </div>
-        <div class="nav-left-actions">
-            <a href="https://www.pat.edu.eg/platform-programs" target="_blank" class="teacher-platform-btn">منصة المٌعلم 🎓</a>
-        </div>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
+current_tab = st.session_state["current_tab"]
 
 st.markdown(
     "<hr style='margin-top: 5px; margin-bottom: 20px; border-color:"
@@ -602,7 +566,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# تحميل الصور مرة واحدة مع التخزين المؤقت لتسريع الأداء
+# تحميل الصور مرة واحدة فقط مع التخزين المؤقت الكامل لمنع بطء التصفح
 @st.cache_data
 def get_cached_images():
   return {
@@ -644,8 +608,7 @@ def get_cached_images():
           "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
       ),
       "amina": find_and_load_image(
-          "amina.jpg",
-          "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
+          "amina.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
       ),
   }
 
@@ -1101,7 +1064,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%8|AC%D9%8A%20%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%20%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
