@@ -109,7 +109,7 @@ logo_header_tag = (
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18PF695ehm/"
 LOCATION_MAP_URL = "https://maps.app.goo.gl/RVpBuBNVfHFnr7qz9"
 
-# 4️⃣ تصميم الأنماط (CSS) لشريط التنقل العلوي المطابق للصورة تماماً
+# 4️⃣ تصميم الأنماط (CSS) مع إزالة الخط السفلي للتبويبات
 st.markdown(
     """
     <style>
@@ -205,7 +205,7 @@ st.markdown(
         width: 100% !important;
     }
 
-    /* تصميم شريط التنقل العلوي الاحترافي */
+    /* تصميم شريط التنقل العلوي الاحترافي بدون خط سفلي للتبويبات */
     .top-navbar {
         background: linear-gradient(135deg, #0b1a3e 0%, #101c38 100%) !important;
         backdrop-filter: blur(12px);
@@ -264,16 +264,17 @@ st.markdown(
         padding: 6px 4px;
         font-weight: 700;
         font-size: 1rem;
-        text-decoration: none;
+        text-decoration: none !important;
         white-space: nowrap;
         transition: all 0.25s ease;
         cursor: pointer;
-        border-bottom: 2px solid transparent;
+        border-bottom: none !important;
     }
 
     .nav-tab-link:hover, .nav-tab-link.active {
         color: #FFD700 !important;
-        border-bottom-color: #FFD700 !important;
+        border-bottom: none !important;
+        text-decoration: none !important;
     }
 
     .nav-left-actions {
@@ -544,7 +545,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 5️⃣ إدارة حالة التبويبات عبر الـ Query Params لتنقل فوري وسلس للغاية داخل نفس الصفحة
+# 5️⃣ إدارة حالة التبويبات الفورية داخل نفس الصفحة بدون فتح نوافذ منفصلة
 query_params = st.query_params
 if "tab" in query_params:
   st.session_state["current_tab"] = query_params["tab"]
@@ -565,13 +566,13 @@ tabs_list = [
     "التواصل مع الدعم",
 ]
 
-# بناء روابط شريط التنقل العلوي الأفقية المماثلة للصورة
+# بناء روابط التبويبات بدون أي فتح في نوافذ جديدة وبدون خط سفلي
 tabs_html_links = ""
 for t_name in tabs_list:
   active_class = " active" if current_tab == t_name else ""
   tabs_html_links += (
-      f'<a href="?tab={urllib.parse.quote(t_name)}" class="nav-tab-link'
-      f'{active_class}">{t_name}</a>'
+      f'<a href="?tab={urllib.parse.quote(t_name)}" target="_self"'
+      f' class="nav-tab-link{active_class}">{t_name}</a>'
   )
 
 # شريط التنقل العلوي المتكامل
@@ -643,7 +644,8 @@ def get_cached_images():
           "omar.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
       ),
       "amina": find_and_load_image(
-          "amina.jpg", "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
+          "amina.jpg",
+          "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
       ),
   }
 
@@ -1099,7 +1101,7 @@ elif current_tab == "التواصل مع الدعم":
             <div style="margin-top: 10px;">
                 <iframe 
                     class="map-frame"
-                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%8A%20%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    src="https://maps.google.com/maps?q=%D8%A7%D9%84%D8%A7%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%20%D8%A7%D9%84%D9%85%D9%87%D9%8A%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D9%8A%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%8|AC%D9%8A%20%D8%B2%D8%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
